@@ -11,6 +11,7 @@
 
     using RestaurantsPlatform.Data.Common.Models;
     using RestaurantsPlatform.Data.Models;
+    using RestaurantsPlatform.Data.Models.Restaurants;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -23,6 +24,12 @@
             : base(options)
         {
         }
+
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Image> Images { get; set; }
+
+        public DbSet<Restaurant> Restaurants { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
