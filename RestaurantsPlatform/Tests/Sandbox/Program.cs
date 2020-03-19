@@ -17,7 +17,7 @@
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Data.Repositories;
-    using RestaurantsPlatform.Data.Seeding;
+    using RestaurantsPlatform.Seed;
     using RestaurantsPlatform.Services.Messaging;
 
     public static class Program

@@ -1,4 +1,4 @@
-﻿namespace RestaurantsPlatform.Data.Seeding
+﻿namespace RestaurantsPlatform.Seed.Seeding
 {
     using System;
     using System.Linq;
@@ -7,8 +7,10 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
 
-    using RestaurantsPlatform.Common;
+    using RestaurantsPlatform.Data;
     using RestaurantsPlatform.Data.Models;
+
+    using static RestaurantsPlatform.Common.GlobalConstants;
 
     internal class RolesSeeder : ISeeder
     {
@@ -16,7 +18,7 @@
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
-            await SeedRoleAsync(roleManager, GlobalConstants.AdministratorRoleName);
+            await SeedRoleAsync(roleManager, AdministratorRoleName);
         }
 
         private static async Task SeedRoleAsync(RoleManager<ApplicationRole> roleManager, string roleName)

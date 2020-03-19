@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +16,7 @@
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Data.Repositories;
-    using RestaurantsPlatform.Data.Seeding;
+    using RestaurantsPlatform.Seed;
     using RestaurantsPlatform.Services.Mapping;
     using RestaurantsPlatform.Services.Messaging;
     using RestaurantsPlatform.Web.ViewModels;
@@ -45,7 +46,10 @@
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
             services.AddRazorPages();
 
             services.AddSingleton(this.configuration);

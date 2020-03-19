@@ -1,4 +1,4 @@
-﻿namespace RestaurantsPlatform.Data.Seeding
+﻿namespace RestaurantPlatform.Seed
 {
     using System;
     using System.Collections.Generic;
@@ -6,6 +6,7 @@
 
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using RestaurantPlatform.Seed.Seeding;
 
     public class ApplicationDbContextSeeder : ISeeder
     {
