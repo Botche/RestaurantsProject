@@ -1,15 +1,16 @@
-﻿namespace RestaurantsPlatform.Data.Models.Restaurants
+﻿namespace RestaurantsPlatform.Web.ViewModels.Restaurants
 {
-    using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
-    using RestaurantsPlatform.Data.Common.Models;
+    using RestaurantsPlatform.Data.Models.Restaurants;
+    using RestaurantsPlatform.Services.Mapping;
 
     using static RestaurantsPlatform.Data.Common.Constants.Models.Restraurant;
 
-    public class Restaurant : IDeletableEntity<int>
+    public class CreateRestaurantInputModel : IMapTo<Restaurant>
     {
+        [DisplayName("Restaurant Name")]
         [Required]
         [MaxLength(DescriptionMaxLength)]
         public string RestaurantName { get; set; }
@@ -22,22 +23,21 @@
         [MaxLength(AddressMaxLength)]
         public string Address { get; set; }
 
+        [DisplayName("Owner Name")]
         [MaxLength(OwnerNameMaxLength)]
         public string OwnerName { get; set; }
 
+        [DisplayName("Working Time")]
         [RegularExpression(WorkingTimePattern)]
         public string WorkingTime { get; set; }
 
+        [DisplayName("Category")]
         [Required]
         public int CategoryId { get; set; }
 
-        public virtual Category Category { get; set; }
-
+        [DisplayName("Contact Info")]
         [Required]
         [MaxLength(ContactInfoMaxLength)]
         public string ContactInfo { get; set; }
-
-        [NotMapped]
-        public virtual IEnumerable<string> Images { get; set; }
     }
 }

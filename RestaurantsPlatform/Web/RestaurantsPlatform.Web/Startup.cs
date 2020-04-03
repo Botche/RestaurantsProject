@@ -82,6 +82,7 @@
             // Application services
             services.AddTransient<IEmailSender>(options => new SendGridEmailSender(""));
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IRestaurantService, RestaurantService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -127,19 +128,23 @@
 
             app.UseEndpoints(
                 endpoints =>
-                    {
-                        endpoints.MapControllerRoute(
+                {
+                    endpoints.MapControllerRoute(
+                    name: "restaurant",
+                    pattern: "r/{id:int}/{name:minlength(3)}",
+                    new { controller = "Restaurant", action = "GetById" });
+                    endpoints.MapControllerRoute(
                         name: "category",
                         pattern: "c/{id:int}/{name:minlength(3)}",
-                        new { controller = "Categories", action = "ByName" });
-                        endpoints.MapControllerRoute(
-                            name: "areaRoute",
-                            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                        endpoints.MapControllerRoute(
-                            name: "default",
-                            pattern: "{controller=Home}/{action=Index}/{id?}");
-                        endpoints.MapRazorPages();
-                    });
+                        new { controller = "Categories", action = "GetById" });
+                    endpoints.MapControllerRoute(
+                        name: "areaRoute",
+                        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Home}/{action=Index}/{id?}");
+                    endpoints.MapRazorPages();
+                });
         }
     }
 }

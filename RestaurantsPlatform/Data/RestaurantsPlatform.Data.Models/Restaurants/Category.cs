@@ -7,7 +7,7 @@
 
     using static RestaurantsPlatform.Data.Common.Constants.Models.Category;
 
-    public class Category : BaseDeletableModel<int>
+    public class Category : IDeletableEntity<int>
     {
         public Category()
         {
