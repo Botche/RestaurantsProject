@@ -245,8 +245,10 @@ namespace RestaurantsPlatform.Data.Migrations
 
             modelBuilder.Entity("RestaurantsPlatform.Data.Models.Restaurants.Category", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -259,9 +261,9 @@ namespace RestaurantsPlatform.Data.Migrations
                         .HasColumnType("nvarchar(1024)")
                         .HasMaxLength(1024);
 
-                    b.Property<string>("ImageId")
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -281,68 +283,25 @@ namespace RestaurantsPlatform.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ImageId");
-
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("RestaurantsPlatform.Data.Models.Restaurants.Image", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AlternativeText")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(64)")
-                        .HasMaxLength(64);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(512)")
-                        .HasMaxLength(512);
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RestaurantId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("RestaurantId");
-
-                    b.ToTable("Images");
-                });
-
             modelBuilder.Entity("RestaurantsPlatform.Data.Models.Restaurants.Restaurant", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<string>("CategoryId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ContactInfo")
                         .IsRequired()
@@ -436,22 +395,6 @@ namespace RestaurantsPlatform.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("RestaurantsPlatform.Data.Models.Restaurants.Category", b =>
-                {
-                    b.HasOne("RestaurantsPlatform.Data.Models.Restaurants.Image", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("RestaurantsPlatform.Data.Models.Restaurants.Image", b =>
-                {
-                    b.HasOne("RestaurantsPlatform.Data.Models.Restaurants.Restaurant", "Restaurant")
-                        .WithMany("Images")
-                        .HasForeignKey("RestaurantId");
                 });
 
             modelBuilder.Entity("RestaurantsPlatform.Data.Models.Restaurants.Restaurant", b =>

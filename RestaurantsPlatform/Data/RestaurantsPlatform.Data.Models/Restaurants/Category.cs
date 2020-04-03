@@ -7,7 +7,7 @@
 
     using static RestaurantsPlatform.Data.Common.Constants.Models.Category;
 
-    public class Category : BaseDeletableModel<string>
+    public class Category : BaseDeletableModel<int>
     {
         public Category()
         {
@@ -27,9 +27,7 @@
         public string Description { get; set; }
 
         [Required]
-        public string ImageId { get; set; }
-
-        public virtual Image Image { get; set; }
+        public string ImageUrl { get; set; }
 
         public virtual IEnumerable<Restaurant> Restaurants { get; set; }
     }

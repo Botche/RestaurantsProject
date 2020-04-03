@@ -2,18 +2,13 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
+    using System.ComponentModel.DataAnnotations.Schema;
     using RestaurantsPlatform.Data.Common.Models;
 
     using static RestaurantsPlatform.Data.Common.Constants.Models.Restraurant;
 
-    public class Restaurant : BaseDeletableModel<string>
+    public class Restaurant : BaseDeletableModel<int>
     {
-        public Restaurant()
-        {
-            this.Images = new HashSet<Image>();
-        }
-
         [Required]
         [MaxLength(DescriptionMaxLength)]
         public string RestaurantName { get; set; }
@@ -33,7 +28,7 @@
         public string WorkingTime { get; set; }
 
         [Required]
-        public string CategoryId { get; set; }
+        public int CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
 
@@ -41,6 +36,7 @@
         [MaxLength(ContactInfoMaxLength)]
         public virtual string ContactInfo { get; set; }
 
-        public virtual IEnumerable<Image> Images { get; set; }
+        [NotMapped]
+        public virtual IEnumerable<string> Images { get; set; }
     }
 }
