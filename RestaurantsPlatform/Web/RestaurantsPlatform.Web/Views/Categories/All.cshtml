@@ -1,0 +1,29 @@
+﻿@model IEnumerable<RestaurantsPlatform.Web.ViewModels.Categories.AllCategoriesViewModel>
+
+@{
+    ViewData["Title"] = "Restaurant Categories";
+}
+
+<h1 class="m-4 text-center">Restaurant categories</h1>
+
+<div class="row d-flex justify-content-around">
+    @foreach (var category in Model)
+    {
+        <div class="row col-4 media mb-4">
+            <div class="mt-0">
+                <img src="@category.ImageUrl" width="350" height="200" class="mr-3 rounded-lg" alt="@category.Title"> 
+            </div>
+            <div class="media-body">
+                <h5 class="mt-2">
+                    <a asp-route="category" asp-route-name="@category.UrlName" asp-route-id="@category.Id">
+                        @category.Name (@category.RestaurantsCount)
+                    </a>
+                </h5>
+                <hr class="mb-3" />
+                <p class="">
+                    @category.ShortDescription
+                </p>
+            </div>
+        </div>
+    }
+</div>

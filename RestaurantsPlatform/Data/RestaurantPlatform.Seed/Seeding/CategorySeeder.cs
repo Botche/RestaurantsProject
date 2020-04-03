@@ -26,8 +26,8 @@
             string cafeteria = "https://res.cloudinary.com/djlskbceh/image/upload/v1585916185/restaurant/categories/Cafeteria_ety9so.jpg";
             string pub = "https://res.cloudinary.com/djlskbceh/image/upload/v1585916179/restaurant/categories/Pub_m94xos.jpg";
 
-            List <(string Name, string ImageId, string Description)> categories
-                = new List<(string Name, string ImageId, string Description)>
+            List <(string Name, string ImageUrl, string Description)> categories
+                = new List<(string Name, string ImageUrl, string Description)>
             {
                 ("Ethnic",
                     ethnic,
@@ -64,6 +64,7 @@
                     Name = category.Name,
                     Description = category.Description,
                     Title = category.Name,
+                    ImageUrl = category.ImageUrl
                 });
             }
         }

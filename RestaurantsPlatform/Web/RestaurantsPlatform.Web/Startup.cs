@@ -18,6 +18,8 @@
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Data.Repositories;
     using RestaurantsPlatform.Seed;
+    using RestaurantsPlatform.Services.Data;
+    using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Services.Mapping;
     using RestaurantsPlatform.Services.Messaging;
     using RestaurantsPlatform.Web.ViewModels;
@@ -44,7 +46,7 @@
                 options.Cookie.IsEssential = true;
             });
 
-            services.AddResponseCaching(); 
+            services.AddResponseCaching();
             services.AddResponseCompression(options =>
             {
                 options.EnableForHttps = true;
@@ -78,7 +80,8 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender>(options => new SendGridEmailSender(""));
+            services.AddTransient<ICategoryService, CategoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -125,6 +128,10 @@
             app.UseEndpoints(
                 endpoints =>
                     {
+                        endpoints.MapControllerRoute(
+                        name: "category",
+                        pattern: "c/{id:int}/{name:minlength(3)}",
+                        new { controller = "Categories", action = "ByName" });
                         endpoints.MapControllerRoute(
                             name: "areaRoute",
                             pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
