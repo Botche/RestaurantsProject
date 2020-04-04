@@ -6,6 +6,6 @@
     {
         IEnumerable<T> GetAllCategories<T>(int? count = null);
 
-        T GetById<T>(int id);
+        T GetByIdAndName<T>(int id, string name);
     }
 }

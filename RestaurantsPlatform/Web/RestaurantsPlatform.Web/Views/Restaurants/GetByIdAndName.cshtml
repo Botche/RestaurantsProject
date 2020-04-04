@@ -1,0 +1,109 @@
+﻿@model RestaurantsPlatform.Web.ViewModels.Restaurants.DetailsRestaurantViewModel
+
+@{
+    ViewData["Title"] = "GetById";
+}
+
+<h1 class="text-center">@Model.RestaurantName</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RestaurantName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RestaurantName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Description != null)
+            {
+                @Html.DisplayFor(model => model.Description)
+            }
+            else
+            {
+                <span>No information was given!</span>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OwnerName)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.OwnerName != null)
+            {
+                @Html.DisplayFor(model => model.OwnerName)
+            }
+            else
+            {
+                <span>No information was given!</span>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WorkingTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WorkingTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ContactInfo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ContactInfo)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-primary" asp-controller="Restaurants" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a class="btn btn-secondary" href="/Home/Index">Go to home</a>
+</div>
+
+<div class="bg-danger" style="height: 450px; width: 100%" id="map"> </div>
+
+@*@section scripts {
+        <script type="text/javascript">
+            async function getLatitude(){
+                const address = $('dt:contains("Address")').next().text();
+                const encodedAddress = encodeURI(address);
+                const linkToFindLongtitudeAndLatitude = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + encodedAddress + '&key=' + '@this.ViewBag.GoogleMapsApiKey';
+
+                const result = await fetch(linkToFindLongtitudeAndLatitude)
+                    .then(response => response.json())
+
+                var latitute = +result['results'][0]['geometry']['location']['lat'];
+                var longitude = +result['results'][0]['geometry']['location']['lng'];
+
+                return { latitute, longitude };
+            }
+
+            async function InitializeMap() {
+                const result = await getLatitude();
+
+                var latlng = new google.maps.LatLng(result.latitute, result.longitude);
+
+                var myOptions = {
+                    zoom: 18,
+                    center: latlng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+
+                var map = new google.maps.Map(document.getElementById("map"), myOptions);
+
+                var marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map,
+                    title: '@Model.RestaurantName'
+                });
+            }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=@this.ViewBag.GoogleMapsApiKey&callback=InitializeMap" async defer></script>
+    }
+*@

@@ -7,7 +7,7 @@
 
 <div class="border-info">
     <h1 class="text-center m-4">@Model.Name</h1>
-    <p>
+    <p class="text-center">
         @Model.Description
     </p>
 </div>
@@ -18,22 +18,28 @@
         <a class="btn btn-info" asp-area="User" asp-controller="Categories" asp-action="All">Back to All</a>
     </form>*@
 
-@*<div class="row d-flex justify-content-around">
+
+
+<div class="row d-flex justify-content-around">
     @foreach (var restaurant in Model.Restaurants)
     {
-        <div class="col-5 media mt-5">
-            <img src="@restaurant.Images.FirstOrDefault()" width="200" height="100" class="mr-3 rounded-lg" alt="@restaurant.RestaurantName">
+        string imageUrl = "https://res.cloudinary.com/djlskbceh/image/upload/v1585916924/restaurant/NoImage_lq3vxk.png";
+        if (restaurant.Images == null || restaurant.Images.FirstOrDefault() == null)
+        {
+            imageUrl = "https://res.cloudinary.com/djlskbceh/image/upload/v1585916924/restaurant/NoImage_lq3vxk.png";
+        }
+
+        <div class="col-6 media mt-5">
+            <img src="@imageUrl" class="mr-3 restaurantImage" alt="@restaurant.RestaurantName">
             <div class="media-body">
                 <h5 class="mt-0">
-                    <a asp-area="User" asp-controller="Restaurants" asp-action="Details" asp-route-id="@restaurant.Id">
+                    <a asp-route="restaurant" asp-route-id="@restaurant.Id" asp-route-name="@restaurant.ParsedUrlName">
                         @restaurant.RestaurantName (@restaurant.WorkingTime)
                     </a>
                 </h5>
                 <hr class="mb-3" />
-                <p>
-                    @restaurant.Address
-                </p>
+                <p>@restaurant.Address</p>
             </div>
         </div>
     }
-</div>*@
+</div>

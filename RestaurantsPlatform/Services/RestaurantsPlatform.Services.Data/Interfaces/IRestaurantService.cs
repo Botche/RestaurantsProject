@@ -9,8 +9,12 @@
 
         int GetCountByCategoryId(int id);
 
-        Task CreateRestaurant(string address, int categoryId, string contactInfo, string description, string ownerName, string restaurantName, string workingTime);
+        Task<int> CreateRestaurant(string address, int categoryId, string contactInfo, string description, string ownerName, string restaurantName, string workingTime);
+
+        T GetByIdAndName<T>(int id, string name);
 
         T GetById<T>(int id);
+
+        Task EditRestaurant(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description);
     }
 }

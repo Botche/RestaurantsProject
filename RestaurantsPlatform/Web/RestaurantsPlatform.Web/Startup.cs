@@ -130,13 +130,13 @@
                 endpoints =>
                 {
                     endpoints.MapControllerRoute(
-                    name: "restaurant",
-                    pattern: "r/{id:int}/{name:minlength(3)}",
-                    new { controller = "Restaurants", action = "GetById" });
+                        name: "restaurant",
+                        pattern: "r/{id:int}/{name:minlength(3)}",
+                        new { controller = "Restaurants", action = "GetByIdAndName" });
                     endpoints.MapControllerRoute(
                         name: "category",
                         pattern: "c/{id:int}/{name:minlength(3)}",
-                        new { controller = "Categories", action = "GetById" });
+                        new { controller = "Categories", action = "GetByIdAndName" });
                     endpoints.MapControllerRoute(
                         name: "areaRoute",
                         pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

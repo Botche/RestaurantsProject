@@ -32,9 +32,9 @@
             return this.View(categories);
         }
 
-        public IActionResult GetById(int id, int page = 1)
+        public IActionResult GetByIdAndName(int id, string name, int page = 1)
         {
-            var category = this.categoryService.GetById<DetailsCategoryViewModel>(id);
+            var category = this.categoryService.GetByIdAndName<DetailsCategoryViewModel>(id, name);
 
             if (category == null)
             {

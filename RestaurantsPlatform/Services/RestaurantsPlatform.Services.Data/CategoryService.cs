@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
@@ -31,14 +32,16 @@
             return query.To<T>().ToList();
         }
 
-        public T GetById<T>(int id)
+        public T GetByIdAndName<T>(int id, string name)
         {
-            var category = this.categoriesRepository.All()
-                .Where(x => x.Id == id)
+            string nameWithoutDashes = name.Replace('-', ' ');
+
+            return this.categoriesRepository
+                .All()
+                .Where(category => category.Id == id
+                    && category.Name.ToLower() == nameWithoutDashes.ToLower())
                 .To<T>()
                 .FirstOrDefault();
-
-            return category;
         }
     }
 }

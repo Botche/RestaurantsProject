@@ -25,16 +25,16 @@
             this.configuration = configuration;
         }
 
-        public IActionResult GetById(int id)
+        public IActionResult GetByIdAndName(int id, string name)
         {
-            var restaurant = this.restaurantService.GetById<DetailsRestaurantViewModel>(id);
+            var restaurant = this.restaurantService.GetByIdAndName<DetailsRestaurantViewModel>(id, name);
 
             if (restaurant == null)
             {
                 return this.NotFound();
             }
 
-            this.ViewBag.MapBoxApiKey = this.configuration.GetSection("MapBox")["ApiKey"];
+            this.ViewBag.GoogleMapsApiKey = this.configuration.GetSection("GoogleMaps")["ApiKey"];
 
             return this.View(restaurant);
         }
@@ -53,9 +53,43 @@
         [HttpPost]
         public async Task<IActionResult> Create(CreateRestaurantInputModel model)
         {
-            await this.restaurantService.CreateRestaurant(model.Address, model.CategoryId, model.ContactInfo, model.Description, model.OwnerName, model.RestaurantName, model.WorkingTime);
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
 
-            return this.RedirectToAction("GetById", model.CategoryId);
+            int restaurantId = await this.restaurantService.CreateRestaurant(model.Address, model.CategoryId, model.ContactInfo, model.Description, model.OwnerName, model.RestaurantName, model.WorkingTime);
+
+            return this.RedirectToAction("GetByIdAndName", new { id = restaurantId, name = model.RestaurantName });
+        }
+
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var restaurant = this.restaurantService.GetById<EditRestaurantViewModel>(id);
+
+            if (restaurant == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.View(restaurant);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditRestaurantViewModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            await this.restaurantService.EditRestaurant(model.Id, model.OwnerName, model.RestaurantName, model.WorkingTime, model.Address, model.ContactInfo, model.Description);
+
+            return this.RedirectToRoute(
+                "restaurant",
+                new { id = model.Id, name = model.RestaurantName.ToLower().Replace(' ', '-') });
         }
     }
 }
