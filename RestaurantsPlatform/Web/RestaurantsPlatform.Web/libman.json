@@ -35,6 +35,23 @@
         "dist/jquery.validate.unobtrusive.js",
         "dist/jquery.validate.unobtrusive.min.js"
       ]
+    },
+    {
+      "library": "mapbox-gl@1.9.0",
+      "destination": "wwwroot/lib/map-box/",
+      "files": [
+        "dist/mapbox-gl.js",
+        "dist/mapbox-gl.css",
+        "dist/mapbox-gl.min.css",
+        "dist/mapbox-gl.min.js"
+      ]
+    },
+    {
+      "library": "mapbox@1.0.0-beta9",
+      "destination": "wwwroot/lib/map-box/",
+      "files": [
+        "dist/mapbox-sdk.min.js"
+      ]
     }
   ]
 }

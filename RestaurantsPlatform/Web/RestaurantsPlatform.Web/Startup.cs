@@ -132,7 +132,7 @@
                     endpoints.MapControllerRoute(
                     name: "restaurant",
                     pattern: "r/{id:int}/{name:minlength(3)}",
-                    new { controller = "Restaurant", action = "GetById" });
+                    new { controller = "Restaurants", action = "GetById" });
                     endpoints.MapControllerRoute(
                         name: "category",
                         pattern: "c/{id:int}/{name:minlength(3)}",

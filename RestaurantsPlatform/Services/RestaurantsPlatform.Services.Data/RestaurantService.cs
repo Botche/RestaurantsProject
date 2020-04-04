@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
@@ -49,6 +50,14 @@
             }
 
             return restaurants.To<T>().ToList();
+        }
+
+        public T GetById<T>(int id)
+        {
+            return this.restaurantRespository.All()
+                .Where(restaurant => restaurant.Id == id)
+                .To<T>()
+                .FirstOrDefault();
         }
 
         public int GetCountByCategoryId(int id)
