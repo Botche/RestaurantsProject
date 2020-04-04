@@ -37,6 +37,11 @@
         [MaxLength(ContactInfoMaxLength)]
         public string ContactInfo { get; set; }
 
+        [Required]
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+
         [NotMapped]
         public virtual IEnumerable<string> Images { get; set; }
     }

@@ -3,11 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Web.ViewModels.Categories;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
@@ -17,12 +20,18 @@
         private readonly IRestaurantService restaurantService;
         private readonly ICategoryService categoryService;
         private readonly IConfiguration configuration;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public RestaurantsController(IRestaurantService restaurantService, ICategoryService categoryService, IConfiguration configuration)
+        public RestaurantsController(
+            IRestaurantService restaurantService,
+            ICategoryService categoryService,
+            IConfiguration configuration,
+            UserManager<ApplicationUser> userManager)
         {
             this.restaurantService = restaurantService;
             this.categoryService = categoryService;
             this.configuration = configuration;
+            this.userManager = userManager;
         }
 
         public IActionResult GetByIdAndName(int id, string name)
@@ -58,7 +67,8 @@
                 return this.View(model);
             }
 
-            int restaurantId = await this.restaurantService.CreateRestaurant(model.Address, model.CategoryId, model.ContactInfo, model.Description, model.OwnerName, model.RestaurantName, model.WorkingTime);
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            int restaurantId = await this.restaurantService.CreateRestaurant(userId, model.Address, model.CategoryId, model.ContactInfo, model.Description, model.OwnerName, model.RestaurantName, model.WorkingTime);
 
             return this.RedirectToAction("GetByIdAndName", new { id = restaurantId, name = model.RestaurantName });
         }
@@ -67,6 +77,12 @@
         public IActionResult Edit(int id)
         {
             var restaurant = this.restaurantService.GetById<EditRestaurantViewModel>(id);
+
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (restaurant.UserId != userId)
+            {
+                return this.Unauthorized();
+            }
 
             if (restaurant == null)
             {
@@ -78,14 +94,15 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Edit(EditRestaurantViewModel model)
+        public async Task<IActionResult> Edit(EditRestaurantInputModel model)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View(model);
             }
 
-            await this.restaurantService.EditRestaurant(model.Id, model.OwnerName, model.RestaurantName, model.WorkingTime, model.Address, model.ContactInfo, model.Description);
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await this.restaurantService.EditRestaurant(userId, model.Id, model.OwnerName, model.RestaurantName, model.WorkingTime, model.Address, model.ContactInfo, model.Description);
 
             return this.RedirectToRoute(
                 "restaurant",

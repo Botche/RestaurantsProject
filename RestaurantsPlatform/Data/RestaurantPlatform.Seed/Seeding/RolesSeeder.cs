@@ -18,7 +18,9 @@
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
+            await SeedRoleAsync(roleManager, UserRoleName);
             await SeedRoleAsync(roleManager, AdministratorRoleName);
+            await SeedRoleAsync(roleManager, AdminRoleName);
         }
 
         private static async Task SeedRoleAsync(RoleManager<ApplicationRole> roleManager, string roleName)

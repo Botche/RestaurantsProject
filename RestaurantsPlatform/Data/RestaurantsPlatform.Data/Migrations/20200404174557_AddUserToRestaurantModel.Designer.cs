@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantsPlatform.Data;
 
 namespace RestaurantsPlatform.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200404174557_AddUserToRestaurantModel")]
+    partial class AddUserToRestaurantModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -335,7 +337,6 @@ namespace RestaurantsPlatform.Data.Migrations
                         .HasMaxLength(512);
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("WorkingTime")
@@ -413,9 +414,7 @@ namespace RestaurantsPlatform.Data.Migrations
 
                     b.HasOne("RestaurantsPlatform.Data.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

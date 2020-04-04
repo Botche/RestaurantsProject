@@ -33,25 +33,32 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="All">Restaurants Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Restaurants" asp-action="Create">Register your restaurant</a>
-                        </li>
+                        @if (this.User.Identity.Name != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="All">Restaurants Categories</a>
+                            </li>
+
+                            @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Restaurants" asp-action="Create">Register your restaurant</a>
+                                </li>
+                            }
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    
+
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @this.RenderBody()
         </main>
     </div>
-    
+
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

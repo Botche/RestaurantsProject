@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -19,7 +17,9 @@
         private readonly ICategoryService categoryService;
         private readonly IRestaurantService restaurantService;
 
-        public CategoriesController(ICategoryService categoryService, IRestaurantService restaurantService)
+        public CategoriesController(
+            ICategoryService categoryService,
+            IRestaurantService restaurantService)
         {
             this.categoryService = categoryService;
             this.restaurantService = restaurantService;

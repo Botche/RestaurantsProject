@@ -19,7 +19,7 @@
             this.restaurantRespository = restaurantRespository;
         }
 
-        public async Task<int> CreateRestaurant(string address, int categoryId, string contactInfo, string description, string ownerName, string restaurantName, string workingTime)
+        public async Task<int> CreateRestaurant(string userId, string address, int categoryId, string contactInfo, string description, string ownerName, string restaurantName, string workingTime)
         {
             Restaurant restaurant = new Restaurant
             {
@@ -31,6 +31,7 @@
                 IsDeleted = false,
                 OwnerName = ownerName,
                 RestaurantName = restaurantName,
+                UserId = userId,
                 WorkingTime = workingTime,
             };
 
@@ -40,12 +41,13 @@
             return restaurant.Id;
         }
 
-        public async Task EditRestaurant(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description)
+        public async Task EditRestaurant(string userId, int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description)
         {
             Restaurant oldEntity = this.restaurantRespository.All()
                 .Where(restaurant => restaurant.Id == id)
                 .FirstOrDefault();
 
+            oldEntity.UserId = userId;
             oldEntity.OwnerName = ownerName;
             oldEntity.RestaurantName = restaurantName;
             oldEntity.WorkingTime = workingTime;

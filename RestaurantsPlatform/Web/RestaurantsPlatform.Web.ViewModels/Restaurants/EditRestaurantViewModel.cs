@@ -18,5 +18,7 @@
         public string WorkingTime { get; set; }
 
         public string ContactInfo { get; set; }
+
+        public string UserId { get; set; }
     }
 }

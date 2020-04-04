@@ -1,4 +1,5 @@
-﻿@model RestaurantsPlatform.Web.ViewModels.Restaurants.DetailsRestaurantViewModel
+﻿@using System.Security.Claims;
+@model RestaurantsPlatform.Web.ViewModels.Restaurants.DetailsRestaurantViewModel
 
 @{
     ViewData["Title"] = "GetById";
@@ -62,7 +63,10 @@
     </dl>
 </div>
 <div>
-    <a class="btn btn-primary" asp-controller="Restaurants" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    @if (Model.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+    {
+        <a class="btn btn-primary" asp-controller="Restaurants" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    }
     <a class="btn btn-secondary" href="/Home/Index">Go to home</a>
 </div>
 

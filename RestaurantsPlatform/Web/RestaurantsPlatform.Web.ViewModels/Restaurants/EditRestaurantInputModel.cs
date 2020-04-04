@@ -3,7 +3,7 @@
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
 
-    public class DetailsRestaurantViewModel : IMapFrom<Restaurant>
+    public class EditRestaurantInputModel : IMapFrom<Restaurant>
     {
         public int Id { get; set; }
 
@@ -18,7 +18,5 @@
         public string WorkingTime { get; set; }
 
         public string ContactInfo { get; set; }
-
-        public string UserId { get; set; }
     }
 }
