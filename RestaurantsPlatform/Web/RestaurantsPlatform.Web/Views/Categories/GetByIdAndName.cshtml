@@ -34,12 +34,52 @@
             <div class="media-body">
                 <h5 class="mt-0">
                     <a asp-route="restaurant" asp-route-id="@restaurant.Id" asp-route-name="@restaurant.ParsedUrlName">
-                        @restaurant.RestaurantName (@restaurant.WorkingTime)
+                        @restaurant.RestaurantName
                     </a>
                 </h5>
+                <div class="workingTime">@restaurant.WorkingTime</div>
+                <div class="badge badge-pill status"></div>
                 <hr class="mb-3" />
                 <p>@restaurant.Address</p>
             </div>
         </div>
     }
 </div>
+
+@section scripts{
+    <script type="text/javascript">
+        const workingTimes = document.getElementsByClassName('workingTime');
+        var today = new Date();
+
+        Array.from(workingTimes).forEach(element => {
+            const statusElement = element.parentNode.parentNode.getElementsByClassName('status')[0];
+
+            statusElement.classList.remove('badge-success');
+            statusElement.classList.remove('badge-danger');
+
+            const times = element.innerText.split(' - ').filter(x => x);
+            const opening = times[0].split(':').map(x => +x);
+            let closing = times[1].split(':').map(x => +x);
+
+            if (opening[0] > closing[0]) {
+                closing[0] += 24;
+            }
+
+            if (today.getHours() > opening[0]
+                && today.getHours() < closing[0]) {
+                statusElement.innerText = 'OPEN';
+                statusElement.classList.add('badge-success');
+            } else if (today.getHours() === opening[0] && today.getMinutes() >= opening[1]) {
+                statusElement.innerText = 'OPEN';
+                statusElement.classList.add('badge-success');
+            } else if (today.getHours() === closing[0] && today.getMinutes() < closing[1]) {
+                statusElement.innerText = 'OPEN';
+                statusElement.classList.add('badge-success');
+            }
+            else {
+                statusElement.innerText = 'CLOSED';
+                statusElement.classList.add('badge-danger');
+            }
+        });
+    </script>
+}

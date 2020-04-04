@@ -29,6 +29,7 @@
 
         [DisplayName("Working Time")]
         [RegularExpression(WorkingTimePattern)]
+        [Required]
         public string WorkingTime { get; set; }
 
         [DisplayName("Category")]

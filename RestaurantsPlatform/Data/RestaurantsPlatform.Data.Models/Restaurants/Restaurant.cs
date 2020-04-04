@@ -26,6 +26,7 @@
         public string OwnerName { get; set; }
 
         [RegularExpression(WorkingTimePattern)]
+        [Required]
         public string WorkingTime { get; set; }
 
         [Required]
