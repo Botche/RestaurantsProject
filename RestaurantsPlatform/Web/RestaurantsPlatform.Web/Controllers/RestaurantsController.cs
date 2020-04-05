@@ -1,8 +1,5 @@
 ﻿namespace RestaurantsPlatform.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -103,6 +100,44 @@
 
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await this.restaurantService.EditRestaurant(userId, model.Id, model.OwnerName, model.RestaurantName, model.WorkingTime, model.Address, model.ContactInfo, model.Description);
+
+            return this.RedirectToRoute(
+                "restaurant",
+                new { id = model.Id, name = model.RestaurantName.ToLower().Replace(' ', '-') });
+        }
+
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            var restaurant = this.restaurantService.GetById<EditRestaurantViewModel>(id);
+
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (restaurant.UserId != userId)
+            {
+                return this.Unauthorized();
+            }
+
+            if (restaurant == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.View(restaurant);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Delete(DeleteRestaurantInputModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+
+            await this.restaurantService.DeleteRestaurantById(model.Id);
 
             return this.RedirectToRoute(
                 "restaurant",

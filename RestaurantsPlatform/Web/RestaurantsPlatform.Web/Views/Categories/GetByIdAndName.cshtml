@@ -12,14 +12,6 @@
     </p>
 </div>
 
-@*<form class="mx-auto w-25 d-flex justify-content-around" asp-area="User" asp-controller="Categories" asp-action="Delete" asp-route-id="@Model.Id" method="get">
-        <button type="submit" value="Delete" class="btn btn-danger">Delete</button>
-        <button asp-area="User" asp-controller="Categories" asp-action="Edit" asp-route-id="@Model.Id" value="Edit" class="btn btn-primary">Edit</button>
-        <a class="btn btn-info" asp-area="User" asp-controller="Categories" asp-action="All">Back to All</a>
-    </form>*@
-
-
-
 <div class="row d-flex justify-content-around">
     @foreach (var restaurant in Model.Restaurants)
     {
@@ -32,15 +24,15 @@
         <div class="col-6 media mt-5">
             <img src="@imageUrl" class="mr-3 restaurantImage" alt="@restaurant.RestaurantName">
             <div class="media-body">
-                <h5 class="mt-0">
-                    <a asp-route="restaurant" asp-route-id="@restaurant.Id" asp-route-name="@restaurant.ParsedUrlName">
-                        @restaurant.RestaurantName
-                    </a>
-                </h5>
+                <h5>@restaurant.RestaurantName</h5>
                 <div class="workingTime">@restaurant.WorkingTime</div>
                 <div class="badge badge-pill status"></div>
                 <hr class="mb-3" />
                 <p>@restaurant.Address</p>
+                <div>
+                    <a asp-route="restaurant" asp-route-id="@restaurant.Id" asp-route-name="@restaurant.ParsedUrlName" class="btn btn-outline-success btn-sm">Details</a>
+                    <a class="likeBtn btn btn-outline-danger btn-sm"><i class="fa-heart fa-w-16"></i></a>
+                </div>
             </div>
         </div>
     }
@@ -48,6 +40,34 @@
 
 @section scripts{
     <script type="text/javascript">
+        const likesBtn = document.getElementsByClassName('likeBtn');
+
+        Array.from(likesBtn).forEach(likeBtn => {
+
+            const icon = likeBtn.getElementsByTagName('i')[0];
+
+            icon.classList.add('far');
+            icon.classList.add('text-danger');
+
+            likeBtn.addEventListener('mouseover', function () {
+                icon.classList.add('text-white');
+                icon.classList.remove('text-danger');
+            });
+            likeBtn.addEventListener('mouseout', function () {
+                icon.classList.remove('text-white');
+                icon.classList.add('text-danger');
+            });
+            likeBtn.addEventListener('click', function () {
+                if (icon.classList.contains('fa')) {
+                    icon.classList.remove('fa');
+                    icon.classList.add('far');
+                } else {
+                    icon.classList.remove('far');
+                    icon.classList.add('fa');
+                }
+            });
+        });
+
         const workingTimes = document.getElementsByClassName('workingTime');
         var today = new Date();
 

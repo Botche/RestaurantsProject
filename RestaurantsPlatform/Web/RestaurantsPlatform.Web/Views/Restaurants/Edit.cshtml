@@ -9,13 +9,8 @@
 <hr class="w-50" />
 <div class="mx-auto w-50">
     <div>
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="POST">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="RestaurantName" class="control-label"></label>
                 <input asp-for="RestaurantName" class="form-control" />

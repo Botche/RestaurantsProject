@@ -5,75 +5,120 @@
     ViewData["Title"] = "GetById";
 }
 
-<h1 class="text-center">@Model.RestaurantName</h1>
-
 <div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RestaurantName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RestaurantName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @if (Model.Description != null)
-            {
-                @Html.DisplayFor(model => model.Description)
-            }
-            else
-            {
-                <span>No information was given!</span>
-            }
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OwnerName)
-        </dt>
-        <dd class="col-sm-10">
-            @if (Model.OwnerName != null)
-            {
-                @Html.DisplayFor(model => model.OwnerName)
-            }
-            else
-            {
-                <span>No information was given!</span>
-            }
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkingTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.WorkingTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ContactInfo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ContactInfo)
-        </dd>
-    </dl>
+    <h1 class="text-center">
+        @Model.RestaurantName
+        <a class="likeBtn" href="#"><i class="fa-heart float-right"></i></a>
+        @if (Model.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+            <span class="float-left">
+                <a class="btn btn-outline-primary" asp-controller="Restaurants" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                <a class="btn btn-outline-danger" asp-controller="Restaurants" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+            </span>
+        }
+    </h1>
 </div>
-<div>
-    @if (Model.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-    {
-        <a class="btn btn-primary" asp-controller="Restaurants" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    }
-    <a class="btn btn-secondary" asp-controller="Categories" asp-action="All">Go to home</a>
+<hr />
+<div class="row">
+    <div class="col-md-6 col-12  row">
+        <div class="w-100">
+            <dl>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.RestaurantName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.RestaurantName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.Description != null)
+                    {
+                        @Html.DisplayFor(model => model.Description)
+                    }
+                    else
+                    {
+                        <span>No information was given!</span>
+                    }
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.OwnerName)
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.OwnerName != null)
+                    {
+                        @Html.DisplayFor(model => model.OwnerName)
+                    }
+                    else
+                    {
+                        <span>No information was given!</span>
+                    }
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.WorkingTime)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.WorkingTime)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ContactInfo)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ContactInfo)
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="col-md-6 col-12 bg-danger" style="height: 450px; width: 100%" id="map"> </div>
 </div>
 
-<div class="bg-danger" style="height: 450px; width: 100%" id="map"> </div>
 
-@*@section scripts {
-        <script type="text/javascript">
+@section scripts {
+
+    <script type="text/javascript">
+        const likeBtn = document.getElementsByClassName('likeBtn')[0];
+        const icon = document.getElementsByTagName('i')[0];
+
+        icon.classList.add('far');
+        icon.classList.add('text-danger');
+
+        likeBtn.addEventListener('mouseover', function () {
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fa');
+            } else {
+                icon.classList.remove('fa');
+                icon.classList.add('far');
+            }
+        });
+        likeBtn.addEventListener('mouseout', function () {
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fa');
+            } else {
+                icon.classList.remove('fa');
+                icon.classList.add('far');
+            }
+        });
+        likeBtn.addEventListener('click', function () {
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fa');
+            } else {
+                icon.classList.remove('fa');
+                icon.classList.add('far');
+            }
+        });
+    </script>
+
+    @*<script type="text/javascript">
             async function getLatitude(){
                 const address = $('dt:contains("Address")').next().text();
                 const encodedAddress = encodeURI(address);
@@ -108,6 +153,5 @@
                 });
             }
         </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=@this.ViewBag.GoogleMapsApiKey&callback=InitializeMap" async defer></script>
-    }
-*@
+        <script src="https://maps.googleapis.com/maps/api/js?key=@this.ViewBag.GoogleMapsApiKey&callback=InitializeMap" async defer></script>*@
+}
