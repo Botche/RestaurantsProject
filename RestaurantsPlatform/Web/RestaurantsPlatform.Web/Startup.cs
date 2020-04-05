@@ -80,9 +80,10 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender>(options => new SendGridEmailSender(""));
+            services.AddTransient<IEmailSender>(options => new SendGridEmailSender(string.Empty));
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IRestaurantService, RestaurantService>();
+            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

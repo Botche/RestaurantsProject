@@ -41,13 +41,24 @@
             return restaurant.Id;
         }
 
-        public async Task EditRestaurant(string userId, int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description)
+        public async Task<int> DeleteRestaurantById(int id)
+        {
+            var restaurant = this.restaurantRespository.All()
+                .Where(restaurant => restaurant.Id == id)
+                .FirstOrDefault();
+
+            this.restaurantRespository.Delete(restaurant);
+            await this.restaurantRespository.SaveChangesAsync();
+
+            return restaurant.Id;
+        }
+
+        public async Task<int> UpdateRestaurant(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description)
         {
             Restaurant oldEntity = this.restaurantRespository.All()
                 .Where(restaurant => restaurant.Id == id)
                 .FirstOrDefault();
 
-            oldEntity.UserId = userId;
             oldEntity.OwnerName = ownerName;
             oldEntity.RestaurantName = restaurantName;
             oldEntity.WorkingTime = workingTime;
@@ -58,6 +69,8 @@
 
             this.restaurantRespository.Update(oldEntity);
             await this.restaurantRespository.SaveChangesAsync();
+
+            return oldEntity.Id;
         }
 
         public IEnumerable<T> GetByCategoryId<T>(int categoryId, int? take = null, int skip = 0)

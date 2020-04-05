@@ -15,6 +15,8 @@
 
         T GetById<T>(int id);
 
-        Task EditRestaurant(string userId, int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description);
+        Task<int> UpdateRestaurant(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description);
+
+        Task<int> DeleteRestaurantById(int id);
     }
 }

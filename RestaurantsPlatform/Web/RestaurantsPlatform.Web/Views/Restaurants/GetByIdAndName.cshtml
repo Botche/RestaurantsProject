@@ -8,20 +8,29 @@
 <div>
     <h1 class="text-center">
         @Model.RestaurantName
+        <span class="badge badge-pill status">Open</span>
         <a class="likeBtn" href="#"><i class="fa-heart float-right"></i></a>
-        @if (Model.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-        {
-            <span class="float-left">
-                <a class="btn btn-outline-primary" asp-controller="Restaurants" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-                <a class="btn btn-outline-danger" asp-controller="Restaurants" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-            </span>
-        }
+
+        <span class="float-left">
+            <a class="btn btn-outline-secondary" asp-route="category" asp-route-id="@Model.CategoryId" asp-route-name="@Model.CategoryName">
+                <i class="far fa-arrow-alt-circle-left"></i>
+            </a>
+            @if (Model.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                <a class="btn btn-outline-primary" asp-controller="Restaurants" asp-action="Update" asp-route-id="@Model.Id">
+                    Update
+                </a>
+                <a class="btn btn-outline-danger" asp-controller="Restaurants" asp-action="Delete" asp-route-id="@Model.Id">
+                    Delete
+                </a>
+            }
+        </span>
     </h1>
 </div>
 <hr />
-<div class="row">
+<div class="row mb-4">
     <div class="col-md-6 col-12  row">
-        <div class="w-100">
+        <div class="border rounded-left pl-3 pt-4 w-100">
             <dl>
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.RestaurantName)
@@ -64,7 +73,7 @@
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.WorkingTime)
                 </dt>
-                <dd class="col-sm-10">
+                <dd class="col-sm-10 workingTime">
                     @Html.DisplayFor(model => model.WorkingTime)
                 </dd>
                 <dt class="col-sm-2">
@@ -76,8 +85,12 @@
             </dl>
         </div>
     </div>
-    <div class="col-md-6 col-12 bg-danger" style="height: 450px; width: 100%" id="map"> </div>
+    <div class="rounded-right col-md-6 col-12 bg-danger" style="height: 450px; width: 100%" id="map"> </div>
 </div>
+
+<a href="#" id="scrollToTop" class="btn btn-lg btn-secondary button-to-top rounded-circle">
+    <i class="fas fa-arrow-up"></i>
+</a>
 
 
 @section scripts {
@@ -114,6 +127,40 @@
             } else {
                 icon.classList.remove('fa');
                 icon.classList.add('far');
+            }
+        });
+
+        const workingTimes = document.getElementsByClassName('workingTime');
+        var today = new Date();
+
+        Array.from(workingTimes).forEach(element => {
+            const statusElement = document.getElementsByClassName('status')[0];
+
+            statusElement.classList.remove('badge-success');
+            statusElement.classList.remove('badge-danger');
+
+            const times = element.innerText.split(' - ').filter(x => x);
+            const opening = times[0].split(':').map(x => +x);
+            let closing = times[1].split(':').map(x => +x);
+
+            if (opening[0] > closing[0]) {
+                closing[0] += 24;
+            }
+
+            if (today.getHours() > opening[0]
+                && today.getHours() < closing[0]) {
+                statusElement.innerText = 'OPEN';
+                statusElement.classList.add('badge-success');
+            } else if (today.getHours() === opening[0] && today.getMinutes() >= opening[1]) {
+                statusElement.innerText = 'OPEN';
+                statusElement.classList.add('badge-success');
+            } else if (today.getHours() === closing[0] && today.getMinutes() < closing[1]) {
+                statusElement.innerText = 'OPEN';
+                statusElement.classList.add('badge-success');
+            }
+            else {
+                statusElement.innerText = 'CLOSED';
+                statusElement.classList.add('badge-danger');
             }
         });
     </script>

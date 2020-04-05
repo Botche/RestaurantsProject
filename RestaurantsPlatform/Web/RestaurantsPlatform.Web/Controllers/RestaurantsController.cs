@@ -16,17 +16,20 @@
     {
         private readonly IRestaurantService restaurantService;
         private readonly ICategoryService categoryService;
+        private readonly IUserService userService;
         private readonly IConfiguration configuration;
         private readonly UserManager<ApplicationUser> userManager;
 
         public RestaurantsController(
             IRestaurantService restaurantService,
             ICategoryService categoryService,
+            IUserService userService,
             IConfiguration configuration,
             UserManager<ApplicationUser> userManager)
         {
             this.restaurantService = restaurantService;
             this.categoryService = categoryService;
+            this.userService = userService;
             this.configuration = configuration;
             this.userManager = userManager;
         }
@@ -71,12 +74,12 @@
         }
 
         [Authorize]
-        public IActionResult Edit(int id)
+        public IActionResult Update(int id)
         {
-            var restaurant = this.restaurantService.GetById<EditRestaurantViewModel>(id);
+            var restaurant = this.restaurantService.GetById<UpdateRestaurantViewModel>(id);
 
-            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (restaurant.UserId != userId)
+            string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (this.userService.CheckIfCurrentUserIsAuthor(restaurant.UserId, currentUserId))
             {
                 return this.Unauthorized();
             }
@@ -91,28 +94,33 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Edit(EditRestaurantInputModel model)
+        public async Task<IActionResult> Update(UpdateRestaurantInputModel model)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View(model);
             }
 
-            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.restaurantService.EditRestaurant(userId, model.Id, model.OwnerName, model.RestaurantName, model.WorkingTime, model.Address, model.ContactInfo, model.Description);
+            string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (this.userService.CheckIfCurrentUserIsAuthorByGivenId(model.Id, currentUserId))
+            {
+                return this.Unauthorized();
+            }
+
+            int modelId = await this.restaurantService.UpdateRestaurant(model.Id, model.OwnerName, model.RestaurantName, model.WorkingTime, model.Address, model.ContactInfo, model.Description);
 
             return this.RedirectToRoute(
                 "restaurant",
-                new { id = model.Id, name = model.RestaurantName.ToLower().Replace(' ', '-') });
+                new { id = modelId, name = model.RestaurantName.ToLower().Replace(' ', '-') });
         }
 
         [Authorize]
         public IActionResult Delete(int id)
         {
-            var restaurant = this.restaurantService.GetById<EditRestaurantViewModel>(id);
+            var restaurant = this.restaurantService.GetById<DeleteRestaurantViewModel>(id);
 
-            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (restaurant.UserId != userId)
+            string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (this.userService.CheckIfCurrentUserIsAuthor(restaurant.UserId, currentUserId))
             {
                 return this.Unauthorized();
             }
@@ -134,14 +142,16 @@
                 return this.View(model);
             }
 
-            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            if (this.userService.CheckIfCurrentUserIsAuthorByGivenId(model.Id, currentUserId))
+            {
+                return this.Unauthorized();
+            }
 
             await this.restaurantService.DeleteRestaurantById(model.Id);
 
-            return this.RedirectToRoute(
-                "restaurant",
-                new { id = model.Id, name = model.RestaurantName.ToLower().Replace(' ', '-') });
+            return this.RedirectToAction("All", "Categories");
         }
     }
 }
