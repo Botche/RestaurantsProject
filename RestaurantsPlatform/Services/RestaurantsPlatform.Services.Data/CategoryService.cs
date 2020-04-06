@@ -13,13 +13,16 @@
     {
         private readonly IDeletableEntityRepository<Category> categoriesRepository;
         private readonly ICategoryImageService imageService;
+        private readonly IRestaurantService restaurantService;
 
         public CategoryService(
             IDeletableEntityRepository<Category> categoriesRepository,
-            ICategoryImageService imageService)
+            ICategoryImageService imageService,
+            IRestaurantService restaurantService)
         {
             this.categoriesRepository = categoriesRepository;
             this.imageService = imageService;
+            this.restaurantService = restaurantService;
         }
 
         public async Task<int> CreateCategoryAsync(string description, string imageUrl, string name, string title)
@@ -43,6 +46,8 @@
         {
             var categoryToDelete = this.GetCategoryById(id)
                 .FirstOrDefault();
+
+            await this.restaurantService.DeleteAllRestaurantsAppenedToCategoryAsync(categoryToDelete.Id);
 
             this.categoriesRepository.Delete(categoryToDelete);
             await this.categoriesRepository.SaveChangesAsync();

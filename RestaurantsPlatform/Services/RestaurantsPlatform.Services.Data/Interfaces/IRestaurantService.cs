@@ -18,5 +18,7 @@
         Task<int> UpdateRestaurantAsync(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description);
 
         Task<int> DeleteRestaurantByIdAsync(int id);
+
+        Task DeleteAllRestaurantsAppenedToCategoryAsync(int categoryId);
     }
 }

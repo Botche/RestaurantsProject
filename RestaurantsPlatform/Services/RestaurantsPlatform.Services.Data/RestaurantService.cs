@@ -12,11 +12,11 @@
     public class RestaurantService : IRestaurantService
     {
         private readonly IDeletableEntityRepository<Restaurant> restaurantRespository;
-        private readonly ICloudinaryImageService imageService;
+        private readonly IRestaurantImageService imageService;
 
         public RestaurantService(
             IDeletableEntityRepository<Restaurant> restaurantRespository,
-            ICloudinaryImageService imageService)
+            IRestaurantImageService imageService)
         {
             this.restaurantRespository = restaurantRespository;
             this.imageService = imageService;
@@ -51,7 +51,23 @@
             this.restaurantRespository.Delete(restaurant);
             await this.restaurantRespository.SaveChangesAsync();
 
+            await this.imageService.DeleteAllImagesAppenedToRestaurantAsync(restaurant.Id);
+
             return restaurant.Id;
+        }
+
+        public async Task DeleteAllRestaurantsAppenedToCategoryAsync(int categoryId)
+        {
+            var restaurants = this.restaurantRespository.All()
+                .Where(restaurant => restaurant.CategoryId == categoryId)
+                .ToList();
+
+            foreach (var restaurant in restaurants)
+            {
+                await this.DeleteRestaurantByIdAsync(restaurant.Id);
+            }
+
+            await this.restaurantRespository.SaveChangesAsync();
         }
 
         public async Task<int> UpdateRestaurantAsync(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description)

@@ -20,7 +20,7 @@
             this.cloudinaryImageService = cloudinaryImageService;
         }
 
-        public async Task DeleteImageAsync(int imageId)
+        public async Task DeleteImageByIdAsync(int imageId)
         {
             var image = this.GetImageById(imageId)
                 .FirstOrDefault();
@@ -28,6 +28,28 @@
             await this.cloudinaryImageService.DeleteImageAsync(image.PublicId);
 
             this.imageRepository.Delete(image);
+            await this.imageRepository.SaveChangesAsync();
+        }
+
+        public async Task DeleteImageAsync(RestaurantImage image)
+        {
+            await this.cloudinaryImageService.DeleteImageAsync(image.PublicId);
+
+            this.imageRepository.Delete(image);
+            await this.imageRepository.SaveChangesAsync();
+        }
+
+        public async Task DeleteAllImagesAppenedToRestaurantAsync(int restaurantId)
+        {
+            var images = this.imageRepository.All()
+                .Where(image => image.RestaurantId == restaurantId)
+                .ToList();
+
+            foreach (var image in images)
+            {
+                await this.DeleteImageAsync(image);
+            }
+
             await this.imageRepository.SaveChangesAsync();
         }
 
