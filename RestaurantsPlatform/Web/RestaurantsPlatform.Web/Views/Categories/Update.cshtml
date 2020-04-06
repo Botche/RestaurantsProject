@@ -1,15 +1,15 @@
-﻿@model RestaurantsPlatform.Web.ViewModels.Categories.CreateCategoryInputModel
+﻿@model RestaurantsPlatform.Web.ViewModels.Categories.UpdateCategoryViewModel
 
 @{
-    ViewData["Title"] = "Create Category";
+    ViewData["Title"] = "Update " + Model.Name;
 }
 
-<h1 class="text-center">Create Category</h1>
+<h1 class="text-center">Update</h1>
 
 <div class="mx-auto w-50">
     <hr />
     <div>
-        <form asp-controller="Categories" asp-action="Create" method="POST">
+        <form asp-controller="Categories" asp-action="Update" method="POST">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -23,22 +23,19 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" rows="5" class="form-control"></textarea>
+                <textarea asp-for="Description" rows="8" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
-            </div>
             <div class="form-group text-center">
-                <input type="submit" value="Create" class="btn btn-outline-primary" />
-                <a class="btn btn-outline-secondary" asp-controller="Categories" asp-action="All">Back to All</a>
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a class="btn btn-outline-secondary" asp-route="category" asp-route-id="@Model.Id" asp-route-name="@Model.Name">
+                    Back to Details
+                </a>
             </div>
         </form>
     </div>
 </div>
 
-@section scripts {
-    <script type="text/javascript" src="~/js/functions/requiredStar.js"></script>
-}
+<div>
+</div>
+

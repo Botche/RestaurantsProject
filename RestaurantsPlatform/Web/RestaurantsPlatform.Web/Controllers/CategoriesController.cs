@@ -62,9 +62,53 @@
         [HttpPost]
         public async Task<IActionResult> Create(CreateCategoryInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
             int id = await this.categoryService.CreateCategory(input.Description, input.ImageUrl, input.Name, input.Title);
 
             return this.RedirectToAction("GetByIdAndName", new { id = id, name = input.Name });
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult Update(int id)
+        {
+            var category = this.categoryService.GetById<UpdateCategoryViewModel>(id);
+
+            return this.View(category);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> Update(UpdateCategoryInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            int id = await this.categoryService.UpdateCategory(input.Id, input.Description, input.Name, input.Title);
+
+            return this.RedirectToAction("GetByIdAndName", new { id = id, name = input.Name });
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult Delete(int id)
+        {
+            var category = this.categoryService.GetById<DeleteCategoryViewModel>(id);
+
+            return this.View(category);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> Delete(DeleteCategoryInputModel input)
+        {
+            int id = await this.categoryService.DeleteCategory(input.Id);
+
+            return this.RedirectToAction("All");
         }
     }
 }

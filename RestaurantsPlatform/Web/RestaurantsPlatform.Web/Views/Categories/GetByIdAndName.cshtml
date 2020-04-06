@@ -5,11 +5,19 @@
 }
 
 
-<div class="border-info">
-    <h1 class="text-center m-4">@Model.Name</h1>
-    <p class="text-center">
+<div class="border-info text-center">
+    <h1 class="m-4">@Model.Name</h1>
+    <p>
         @Model.Description
     </p>
+</div>
+<div class="text-center">
+    <a class="btn btn-outline-info" asp-controller="Categories" asp-action="Update" asp-route-id="@Model.Id">
+        Update
+    </a>
+    <a class="btn btn-outline-danger" asp-controller="Categories" asp-action="Delete" asp-route-id="@Model.Id">
+        Delete
+    </a>
 </div>
 
 <div class="row d-flex justify-content-around">

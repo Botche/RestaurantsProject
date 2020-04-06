@@ -1,8 +1,7 @@
 ﻿namespace RestaurantsPlatform.Services.Data.Interfaces
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    using System.Threading.Tasks;
+
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
     using Microsoft.Extensions.Configuration;
@@ -18,7 +17,26 @@
             this.cloudinary = this.InitializeCloudinary();
         }
 
-        public string UploadImageToCloudinary(string imageUrl)
+        public async Task DeleteImageAsync(string imageUrl)
+        {
+            var resourcesParams = new ListResourcesParams();
+            var result = await this.cloudinary.ListResourcesAsync(resourcesParams);
+
+            var publicId = string.Empty;
+            foreach (var resource in result.Resources)
+            {
+                var resourcePath = resource.SecureUri.OriginalString;
+                if (resourcePath == imageUrl)
+                {
+                    publicId = resource.PublicId;
+                }
+            }
+
+            var deletionParams = new DeletionParams(publicId);
+            await this.cloudinary.DestroyAsync(deletionParams);
+        }
+
+        public async Task<string> UploadImageToCloudinaryAsync(string imageUrl)
         {
             var uploadParams = new ImageUploadParams()
             {
@@ -27,7 +45,7 @@
                 EagerAsync = true,
                 EagerNotificationUrl = "https://localhost:44319/Categories/All",
             };
-            var uploadResult = this.cloudinary.Upload(uploadParams);
+            var uploadResult = await this.cloudinary.UploadAsync(uploadParams);
 
             return uploadResult.SecureUri.AbsoluteUri;
         }
