@@ -12,7 +12,7 @@
     using RestaurantsPlatform.Web.ViewModels.Categories;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
 
-    public class RestaurantsController : Controller
+    public class RestaurantsController : BaseController
     {
         private readonly IRestaurantService restaurantService;
         private readonly ICategoryService categoryService;
@@ -60,17 +60,17 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Create(CreateRestaurantInputModel model)
+        public async Task<IActionResult> Create(CreateRestaurantInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(model);
+                return this.View(input);
             }
 
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            int restaurantId = await this.restaurantService.CreateRestaurant(userId, model.Address, model.CategoryId, model.ContactInfo, model.Description, model.OwnerName, model.RestaurantName, model.WorkingTime);
+            int restaurantId = await this.restaurantService.CreateRestaurant(userId, input.Address, input.CategoryId, input.ContactInfo, input.Description, input.OwnerName, input.RestaurantName, input.WorkingTime);
 
-            return this.RedirectToAction("GetByIdAndName", new { id = restaurantId, name = model.RestaurantName });
+            return this.RedirectToAction("GetByIdAndName", new { id = restaurantId, name = input.RestaurantName });
         }
 
         [Authorize]
@@ -94,24 +94,24 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateRestaurantInputModel model)
+        public async Task<IActionResult> Update(UpdateRestaurantInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(model);
+                return this.View(input);
             }
 
             string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (this.userService.CheckIfCurrentUserIsAuthorByGivenId(model.Id, currentUserId))
+            if (this.userService.CheckIfCurrentUserIsAuthorByGivenId(input.Id, currentUserId))
             {
                 return this.Unauthorized();
             }
 
-            int modelId = await this.restaurantService.UpdateRestaurant(model.Id, model.OwnerName, model.RestaurantName, model.WorkingTime, model.Address, model.ContactInfo, model.Description);
+            int modelId = await this.restaurantService.UpdateRestaurant(input.Id, input.OwnerName, input.RestaurantName, input.WorkingTime, input.Address, input.ContactInfo, input.Description);
 
             return this.RedirectToRoute(
                 "restaurant",
-                new { id = modelId, name = model.RestaurantName.ToLower().Replace(' ', '-') });
+                new { id = modelId, name = input.RestaurantName.ToLower().Replace(' ', '-') });
         }
 
         [Authorize]
@@ -135,21 +135,21 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Delete(DeleteRestaurantInputModel model)
+        public async Task<IActionResult> Delete(DeleteRestaurantInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(model);
+                return this.View(input);
             }
 
             string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (this.userService.CheckIfCurrentUserIsAuthorByGivenId(model.Id, currentUserId))
+            if (this.userService.CheckIfCurrentUserIsAuthorByGivenId(input.Id, currentUserId))
             {
                 return this.Unauthorized();
             }
 
-            await this.restaurantService.DeleteRestaurantById(model.Id);
+            await this.restaurantService.DeleteRestaurantById(input.Id);
 
             return this.RedirectToAction("All", "Categories");
         }

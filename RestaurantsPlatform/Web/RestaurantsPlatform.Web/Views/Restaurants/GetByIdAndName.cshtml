@@ -7,11 +7,7 @@
 
 <div>
     <h1 class="text-center">
-        @Model.RestaurantName
-        <span class="badge badge-pill status">Open</span>
-        <a class="likeBtn" href="#"><i class="fa-heart float-right"></i></a>
-
-        <span class="float-left">
+        <span class="float-md-left">
             <a class="btn btn-outline-secondary" asp-route="category" asp-route-id="@Model.CategoryId" asp-route-name="@Model.CategoryName">
                 <i class="far fa-arrow-alt-circle-left"></i>
             </a>
@@ -25,11 +21,16 @@
                 </a>
             }
         </span>
+        @Model.RestaurantName
+        <span class="badge badge-pill status">Open</span>
+        <a class="likeBtn" href="#"><i class="heartIcon fa-heart float-right"></i></a>
+
+
     </h1>
 </div>
 <hr />
 <div class="row mb-4">
-    <div class="col-md-6 col-12  row">
+    <div class=" col-12 col-md-6">
         <div class="border rounded-left pl-3 pt-4 w-100">
             <dl>
                 <dt class="col-sm-2">
@@ -94,111 +95,43 @@
 
 
 @section scripts {
-
-    <script type="text/javascript">
-        const likeBtn = document.getElementsByClassName('likeBtn')[0];
-        const icon = document.getElementsByTagName('i')[0];
-
-        icon.classList.add('far');
-        icon.classList.add('text-danger');
-
-        likeBtn.addEventListener('mouseover', function () {
-            if (icon.classList.contains('far')) {
-                icon.classList.remove('far');
-                icon.classList.add('fa');
-            } else {
-                icon.classList.remove('fa');
-                icon.classList.add('far');
-            }
-        });
-        likeBtn.addEventListener('mouseout', function () {
-            if (icon.classList.contains('far')) {
-                icon.classList.remove('far');
-                icon.classList.add('fa');
-            } else {
-                icon.classList.remove('fa');
-                icon.classList.add('far');
-            }
-        });
-        likeBtn.addEventListener('click', function () {
-            if (icon.classList.contains('far')) {
-                icon.classList.remove('far');
-                icon.classList.add('fa');
-            } else {
-                icon.classList.remove('fa');
-                icon.classList.add('far');
-            }
-        });
-
-        const workingTimes = document.getElementsByClassName('workingTime');
-        var today = new Date();
-
-        Array.from(workingTimes).forEach(element => {
-            const statusElement = document.getElementsByClassName('status')[0];
-
-            statusElement.classList.remove('badge-success');
-            statusElement.classList.remove('badge-danger');
-
-            const times = element.innerText.split(' - ').filter(x => x);
-            const opening = times[0].split(':').map(x => +x);
-            let closing = times[1].split(':').map(x => +x);
-
-            if (opening[0] > closing[0]) {
-                closing[0] += 24;
-            }
-
-            if (today.getHours() > opening[0]
-                && today.getHours() < closing[0]) {
-                statusElement.innerText = 'OPEN';
-                statusElement.classList.add('badge-success');
-            } else if (today.getHours() === opening[0] && today.getMinutes() >= opening[1]) {
-                statusElement.innerText = 'OPEN';
-                statusElement.classList.add('badge-success');
-            } else if (today.getHours() === closing[0] && today.getMinutes() < closing[1]) {
-                statusElement.innerText = 'OPEN';
-                statusElement.classList.add('badge-success');
-            }
-            else {
-                statusElement.innerText = 'CLOSED';
-                statusElement.classList.add('badge-danger');
-            }
-        });
-    </script>
+    <script type="text/javascript" src="~/js/functions/determinateRestaurantStatusByWorkingTime.js"></script>
+    <script type="text/javascript" src="~/js/functions/favouriteButtonInRestaurantView.js"></script>
 
     @*<script type="text/javascript">
-            async function getLatitude(){
-                const address = $('dt:contains("Address")').next().text();
-                const encodedAddress = encodeURI(address);
-                const linkToFindLongtitudeAndLatitude = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + encodedAddress + '&key=' + '@this.ViewBag.GoogleMapsApiKey';
+        async function getLatitude() {
+            const address = $('dt:contains("Address")').next().text();
+            const encodedAddress = encodeURI(address);
+            const linkToFindLongtitudeAndLatitude = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + encodedAddress + '&key=' + '@this.ViewBag.GoogleMapsApiKey';
 
-                const result = await fetch(linkToFindLongtitudeAndLatitude)
-                    .then(response => response.json())
+            const result = await fetch(linkToFindLongtitudeAndLatitude)
+                .then(response => response.json())
 
-                var latitute = +result['results'][0]['geometry']['location']['lat'];
-                var longitude = +result['results'][0]['geometry']['location']['lng'];
+            var latitute = +result['results'][0]['geometry']['location']['lat'];
+            var longitude = +result['results'][0]['geometry']['location']['lng'];
 
-                return { latitute, longitude };
-            }
+            return { latitute, longitude };
+        }
 
-            async function InitializeMap() {
-                const result = await getLatitude();
+        async function InitializeMap() {
+            const result = await getLatitude();
 
-                var latlng = new google.maps.LatLng(result.latitute, result.longitude);
+            var latlng = new google.maps.LatLng(result.latitute, result.longitude);
 
-                var myOptions = {
-                    zoom: 18,
-                    center: latlng,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
+            var myOptions = {
+                zoom: 18,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
 
-                var map = new google.maps.Map(document.getElementById("map"), myOptions);
+            var map = new google.maps.Map(document.getElementById("map"), myOptions);
 
-                var marker = new google.maps.Marker({
-                    position: latlng,
-                    map: map,
-                    title: '@Model.RestaurantName'
-                });
-            }
-        </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=@this.ViewBag.GoogleMapsApiKey&callback=InitializeMap" async defer></script>*@
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: '@Model.RestaurantName'
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=@this.ViewBag.GoogleMapsApiKey&callback=InitializeMap" async defer></script>*@
 }

@@ -2,15 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
-
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Web.ViewModels.Categories;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
 
-    [Authorize]
-    public class CategoriesController : Controller
+    public class CategoriesController : BaseController
     {
         private const int RestaurantsPerPage = 6;
 
@@ -51,6 +50,21 @@
             }
 
             return this.View(category);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult Create()
+        {
+            return this.View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateCategoryInputModel input)
+        {
+            int id = await this.categoryService.CreateCategory(input.Description, input.ImageUrl, input.Name, input.Title);
+
+            return this.RedirectToAction("GetByIdAndName", new { id = id, name = input.Name });
         }
     }
 }

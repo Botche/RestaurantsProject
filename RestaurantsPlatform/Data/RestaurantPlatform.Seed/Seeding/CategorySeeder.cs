@@ -59,8 +59,6 @@
             {
                 await dbContext.Categories.AddAsync(new Category
                 {
-                    CreatedOn = DateTime.UtcNow,
-                    IsDeleted = false,
                     Name = category.Name,
                     Description = category.Description,
                     Title = category.Name,

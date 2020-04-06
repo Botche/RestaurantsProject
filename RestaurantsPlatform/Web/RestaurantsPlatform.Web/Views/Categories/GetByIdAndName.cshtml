@@ -31,7 +31,7 @@
                 <p>@restaurant.Address</p>
                 <div>
                     <a asp-route="restaurant" asp-route-id="@restaurant.Id" asp-route-name="@restaurant.ParsedUrlName" class="btn btn-outline-success btn-sm">Details</a>
-                    <a class="likeBtn btn btn-outline-danger btn-sm"><i class="fa-heart fa-w-16"></i></a>
+                    <a class="likeBtn btn btn-outline-danger btn-sm"><i class="heartIcon fa-heart fa-w-16"></i></a>
                 </div>
             </div>
         </div>
@@ -39,67 +39,6 @@
 </div>
 
 @section scripts{
-    <script type="text/javascript">
-        const likesBtn = document.getElementsByClassName('likeBtn');
-
-        Array.from(likesBtn).forEach(likeBtn => {
-
-            const icon = likeBtn.getElementsByTagName('i')[0];
-
-            icon.classList.add('far');
-            icon.classList.add('text-danger');
-
-            likeBtn.addEventListener('mouseover', function () {
-                icon.classList.add('text-white');
-                icon.classList.remove('text-danger');
-            });
-            likeBtn.addEventListener('mouseout', function () {
-                icon.classList.remove('text-white');
-                icon.classList.add('text-danger');
-            });
-            likeBtn.addEventListener('click', function () {
-                if (icon.classList.contains('fa')) {
-                    icon.classList.remove('fa');
-                    icon.classList.add('far');
-                } else {
-                    icon.classList.remove('far');
-                    icon.classList.add('fa');
-                }
-            });
-        });
-
-        const workingTimes = document.getElementsByClassName('workingTime');
-        var today = new Date();
-
-        Array.from(workingTimes).forEach(element => {
-            const statusElement = element.parentNode.parentNode.getElementsByClassName('status')[0];
-
-            statusElement.classList.remove('badge-success');
-            statusElement.classList.remove('badge-danger');
-
-            const times = element.innerText.split(' - ').filter(x => x);
-            const opening = times[0].split(':').map(x => +x);
-            let closing = times[1].split(':').map(x => +x);
-
-            if (opening[0] > closing[0]) {
-                closing[0] += 24;
-            }
-
-            if (today.getHours() > opening[0]
-                && today.getHours() < closing[0]) {
-                statusElement.innerText = 'OPEN';
-                statusElement.classList.add('badge-success');
-            } else if (today.getHours() === opening[0] && today.getMinutes() >= opening[1]) {
-                statusElement.innerText = 'OPEN';
-                statusElement.classList.add('badge-success');
-            } else if (today.getHours() === closing[0] && today.getMinutes() < closing[1]) {
-                statusElement.innerText = 'OPEN';
-                statusElement.classList.add('badge-success');
-            }
-            else {
-                statusElement.innerText = 'CLOSED';
-                statusElement.classList.add('badge-danger');
-            }
-        });
-    </script>
+    <script type="text/javascript" src="~/js/functions/determinateRestaurantStatusByWorkingTime.js"></script>
+    <script type="text/javascript" src="~/js/functions/favouriteButtonInCategoryView.js"></script>
 }

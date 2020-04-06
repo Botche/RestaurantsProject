@@ -9,9 +9,9 @@
 <div class="row d-flex justify-content-around">
     @foreach (var category in Model)
     {
-        <div class="row col-4 media mb-4">
-            <div class="mt-0">
-                <img src="@category.ImageUrl" class="mr-3 rounded-lg" alt="@category.Title"> 
+        <div class="row col-md-6 col-lg-4 media mb-4">
+            <div>
+                <img src="@category.ImageUrl" class="mr-3 rounded-lg w-100" alt="@category.Title"> 
             </div>
             <div class="media-body">
                 <h5 class="mt-2">
