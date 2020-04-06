@@ -1,6 +1,5 @@
 ﻿namespace RestaurantsPlatform.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -13,22 +12,24 @@
     public class RestaurantService : IRestaurantService
     {
         private readonly IDeletableEntityRepository<Restaurant> restaurantRespository;
+        private readonly ICloudinaryImageService imageService;
 
-        public RestaurantService(IDeletableEntityRepository<Restaurant> restaurantRespository)
+        public RestaurantService(
+            IDeletableEntityRepository<Restaurant> restaurantRespository,
+            ICloudinaryImageService imageService)
         {
             this.restaurantRespository = restaurantRespository;
+            this.imageService = imageService;
         }
 
-        public async Task<int> CreateRestaurant(string userId, string address, int categoryId, string contactInfo, string description, string ownerName, string restaurantName, string workingTime)
+        public async Task<int> CreateRestaurantAsync(string userId, string address, int categoryId, string contactInfo, string description, string ownerName, string restaurantName, string workingTime)
         {
             Restaurant restaurant = new Restaurant
             {
                 Address = address,
                 CategoryId = categoryId,
                 ContactInfo = contactInfo,
-                CreatedOn = DateTime.UtcNow,
                 Description = description,
-                IsDeleted = false,
                 OwnerName = ownerName,
                 RestaurantName = restaurantName,
                 UserId = userId,
@@ -41,7 +42,7 @@
             return restaurant.Id;
         }
 
-        public async Task<int> DeleteRestaurantById(int id)
+        public async Task<int> DeleteRestaurantByIdAsync(int id)
         {
             var restaurant = this.restaurantRespository.All()
                 .Where(restaurant => restaurant.Id == id)
@@ -53,10 +54,9 @@
             return restaurant.Id;
         }
 
-        public async Task<int> UpdateRestaurant(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description)
+        public async Task<int> UpdateRestaurantAsync(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description)
         {
-            Restaurant oldEntity = this.restaurantRespository.All()
-                .Where(restaurant => restaurant.Id == id)
+            Restaurant oldEntity = this.GetRestaurantById(id)
                 .FirstOrDefault();
 
             oldEntity.OwnerName = ownerName;
@@ -65,7 +65,6 @@
             oldEntity.Address = address;
             oldEntity.ContactInfo = contactInfo;
             oldEntity.Description = description;
-            oldEntity.ModifiedOn = DateTime.UtcNow;
 
             this.restaurantRespository.Update(oldEntity);
             await this.restaurantRespository.SaveChangesAsync();
@@ -90,8 +89,7 @@
 
         public T GetById<T>(int id)
         {
-            return this.restaurantRespository.All()
-                .Where(restaurant => restaurant.Id == id)
+            return this.GetRestaurantById(id)
                 .To<T>()
                 .FirstOrDefault();
         }
@@ -100,9 +98,8 @@
         {
             string nameWithoutDashes = name.Replace('-', ' ');
 
-            return this.restaurantRespository.All()
-                .Where(restaurant => restaurant.Id == id
-                    && restaurant.RestaurantName.ToLower() == nameWithoutDashes.ToLower())
+            return this.GetRestaurantById(id)
+                .Where(restaurant => restaurant.RestaurantName.ToLower() == nameWithoutDashes.ToLower())
                 .To<T>()
                 .FirstOrDefault();
         }
@@ -110,6 +107,12 @@
         public int GetCountByCategoryId(int id)
         {
             return this.restaurantRespository.All().Count();
+        }
+
+        private IQueryable<Restaurant> GetRestaurantById(int id)
+        {
+            return this.restaurantRespository.All()
+                .Where(resturant => resturant.Id == id);
         }
     }
 }

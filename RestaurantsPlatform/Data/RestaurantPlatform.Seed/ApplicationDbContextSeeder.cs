@@ -28,6 +28,7 @@
             var seeders = new List<ISeeder>
                           {
                               new RolesSeeder(),
+                              new CategoryImagesSeeder(),
                               new CategorySeeder(),
                           };
 

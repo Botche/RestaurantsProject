@@ -9,11 +9,12 @@
 
         T GetByIdAndName<T>(int id, string name);
 
-        Task<int> CreateCategory(string description, string imageUrl, string name, string title);
+        Task<int> CreateCategoryAsync(string description, string imageUrl, string name, string title);
 
         T GetById<T>(int id);
 
-        Task<int> UpdateCategory(int id, string description, string name, string title);
-        Task<int> DeleteCategory(int id);
+        Task<int> UpdateCategoryAsync(int id, string description, string name, string title);
+
+        Task<int> DeleteCategoryAsync(int id);
     }
 }

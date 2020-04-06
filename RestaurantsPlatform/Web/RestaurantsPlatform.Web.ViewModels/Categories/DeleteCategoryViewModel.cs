@@ -1,5 +1,6 @@
 ﻿namespace RestaurantsPlatform.Web.ViewModels.Categories
 {
+    using System.ComponentModel;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
 
@@ -13,6 +14,7 @@
 
         public string Description { get; set; }
 
-        public string ImageUrl { get; set; }
+        [DisplayName("Image Url")]
+        public string ImageImageUrl { get; set; }
     }
 }

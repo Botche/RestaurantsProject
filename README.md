@@ -3,7 +3,8 @@ Project for my graduation at SoftUni.
 
 
 TODO:
-* Add pictures to restaurants
+* Implement gallery
+* Upadate, delete images
 * Table with users (promote/demote)
 * Reviews with comments
 * Account page
@@ -15,3 +16,4 @@ TODO:
 * Update header and footer
 * Elastic search
 * Pagination
+* Notifications

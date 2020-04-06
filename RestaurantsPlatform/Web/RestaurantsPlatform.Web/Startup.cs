@@ -84,7 +84,9 @@
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IRestaurantService, RestaurantService>();
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<ICloudinaryImageService, CloudinaryImageService>();
+            services.AddTransient<IRestaurantImageService, RestaurantImageService>();
+            services.AddTransient<ICategoryImageService, CategoryImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -68,7 +68,7 @@
             }
 
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            int restaurantId = await this.restaurantService.CreateRestaurant(userId, input.Address, input.CategoryId, input.ContactInfo, input.Description, input.OwnerName, input.RestaurantName, input.WorkingTime);
+            int restaurantId = await this.restaurantService.CreateRestaurantAsync(userId, input.Address, input.CategoryId, input.ContactInfo, input.Description, input.OwnerName, input.RestaurantName, input.WorkingTime);
 
             return this.RedirectToAction("GetByIdAndName", new { id = restaurantId, name = input.RestaurantName });
         }
@@ -107,7 +107,7 @@
                 return this.Unauthorized();
             }
 
-            int modelId = await this.restaurantService.UpdateRestaurant(input.Id, input.OwnerName, input.RestaurantName, input.WorkingTime, input.Address, input.ContactInfo, input.Description);
+            int modelId = await this.restaurantService.UpdateRestaurantAsync(input.Id, input.OwnerName, input.RestaurantName, input.WorkingTime, input.Address, input.ContactInfo, input.Description);
 
             return this.RedirectToRoute(
                 "restaurant",
@@ -149,7 +149,7 @@
                 return this.Unauthorized();
             }
 
-            await this.restaurantService.DeleteRestaurantById(input.Id);
+            await this.restaurantService.DeleteRestaurantByIdAsync(input.Id);
 
             return this.RedirectToAction("All", "Categories");
         }

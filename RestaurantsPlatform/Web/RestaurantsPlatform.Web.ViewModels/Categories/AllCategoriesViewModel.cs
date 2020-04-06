@@ -20,7 +20,7 @@
                  ? this.Description?.Substring(0, ShortDescriptionLength) + "..."
                  : this.Description;
 
-        public string ImageUrl { get; set; }
+        public string ImageImageUrl { get; set; }
 
         public int RestaurantsCount { get; set; }
 

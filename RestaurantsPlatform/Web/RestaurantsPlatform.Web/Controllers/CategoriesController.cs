@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantsPlatform.Services.Data.Interfaces;
@@ -67,7 +68,7 @@
                 return this.View(input);
             }
 
-            int id = await this.categoryService.CreateCategory(input.Description, input.ImageUrl, input.Name, input.Title);
+            int id = await this.categoryService.CreateCategoryAsync(input.Description, input.ImageUrl, input.Name, input.Title);
 
             return this.RedirectToAction("GetByIdAndName", new { id = id, name = input.Name });
         }
@@ -89,7 +90,7 @@
                 return this.View(input);
             }
 
-            int id = await this.categoryService.UpdateCategory(input.Id, input.Description, input.Name, input.Title);
+            int id = await this.categoryService.UpdateCategoryAsync(input.Id, input.Description, input.Name, input.Title);
 
             return this.RedirectToAction("GetByIdAndName", new { id = id, name = input.Name });
         }
@@ -106,7 +107,7 @@
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteCategoryInputModel input)
         {
-            int id = await this.categoryService.DeleteCategory(input.Id);
+            int id = await this.categoryService.DeleteCategoryAsync(input.Id);
 
             return this.RedirectToAction("All");
         }

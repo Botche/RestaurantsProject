@@ -13,6 +13,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200404174405_AddUserToRestaurantModel.cs" />
     <Compile Remove="Migrations\20200404174405_AddUserToRestaurantModel.Designer.cs" />
+    <Compile Remove="Migrations\20200406210155_AddEntitiesImages.cs" />
+    <Compile Remove="Migrations\20200406210155_AddEntitiesImages.Designer.cs" />
+    <Compile Remove="Migrations\20200406210307_AddEntitiesImages2.cs" />
+    <Compile Remove="Migrations\20200406210307_AddEntitiesImages2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

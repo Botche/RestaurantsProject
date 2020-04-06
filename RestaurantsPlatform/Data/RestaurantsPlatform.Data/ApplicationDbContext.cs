@@ -27,6 +27,10 @@
 
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<CategoryImage> CategoryImages { get; set; }
+
+        public DbSet<RestaurantImage> RestaurantImages { get; set; }
+
         public DbSet<Restaurant> Restaurants { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);

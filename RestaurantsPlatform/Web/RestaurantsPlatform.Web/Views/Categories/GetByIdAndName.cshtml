@@ -11,22 +11,26 @@
         @Model.Description
     </p>
 </div>
-<div class="text-center">
-    <a class="btn btn-outline-info" asp-controller="Categories" asp-action="Update" asp-route-id="@Model.Id">
-        Update
-    </a>
-    <a class="btn btn-outline-danger" asp-controller="Categories" asp-action="Delete" asp-route-id="@Model.Id">
-        Delete
-    </a>
-</div>
+
+@if (this.User.IsInRole("Admin"))
+{
+    <div class="text-center">
+        <a class="btn btn-outline-info" asp-controller="Categories" asp-action="Update" asp-route-id="@Model.Id">
+            Update
+        </a>
+        <a class="btn btn-outline-danger" asp-controller="Categories" asp-action="Delete" asp-route-id="@Model.Id">
+            Delete
+        </a>
+    </div>
+}
 
 <div class="row d-flex justify-content-around">
     @foreach (var restaurant in Model.Restaurants)
     {
         string imageUrl = "https://res.cloudinary.com/djlskbceh/image/upload/v1585916924/restaurant/NoImage_lq3vxk.png";
-        if (restaurant.Images == null || restaurant.Images.FirstOrDefault() == null)
+        if (restaurant.Images?.FirstOrDefault() != null)
         {
-            imageUrl = "https://res.cloudinary.com/djlskbceh/image/upload/v1585916924/restaurant/NoImage_lq3vxk.png";
+            imageUrl = restaurant.Images.FirstOrDefault().ImageUrl;
         }
 
         <div class="col-6 media mt-5">

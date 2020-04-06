@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantsPlatform.Data;
 
 namespace RestaurantsPlatform.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200406210403_AddEntitiesImages")]
+    partial class AddEntitiesImages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,9 +263,6 @@ namespace RestaurantsPlatform.Data.Migrations
                         .HasColumnType("nvarchar(1024)")
                         .HasMaxLength(1024);
 
-                    b.Property<int>("ImageId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -282,8 +281,6 @@ namespace RestaurantsPlatform.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ImageId");
-
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Categories");
@@ -295,6 +292,9 @@ namespace RestaurantsPlatform.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -317,6 +317,9 @@ namespace RestaurantsPlatform.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId")
+                        .IsUnique();
 
                     b.HasIndex("IsDeleted");
 
@@ -478,11 +481,11 @@ namespace RestaurantsPlatform.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RestaurantsPlatform.Data.Models.Restaurants.Category", b =>
+            modelBuilder.Entity("RestaurantsPlatform.Data.Models.Restaurants.CategoryImage", b =>
                 {
-                    b.HasOne("RestaurantsPlatform.Data.Models.Restaurants.CategoryImage", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId")
+                    b.HasOne("RestaurantsPlatform.Data.Models.Restaurants.Category", "Category")
+                        .WithOne("Image")
+                        .HasForeignKey("RestaurantsPlatform.Data.Models.Restaurants.CategoryImage", "CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

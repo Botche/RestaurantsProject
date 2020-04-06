@@ -12,7 +12,6 @@
     {
         public int Id { get; set; }
 
-        [DisplayName("Restaurant Name")]
         [Required]
         [MaxLength(DescriptionMaxLength)]
         public string RestaurantName { get; set; }
@@ -25,16 +24,13 @@
         [MaxLength(AddressMaxLength)]
         public string Address { get; set; }
 
-        [DisplayName("Owner Name")]
         [MaxLength(OwnerNameMaxLength)]
         public string OwnerName { get; set; }
 
-        [DisplayName("Working Time")]
         [RegularExpression(WorkingTimePattern)]
         [Required]
         public string WorkingTime { get; set; }
 
-        [DisplayName("Contact Info")]
         [Required]
         [MaxLength(ContactInfoMaxLength)]
         public string ContactInfo { get; set; }

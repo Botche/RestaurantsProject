@@ -12,25 +12,25 @@
     public class CategoryService : ICategoryService
     {
         private readonly IDeletableEntityRepository<Category> categoriesRepository;
-        private readonly IImageService imageService;
+        private readonly ICategoryImageService imageService;
 
         public CategoryService(
             IDeletableEntityRepository<Category> categoriesRepository,
-            IImageService imageService)
+            ICategoryImageService imageService)
         {
             this.categoriesRepository = categoriesRepository;
             this.imageService = imageService;
         }
 
-        public async Task<int> CreateCategory(string description, string imageUrl, string name, string title)
+        public async Task<int> CreateCategoryAsync(string description, string imageUrl, string name, string title)
         {
-            string cloudinaryImageUrl = await this.imageService.UploadImageToCloudinaryAsync(imageUrl);
+            int imageId = await this.imageService.AddImageToCategoryAsync(imageUrl, name);
             var category = new Category
             {
                 Description = description,
                 Name = name,
                 Title = title,
-                ImageUrl = cloudinaryImageUrl,
+                ImageId = imageId,
             };
 
             await this.categoriesRepository.AddAsync(category);
@@ -39,16 +39,15 @@
             return category.Id;
         }
 
-        public async Task<int> DeleteCategory(int id)
+        public async Task<int> DeleteCategoryAsync(int id)
         {
-            var categoryToDelete = this.categoriesRepository.All()
-                .Where(category => category.Id == id)
+            var categoryToDelete = this.GetCategoryById(id)
                 .FirstOrDefault();
-
-            await this.imageService.DeleteImageAsync(categoryToDelete.ImageUrl);
 
             this.categoriesRepository.Delete(categoryToDelete);
             await this.categoriesRepository.SaveChangesAsync();
+
+            await this.imageService.DeleteImageAsync(categoryToDelete.ImageId);
 
             return categoryToDelete.Id;
         }
@@ -68,9 +67,7 @@
 
         public T GetById<T>(int id)
         {
-            return this.categoriesRepository
-                .All()
-                .Where(category => category.Id == id)
+            return this.GetCategoryById(id)
                 .To<T>()
                 .FirstOrDefault();
         }
@@ -79,18 +76,15 @@
         {
             string nameWithoutDashes = name.Replace('-', ' ');
 
-            return this.categoriesRepository
-                .All()
-                .Where(category => category.Id == id
-                    && category.Name.ToLower() == nameWithoutDashes.ToLower())
+            return this.GetCategoryById(id)
+                .Where(category => category.Name.ToLower() == nameWithoutDashes.ToLower())
                 .To<T>()
                 .FirstOrDefault();
         }
 
-        public async Task<int> UpdateCategory(int id, string description, string name, string title)
+        public async Task<int> UpdateCategoryAsync(int id, string description, string name, string title)
         {
-            var oldEntity = this.categoriesRepository.All()
-                .Where(category => category.Id == id)
+            var oldEntity = this.GetCategoryById(id)
                 .FirstOrDefault();
 
             oldEntity.Description = description;
@@ -101,6 +95,13 @@
             await this.categoriesRepository.SaveChangesAsync();
 
             return id;
+        }
+
+        private IQueryable<Category> GetCategoryById(int id)
+        {
+            return this.categoriesRepository
+                .All()
+                .Where(resturant => resturant.Id == id);
         }
     }
 }

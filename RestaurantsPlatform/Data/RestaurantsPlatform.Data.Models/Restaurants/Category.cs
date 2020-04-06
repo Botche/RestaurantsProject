@@ -27,7 +27,9 @@
         public string Description { get; set; }
 
         [Required]
-        public string ImageUrl { get; set; }
+        public int ImageId { get; set; }
+
+        public CategoryImage Image { get; set; }
 
         public virtual IEnumerable<Restaurant> Restaurants { get; set; }
     }

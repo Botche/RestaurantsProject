@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     using RestaurantsPlatform.Data.Common.Models;
 
@@ -10,6 +9,11 @@
 
     public class Restaurant : IDeletableEntity<int>
     {
+        public Restaurant()
+        {
+            this.Images = new HashSet<RestaurantImage>();
+        }
+
         [Required]
         [MaxLength(DescriptionMaxLength)]
         public string RestaurantName { get; set; }
@@ -43,7 +47,6 @@
 
         public virtual ApplicationUser User { get; set; }
 
-        [NotMapped]
-        public virtual IEnumerable<string> Images { get; set; }
+        public virtual ICollection<RestaurantImage> Images { get; set; }
     }
 }

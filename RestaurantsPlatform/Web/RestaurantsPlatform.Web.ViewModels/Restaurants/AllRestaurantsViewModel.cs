@@ -4,6 +4,7 @@
 
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
+    using RestaurantsPlatform.Web.ViewModels.Images;
 
     public class AllRestaurantsViewModel : IMapFrom<Restaurant>
     {
@@ -17,7 +18,7 @@
 
         public string WorkingTime { get; set; }
 
-        public virtual IEnumerable<string> Images { get; set; }
+        public virtual IEnumerable<DetailsRestaurantImageViewModel> Images { get; set; }
 
         public string ParsedUrlName => this.RestaurantName.Replace(' ', '-').ToLower();
     }

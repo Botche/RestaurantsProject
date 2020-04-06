@@ -1,7 +1,11 @@
 ﻿namespace RestaurantsPlatform.Web.ViewModels.Restaurants
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
+    using RestaurantsPlatform.Web.ViewModels.Images;
 
     public class DetailsRestaurantViewModel : IMapFrom<Restaurant>
     {
@@ -24,5 +28,11 @@
         public int CategoryId { get; set; }
 
         public string CategoryName { get; set; }
+
+        [Required]
+        [Url]
+        public string ImageUrl { get; set; }
+
+        public IEnumerable<DetailsRestaurantImageViewModel> Images { get; set; }
     }
 }

@@ -30,8 +30,8 @@
 </div>
 <hr />
 <div class="row mb-4">
-    <div class=" col-12 col-md-6">
-        <div class="border rounded-left pl-3 pt-4 w-100">
+    <div class="col-12 col-md-6">
+        <div class="border rounded-lg pl-3 pt-4 h-100">
             <dl>
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.RestaurantName)
@@ -86,52 +86,93 @@
             </dl>
         </div>
     </div>
-    <div class="rounded-right col-md-6 col-12 bg-danger" style="height: 450px; width: 100%" id="map"> </div>
+    <div class="rounded-lg col-12 col-md-6 bg-secondary" style="height: 520px;" id="map"> </div>
 </div>
 
-<a href="#" id="scrollToTop" class="btn btn-lg btn-secondary button-to-top rounded-circle">
-    <i class="fas fa-arrow-up"></i>
-</a>
+<div class="d-flex justify-content-around flex-wrap">
+    @if (Model.Images.Count() != 0)
+    {
+        @foreach (var image in Model.Images.Take(3))
+        {
+            <div class="mb-3">
+                <img class="img-fluid display-image img-thumbnail" src="@image.ImageUrl" alt="Card image cap">
+            </div>
+        }
+    }
+</div>
 
-
-@section scripts {
-    <script type="text/javascript" src="~/js/functions/determinateRestaurantStatusByWorkingTime.js"></script>
-    <script type="text/javascript" src="~/js/functions/favouriteButtonInRestaurantView.js"></script>
-
-    @*<script type="text/javascript">
-        async function getLatitude() {
-            const address = $('dt:contains("Address")').next().text();
-            const encodedAddress = encodeURI(address);
-            const linkToFindLongtitudeAndLatitude = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + encodedAddress + '&key=' + '@this.ViewBag.GoogleMapsApiKey';
-
-            const result = await fetch(linkToFindLongtitudeAndLatitude)
-                .then(response => response.json())
-
-            var latitute = +result['results'][0]['geometry']['location']['lat'];
-            var longitude = +result['results'][0]['geometry']['location']['lng'];
-
-            return { latitute, longitude };
+<div class="text-center">
+    @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.UserId)
+    {
+        <form method="POST" asp-controller="ImageRestaurant" asp-action="AddImageToRestaurant">
+            <div class="form-group">
+                <input asp-for="Id" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <input asp-for="RestaurantName" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-outline-success" value="Add picture to gallery" type="submit" />
+            </div>
+        </form>
         }
 
-        async function InitializeMap() {
-            const result = await getLatitude();
-
-            var latlng = new google.maps.LatLng(result.latitute, result.longitude);
-
-            var myOptions = {
-                zoom: 18,
-                center: latlng,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-
-            var map = new google.maps.Map(document.getElementById("map"), myOptions);
-
-            var marker = new google.maps.Marker({
-                position: latlng,
-                map: map,
-                title: '@Model.RestaurantName'
-            });
+        @if (Model.Images.Count() != 0)
+        {
+            <a class="btn btn-outline-info" asp-controller="Restaurants" asp-action="AddPictureToRestaurant" asp-route-id="@Model.Id">
+                Show gallery
+            </a>
         }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=@this.ViewBag.GoogleMapsApiKey&callback=InitializeMap" async defer></script>*@
-}
+    </div>
+
+    <a href="#" id="scrollToTop" class="btn btn-lg btn-secondary button-to-top rounded-circle">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+
+    @section scripts {
+        <script type="text/javascript" src="~/js/functions/determinateRestaurantStatusByWorkingTime.js"></script>
+        <script type="text/javascript" src="~/js/functions/favouriteButtonInRestaurantView.js"></script>
+
+        @*<script type="text/javascript">
+                async function getLatitude() {
+                    const address = $('dt:contains("Address")').next().text();
+                    const encodedAddress = encodeURI(address);
+                    const linkToFindLongtitudeAndLatitude = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + encodedAddress + '&key=' + '@this.ViewBag.GoogleMapsApiKey';
+
+                    const result = await fetch(linkToFindLongtitudeAndLatitude)
+                        .then(response => response.json())
+
+                    var latitute = +result['results'][0]['geometry']['location']['lat'];
+                    var longitude = +result['results'][0]['geometry']['location']['lng'];
+
+                    return { latitute, longitude };
+                }
+
+                async function InitializeMap() {
+                    const result = await getLatitude();
+
+                    var latlng = new google.maps.LatLng(result.latitute, result.longitude);
+
+                    var myOptions = {
+                        zoom: 18,
+                        center: latlng,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+
+                    var map = new google.maps.Map(document.getElementById("map"), myOptions);
+
+                    var marker = new google.maps.Marker({
+                        position: latlng,
+                        map: map,
+                        title: '@Model.RestaurantName'
+                    });
+                }
+            </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=@this.ViewBag.GoogleMapsApiKey&callback=InitializeMap" async defer></script>*@
+    }

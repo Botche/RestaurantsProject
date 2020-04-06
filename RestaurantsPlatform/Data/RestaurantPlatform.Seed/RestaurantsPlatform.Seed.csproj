@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Services\RestaurantsPlatform.Services.Data\RestaurantsPlatform.Services.Data.csproj" />
     <ProjectReference Include="..\RestaurantsPlatform.Data\RestaurantsPlatform.Data.csproj" />
   </ItemGroup>
 

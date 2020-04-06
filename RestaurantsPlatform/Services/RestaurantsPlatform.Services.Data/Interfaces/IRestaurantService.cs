@@ -9,14 +9,14 @@
 
         int GetCountByCategoryId(int id);
 
-        Task<int> CreateRestaurant(string userId, string address, int categoryId, string contactInfo, string description, string ownerName, string restaurantName, string workingTime);
+        Task<int> CreateRestaurantAsync(string userId, string address, int categoryId, string contactInfo, string description, string ownerName, string restaurantName, string workingTime);
 
         T GetByIdAndName<T>(int id, string name);
 
         T GetById<T>(int id);
 
-        Task<int> UpdateRestaurant(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description);
+        Task<int> UpdateRestaurantAsync(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description);
 
-        Task<int> DeleteRestaurantById(int id);
+        Task<int> DeleteRestaurantByIdAsync(int id);
     }
 }
