@@ -1,5 +1,6 @@
 ﻿namespace RestaurantsPlatform.Web.ViewModels.Categories
 {
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
     using static RestaurantsPlatform.Data.Common.Constants.Models.Category;
@@ -18,6 +19,7 @@
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; }
 
+        [DisplayName("Image URL")]
         [Required]
         [Url]
         public string ImageUrl { get; set; }

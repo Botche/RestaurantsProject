@@ -14,7 +14,7 @@
 
         public string Description { get; set; }
 
-        [DisplayName("Image Url")]
+        [DisplayName("Image URL")]
         public string ImageImageUrl { get; set; }
     }
 }
