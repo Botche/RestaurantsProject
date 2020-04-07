@@ -5,7 +5,6 @@ Project for my graduation at SoftUni.
 TODO:
 * Implement gallery
 * Upadate, delete images
-* Table with users (promote/demote)
 * Reviews with comments
 * Account page
 * Favourites restaurants

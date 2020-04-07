@@ -10,6 +10,8 @@
     using RestaurantsPlatform.Web.ViewModels.Categories;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
 
+    using static RestaurantsPlatform.Common.GlobalConstants;
+
     public class CategoriesController : BaseController
     {
         private const int RestaurantsPerPage = 6;
@@ -53,13 +55,13 @@
             return this.View(category);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = AdministratorRoleName)]
         public IActionResult Create()
         {
             return this.View();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = AdministratorRoleName)]
         [HttpPost]
         public async Task<IActionResult> Create(CreateCategoryInputModel input)
         {
@@ -73,7 +75,7 @@
             return this.RedirectToAction("GetByIdAndName", new { id = id, name = input.Name });
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = AdministratorRoleName)]
         public IActionResult Update(int id)
         {
             var category = this.categoryService.GetById<UpdateCategoryViewModel>(id);
@@ -81,7 +83,7 @@
             return this.View(category);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = AdministratorRoleName)]
         [HttpPost]
         public async Task<IActionResult> Update(UpdateCategoryInputModel input)
         {
@@ -95,7 +97,7 @@
             return this.RedirectToAction("GetByIdAndName", new { id = id, name = input.Name });
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = AdministratorRoleName)]
         public IActionResult Delete(int id)
         {
             var category = this.categoryService.GetById<DeleteCategoryViewModel>(id);
@@ -103,7 +105,7 @@
             return this.View(category);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = AdministratorRoleName)]
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteCategoryInputModel input)
         {

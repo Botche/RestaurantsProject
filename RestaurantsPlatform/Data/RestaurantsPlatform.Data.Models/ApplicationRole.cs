@@ -2,6 +2,7 @@
 namespace RestaurantsPlatform.Data.Models
 {
     using System;
+    using System.Collections.Generic;
 
     using Microsoft.AspNetCore.Identity;
 
@@ -12,6 +13,7 @@ namespace RestaurantsPlatform.Data.Models
         public ApplicationRole()
             : this(null)
         {
+            this.UserRoles = new HashSet<ApplicationUserRole>();
         }
 
         public ApplicationRole(string name)
@@ -27,5 +29,7 @@ namespace RestaurantsPlatform.Data.Models
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
     }
 }

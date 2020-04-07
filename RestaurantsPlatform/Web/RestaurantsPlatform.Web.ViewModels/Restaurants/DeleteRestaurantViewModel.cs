@@ -1,6 +1,7 @@
 ﻿namespace RestaurantsPlatform.Web.ViewModels.Restaurants
 {
     using System.ComponentModel;
+
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
 

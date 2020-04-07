@@ -8,6 +8,9 @@
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
 
+    using static RestaurantsPlatform.Common.GlobalConstants;
+
+    [Authorize(Roles = AdministratorOrRestaurantOwner)]
     public class ImageRestaurantController : BaseController
     {
         private readonly IRestaurantImageService imageService;
@@ -21,7 +24,6 @@
             this.userService = userService;
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddImageToRestaurant(AddPictureToRestaurantInputModel input)
         {

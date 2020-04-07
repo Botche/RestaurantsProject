@@ -1,4 +1,5 @@
-﻿@model RestaurantsPlatform.Web.ViewModels.Categories.DetailsCategoryViewModel
+﻿@using static RestaurantsPlatform.Common.GlobalConstants
+@model RestaurantsPlatform.Web.ViewModels.Categories.DetailsCategoryViewModel
 
 @{
     ViewData["Title"] = Model.Name;
@@ -12,7 +13,7 @@
     </p>
 </div>
 
-@if (this.User.IsInRole("Admin"))
+@if (this.User.IsInRole(AdministratorRoleName))
 {
     <div class="text-center">
         <a class="btn btn-outline-info" asp-controller="Categories" asp-action="Update" asp-route-id="@Model.Id">

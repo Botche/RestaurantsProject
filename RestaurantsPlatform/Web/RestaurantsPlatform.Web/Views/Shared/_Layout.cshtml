@@ -1,4 +1,6 @@
 ﻿@using RestaurantsPlatform.Common
+@using static RestaurantsPlatform.Common.GlobalConstants 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,21 +37,26 @@
                             </a>
                         </li>
 
-                        @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Admin"))
+                        @if (this.User.IsInRole(AdministratorRoleName) || this.User.IsInRole(RestaurantRoleName))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Restaurants" asp-action="Create">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Restaurants" asp-action="Create">
                                     Register your restaurant
                                 </a>
                             </li>
                         }
-                        @if (this.User.IsInRole("Admin"))
+                        @if (this.User.IsInRole(AdministratorRoleName))
                         {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Categories" asp-action="Create">
-                                Create new category
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Create">
+                                    Create new category
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Users">
+                                    Users
+                                </a>
+                            </li>
                         }
                     </ul>
                 </div>

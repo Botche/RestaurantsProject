@@ -12,6 +12,8 @@
     using RestaurantsPlatform.Web.ViewModels.Categories;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
 
+    using static RestaurantsPlatform.Common.GlobalConstants;
+
     public class RestaurantsController : BaseController
     {
         private readonly IRestaurantService restaurantService;
@@ -48,7 +50,7 @@
             return this.View(restaurant);
         }
 
-        [Authorize]
+        [Authorize(Roles = AdministratorOrRestaurantOwner)]
         public IActionResult Create()
         {
             var categories = this.categoryService.GetAllCategories<AllCategoriesToCreateRestaurantViewModel>();
@@ -58,7 +60,7 @@
             return this.View();
         }
 
-        [Authorize]
+        [Authorize(Roles = AdministratorOrRestaurantOwner)]
         [HttpPost]
         public async Task<IActionResult> Create(CreateRestaurantInputModel input)
         {
@@ -73,7 +75,7 @@
             return this.RedirectToAction("GetByIdAndName", new { id = restaurantId, name = input.RestaurantName });
         }
 
-        [Authorize]
+        [Authorize(Roles = AdministratorOrRestaurantOwner)]
         public IActionResult Update(int id)
         {
             var restaurant = this.restaurantService.GetById<UpdateRestaurantViewModel>(id);
@@ -92,7 +94,7 @@
             return this.View(restaurant);
         }
 
-        [Authorize]
+        [Authorize(Roles = AdministratorOrRestaurantOwner)]
         [HttpPost]
         public async Task<IActionResult> Update(UpdateRestaurantInputModel input)
         {
@@ -114,7 +116,7 @@
                 new { id = modelId, name = input.RestaurantName.ToLower().Replace(' ', '-') });
         }
 
-        [Authorize]
+        [Authorize(Roles = AdministratorOrRestaurantOwner)]
         public IActionResult Delete(int id)
         {
             var restaurant = this.restaurantService.GetById<DeleteRestaurantViewModel>(id);
@@ -133,7 +135,7 @@
             return this.View(restaurant);
         }
 
-        [Authorize]
+        [Authorize(Roles = AdministratorOrRestaurantOwner)]
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteRestaurantInputModel input)
         {

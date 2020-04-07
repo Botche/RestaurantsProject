@@ -18,6 +18,8 @@
     using Microsoft.Extensions.Logging;
     using RestaurantsPlatform.Data.Models;
 
+    using static RestaurantsPlatform.Common.GlobalConstants;
+
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
@@ -62,7 +64,7 @@
                 if (result.Succeeded)
                 {
                     this.logger.LogInformation("User created a new account with password.");
-                    await this.userManager.AddToRoleAsync(user, "User");
+                    await this.userManager.AddToRoleAsync(user, UserRoleName);
 
                     var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
