@@ -1,0 +1,22 @@
+﻿@model RestaurantsPlatform.Web.ViewModels.Images.AllImagesFromRestaurantViewModel
+
+@{
+    ViewData["Title"] = "Gallery";
+}
+
+<h1 class="text-center">
+    <span class="float-md-left">
+        <a class="btn btn-outline-secondary" asp-route="restaurant" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantName">
+            <i class="far fa-arrow-alt-circle-left"></i>
+        </a>
+    </span>
+    Gallery
+</h1>
+
+
+<div class="d-flex flex-wrap justify-content-between">
+    @foreach (var item in Model.Images)
+    {
+        <img class="mb-4 rounded-lg" src="@item.ImageUrl" alt="Image" />
+    }
+</div>

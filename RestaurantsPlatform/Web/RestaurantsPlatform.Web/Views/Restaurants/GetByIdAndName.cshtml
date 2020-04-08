@@ -125,7 +125,7 @@
 
     @if (Model.Images.Count() != 0)
     {
-        <a class="btn btn-outline-info" asp-controller="Restaurants" asp-action="AddPictureToRestaurant" asp-route-id="@Model.Id">
+        <a class="btn btn-outline-info" asp-controller="RestaurantImages" asp-action="Gallery" asp-route-id="@Model.Id">
             Show gallery
         </a>
     }

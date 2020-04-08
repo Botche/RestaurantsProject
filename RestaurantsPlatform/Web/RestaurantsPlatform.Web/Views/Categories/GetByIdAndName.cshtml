@@ -7,7 +7,14 @@
 
 
 <div class="border-info text-center">
-    <h1 class="m-4">@Model.Name</h1>
+    <h1 class="m-4">
+        <span class="float-md-left">
+            <a class="btn btn-outline-secondary" asp-controller="Categories" asp-action="All">
+                <i class="far fa-arrow-alt-circle-left"></i>
+            </a>
+        </span>
+        @Model.Name
+    </h1>
     <p>
         @Model.Description
     </p>
