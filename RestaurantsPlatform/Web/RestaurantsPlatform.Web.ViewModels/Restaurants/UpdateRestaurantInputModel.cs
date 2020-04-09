@@ -34,5 +34,8 @@
         [Required]
         [MaxLength(ContactInfoMaxLength)]
         public string ContactInfo { get; set; }
+
+        [Required]
+        public int CategoryId { get; set; }
     }
 }

@@ -15,11 +15,12 @@
 
         T GetById<T>(int id);
 
-        Task<int> UpdateRestaurantAsync(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description);
+        Task<int> UpdateRestaurantAsync(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description, int categoryId);
 
         Task<int> DeleteRestaurantByIdAsync(int id);
 
         Task DeleteAllRestaurantsAppenedToCategoryAsync(int categoryId);
+
         Task DeleteImageByRestaurantIdAsync(int id, string imageUrl);
     }
 }

@@ -91,6 +91,10 @@
                 return this.NotFound();
             }
 
+            var categories = this.categoryService.GetAllCategories<AllCategoriesToCreateRestaurantViewModel>();
+
+            this.ViewBag.Categories = categories;
+
             return this.View(restaurant);
         }
 
@@ -109,7 +113,7 @@
                 return this.Unauthorized();
             }
 
-            int modelId = await this.restaurantService.UpdateRestaurantAsync(input.Id, input.OwnerName, input.RestaurantName, input.WorkingTime, input.Address, input.ContactInfo, input.Description);
+            int modelId = await this.restaurantService.UpdateRestaurantAsync(input.Id, input.OwnerName, input.RestaurantName, input.WorkingTime, input.Address, input.ContactInfo, input.Description, input.CategoryId);
 
             return this.RedirectToRoute(
                 "restaurant",

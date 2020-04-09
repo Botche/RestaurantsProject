@@ -39,6 +39,10 @@
         [MaxLength(ContactInfoMaxLength)]
         public string ContactInfo { get; set; }
 
+        [DisplayName("Category")]
+        [Required]
+        public int CategoryId { get; set; }
+
         public string UserId { get; set; }
 
         public string Url => this.RestaurantName.Replace(' ', '-').ToLower();

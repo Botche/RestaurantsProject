@@ -70,7 +70,7 @@
             await this.restaurantRespository.SaveChangesAsync();
         }
 
-        public async Task<int> UpdateRestaurantAsync(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description)
+        public async Task<int> UpdateRestaurantAsync(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description, int categoryId)
         {
             Restaurant oldEntity = this.GetRestaurantById(id)
                 .FirstOrDefault();
@@ -81,6 +81,7 @@
             oldEntity.Address = address;
             oldEntity.ContactInfo = contactInfo;
             oldEntity.Description = description;
+            oldEntity.CategoryId = categoryId;
 
             this.restaurantRespository.Update(oldEntity);
             await this.restaurantRespository.SaveChangesAsync();
