@@ -135,16 +135,35 @@
                 endpoints =>
                 {
                     endpoints.MapControllerRoute(
+                        name: "restaurantImages",
+                        pattern: "r/{id:int}/{name:minlength(3)}/{action}/images",
+                        new { controller = "RestaurantImages" });
+                    endpoints.MapControllerRoute(
                         name: "restaurant",
                         pattern: "r/{id:int}/{name:minlength(3)}",
                         new { controller = "Restaurants", action = "GetByIdAndName" });
+                    endpoints.MapControllerRoute(
+                        name: "restaurantWithAction",
+                        pattern: "r/{id:int}/{name:minlength(3)}/{action}",
+                        new { controller = "Restaurants" });
+
+                    endpoints.MapControllerRoute(
+                        name: "categoryImage",
+                        pattern: "c/{id:int}/{name:minlength(3)}/{action}/image",
+                        new { controller = "CategoryImages" });
                     endpoints.MapControllerRoute(
                         name: "category",
                         pattern: "c/{id:int}/{name:minlength(3)}",
                         new { controller = "Categories", action = "GetByIdAndName" });
                     endpoints.MapControllerRoute(
+                        name: "categoryWithAction",
+                        pattern: "c/{id:int}/{name:minlength(3)}/{action}",
+                        new { controller = "Categories" });
+
+                    endpoints.MapControllerRoute(
                         name: "areaRoute",
                         pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                     endpoints.MapControllerRoute(
                         name: "default",
                         pattern: "{controller=Home}/{action=Index}/{id?}");

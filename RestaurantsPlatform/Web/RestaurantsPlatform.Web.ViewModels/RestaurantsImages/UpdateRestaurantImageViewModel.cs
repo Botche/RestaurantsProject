@@ -15,5 +15,7 @@
         public string RestaurantName { get; set; }
 
         public string ImageUrl { get; set; }
+
+        public string Url => this.RestaurantName.Replace(' ', '-').ToLower();
     }
 }

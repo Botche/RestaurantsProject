@@ -33,7 +33,9 @@
         [Url]
         public string ImageUrl { get; set; }
 
-        public string Url => this.CategoryName.Replace(' ', '-').ToLower();
+        public string CategoryUrl => this.CategoryName.Replace(' ', '-').ToLower();
+
+        public string RestaurantUrl => this.RestaurantName.Replace(' ', '-').ToLower();
 
         public IEnumerable<DetailsRestaurantImageViewModel> Images { get; set; }
     }

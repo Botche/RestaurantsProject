@@ -7,7 +7,7 @@
 
 <h1 class="text-center m-4">
     <span class="float-md-left">
-        <a class="btn btn-outline-secondary" asp-route="restaurant" asp-route-id="@Model.Id" asp-route-name="@Model.Url">
+        <a class="btn btn-outline-secondary" href="/r/@Model.Id/@Model.Url">
             <i class="far fa-arrow-alt-circle-left"></i>
         </a>
     </span>
@@ -23,10 +23,10 @@
             @if (Model.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
                 <div class="text-center position-absolute pictureBtn">
-                    <a class="btn btn-info rounded-pill " asp-controller="RestaurantImages" asp-action="Update" asp-route-id="@Model.Id" asp-route-imageUrl="@item.ImageUrl">
+                    <a class="btn btn-info rounded-pill " asp-route="restaurantImages" asp-route-id="@Model.Id" asp-route-name="@Model.Url" asp-route-action="update" asp-route-imageUrl="@item.ImageUrl">
                         Update
                     </a>
-                    <a class="btn btn-danger rounded-pill" asp-controller="RestaurantImages" asp-action="Delete" asp-route-id="@Model.Id" asp-route-imageUrl="@item.ImageUrl">
+                    <a class="btn btn-danger rounded-pill" asp-route="restaurantImages" asp-route-id="@Model.Id" asp-route-name="@Model.Url" asp-route-action="delete" asp-route-imageUrl="@item.ImageUrl">
                         Delete
                     </a>
                 </div>

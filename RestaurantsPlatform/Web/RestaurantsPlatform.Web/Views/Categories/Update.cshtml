@@ -9,7 +9,7 @@
 <div class="mx-auto w-50">
     <hr />
     <div>
-        <form asp-controller="Categories" asp-action="Update" method="POST">
+        <form asp-route="default" asp-route-controller="categories" asp-route-action="update" method="POST">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>

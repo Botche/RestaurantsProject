@@ -9,7 +9,7 @@
 <div class="border-info text-center">
     <h1 class="m-4">
         <span class="float-md-left">
-            <a class="btn btn-outline-secondary" asp-controller="Categories" asp-action="All">
+            <a class="btn btn-outline-secondary" asp-route="default" asp-route-controller="categories" asp-route-action="all">
                 <i class="far fa-arrow-alt-circle-left"></i>
             </a>
         </span>
@@ -23,10 +23,10 @@
 @if (this.User.IsInRole(AdministratorRoleName))
 {
     <div class="text-center">
-        <a class="btn btn-outline-info" asp-controller="Categories" asp-action="Update" asp-route-id="@Model.Id">
+        <a class="btn btn-outline-info" asp-route="categoryWithAction" asp-route-name="@Model.Url" asp-route-id="@Model.Id" asp-route-action="update">
             Update
         </a>
-        <a class="btn btn-outline-danger" asp-controller="Categories" asp-action="Delete" asp-route-id="@Model.Id">
+        <a class="btn btn-outline-danger" asp-route="categoryWithAction" asp-route-name="@Model.Url" asp-route-id="@Model.Id" asp-route-action="delete">
             Delete
         </a>
     </div>

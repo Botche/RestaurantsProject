@@ -15,7 +15,7 @@
                 <img src="@category.ImageImageUrl" class="mr-3 rounded-lg w-100" alt="@category.Title">
                 @if (this.User.IsInRole(AdministratorRoleName))
                 {
-                    <a class="btn btn-primary position-absolute rounded-pill pictureBtn" asp-controller="CategoryImages" asp-action="Update" asp-route-id="@category.Id" asp-route-imageUrl="@category.ImageImageUrl">
+                    <a class="btn btn-primary position-absolute rounded-pill pictureBtn" asp-route="categoryImage" asp-route-id="@category.Id" asp-route-name="@category.UrlName" asp-route-action="update" asp-route-imageUrl="@category.ImageImageUrl">
                         Change Picture
                     </a>
                 }

@@ -2,21 +2,21 @@
 @model RestaurantsPlatform.Web.ViewModels.Restaurants.DetailsRestaurantViewModel
 
 @{
-    ViewData["Title"] = "GetById";
+    ViewData["Title"] = Model.RestaurantName;
 }
 
 <div>
     <h1 class="text-center m-4">
         <span class="float-md-left">
-            <a class="btn btn-outline-secondary" asp-route="category" asp-route-id="@Model.CategoryId" asp-route-name="@Model.Url">
+            <a class="btn btn-outline-secondary" asp-route="category" asp-route-id="@Model.CategoryId" asp-route-name="@Model.CategoryUrl">
                 <i class="far fa-arrow-alt-circle-left"></i>
             </a>
             @if (Model.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
-                <a class="btn btn-outline-primary" asp-controller="Restaurants" asp-action="Update" asp-route-id="@Model.Id">
+                <a class="btn btn-outline-primary" asp-route="restaurantWithAction" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl" asp-route-action="update">
                     Update
                 </a>
-                <a class="btn btn-outline-danger" asp-controller="Restaurants" asp-action="Delete" asp-route-id="@Model.Id">
+                <a class="btn btn-outline-danger" asp-route="restaurantWithAction" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl" asp-route-action="delete">
                     Delete
                 </a>
             }
@@ -33,15 +33,9 @@
     <div class="col-12 col-md-6">
         <div class="border rounded-lg pl-3 pt-4 h-100">
             <dl>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.RestaurantName)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.RestaurantName)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Description)
-                </dt>
+                <dt class="col-sm-2">@Html.DisplayNameFor(model => model.RestaurantName)</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.RestaurantName)</dd>
+                <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Description)</dt>
                 <dd class="col-sm-10">
                     @if (Model.Description != null)
                     {
@@ -52,15 +46,9 @@
                         <span>No information was given!</span>
                     }
                 </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Address)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Address)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.OwnerName)
-                </dt>
+                <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Address)</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.Address)</dd>
+                <dt class="col-sm-2">@Html.DisplayNameFor(model => model.OwnerName)</dt>
                 <dd class="col-sm-10">
                     @if (Model.OwnerName != null)
                     {
@@ -71,18 +59,10 @@
                         <span>No information was given!</span>
                     }
                 </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.WorkingTime)
-                </dt>
-                <dd class="col-sm-10 workingTime">
-                    @Html.DisplayFor(model => model.WorkingTime)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.ContactInfo)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.ContactInfo)
-                </dd>
+                <dt class="col-sm-2">@Html.DisplayNameFor(model => model.WorkingTime)</dt>
+                <dd class="col-sm-10 workingTime">@Html.DisplayFor(model => model.WorkingTime)</dd>
+                <dt class="col-sm-2">@Html.DisplayNameFor(model => model.ContactInfo)</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.ContactInfo)</dd>
             </dl>
         </div>
     </div>
@@ -125,7 +105,7 @@
 
     @if (Model.Images.Count() != 0)
     {
-        <a class="btn btn-outline-info" asp-controller="RestaurantImages" asp-action="Gallery" asp-route-id="@Model.Id">
+        <a class="btn btn-outline-info" asp-route="restaurantImages" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl" asp-route-action="gallery">
             Show gallery
         </a>
     }

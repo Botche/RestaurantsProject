@@ -24,6 +24,8 @@
 
         public int PagesCount { get; set; }
 
+        public string Url => this.Name.Replace(' ', '-').ToLower();
+
         public IEnumerable<AllRestaurantsViewModel> Restaurants { get; set; }
     }
 }
