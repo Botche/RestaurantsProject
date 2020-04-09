@@ -1,18 +1,14 @@
-﻿@model RestaurantsPlatform.Web.ViewModels.CategoryImages.UpdateCategoryImageViewModel
+﻿@using RestaurantsPlatform.Web.ViewModels.PartialModels;
+@model RestaurantsPlatform.Web.ViewModels.CategoryImages.UpdateCategoryImageViewModel
 @{
     ViewData["Title"] = "Update Image";
+
+    var partialModel = new HeadingPartialViewModel("Old Picture", "default", "categories", null, "all", null);
 }
 
 <div class="text-center mx-auto">
-    <h1>
-        <span class="float-md-left">
-            <a class="btn btn-outline-secondary" asp-route="default" asp-route-controller="categories" asp-route-action="all">
-                <i class="far fa-arrow-alt-circle-left"></i>
-            </a>
-        </span>
-        Old Picture
-    </h1>
-        <img class="mx-auto d-block" src="@Model.ImageUrl" alt="Category Image" />
+    <partial name="_Heading" model="partialModel" />
+    <img class="mx-auto d-block" src="@Model.ImageUrl" alt="Category Image" />
 </div>
 
 <form class="text-center" method="POST" asp-controller="CategoryImages" asp-action="Update">

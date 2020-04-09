@@ -1,0 +1,25 @@
+﻿@model RestaurantsPlatform.Web.ViewModels.PartialModels.HeadingPartialViewModel
+
+<h1 class="text-center m-4">
+    <span class="float-md-left">
+        @if (string.IsNullOrEmpty(Model.RouteParameterController) && !string.IsNullOrEmpty(Model.RouteParameterAction))
+        {
+            <a class="btn btn-outline-secondary" asp-route="@Model.RouteName" asp-route-action="@Model.RouteParameterAction" asp-route-id="@Model.RouteParameterId" asp-route-name="@Model.RouteParameterName">
+                <i class="far fa-arrow-alt-circle-left"></i>
+            </a>
+        }
+        else if (string.IsNullOrEmpty(Model.RouteParameterAction) && string.IsNullOrEmpty(Model.RouteParameterController))
+        {
+            <a class="btn btn-outline-secondary" asp-route="@Model.RouteName" asp-route-id="@Model.RouteParameterId" asp-route-name="@Model.RouteParameterName">
+                <i class="far fa-arrow-alt-circle-left"></i>
+            </a>
+        }
+        else
+        {
+            <a class="btn btn-outline-secondary" asp-route="@Model.RouteName" asp-route-controller="@Model.RouteParameterController" asp-route-action="@Model.RouteParameterAction">
+                <i class="far fa-arrow-alt-circle-left"></i>
+            </a>
+        }
+    </span>
+    @Model.Name
+</h1>

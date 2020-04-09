@@ -1,18 +1,14 @@
 ﻿@using System.Security.Claims;
+@using RestaurantsPlatform.Web.ViewModels.PartialModels;
 @model RestaurantsPlatform.Web.ViewModels.RestaurantsImages.AllImagesFromRestaurantViewModel
 
 @{
     ViewData["Title"] = "Gallery";
+
+    var partialModel = new HeadingPartialViewModel("Gallery", "restaurant", null, Model.Id, null, Model.Url);
 }
 
-<h1 class="text-center m-4">
-    <span class="float-md-left">
-        <a class="btn btn-outline-secondary" href="/r/@Model.Id/@Model.Url">
-            <i class="far fa-arrow-alt-circle-left"></i>
-        </a>
-    </span>
-    Gallery
-</h1>
+<partial name="_Heading" model="partialModel" />
 
 
 <div class="d-flex flex-wrap justify-content-between">

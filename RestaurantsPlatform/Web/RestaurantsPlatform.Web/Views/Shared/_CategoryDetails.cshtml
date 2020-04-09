@@ -1,0 +1,23 @@
+﻿@using static RestaurantsPlatform.Common.GlobalConstants
+@model RestaurantsPlatform.Web.ViewModels.Categories.AllCategoriesViewModel
+
+<div class="position-relative imageContainer">
+    <img src="@Model.ImageImageUrl" class="mr-3 rounded-lg w-100" alt="@Model.Title">
+    @if (this.User.IsInRole(AdministratorRoleName))
+    {
+        <a class="btn btn-primary position-absolute rounded-pill pictureBtn" asp-route="categoryImage" asp-route-id="@Model.Id" asp-route-name="@Model.UrlName" asp-route-action="update" asp-route-imageUrl="@Model.ImageImageUrl">
+            Change Picture
+        </a>
+    }
+</div>
+<div class="media-body">
+    <h5 class="mt-2">
+        <a asp-route="category" asp-route-name="@Model.UrlName" asp-route-id="@Model.Id">
+            @Model.Name (@Model.RestaurantsCount)
+        </a>
+    </h5>
+    <hr class="mb-3" />
+    <p class="">
+        @Model.ShortDescription
+    </p>
+</div>

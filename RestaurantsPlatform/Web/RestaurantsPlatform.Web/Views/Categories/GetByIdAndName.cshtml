@@ -1,20 +1,16 @@
 ﻿@using static RestaurantsPlatform.Common.GlobalConstants
+@using RestaurantsPlatform.Web.ViewModels.PartialModels;
 @model RestaurantsPlatform.Web.ViewModels.Categories.DetailsCategoryViewModel
 
 @{
     ViewData["Title"] = Model.Name;
+
+    var partialModel = new HeadingPartialViewModel(Model.Name, "default", "categories", null, "all", null);
 }
 
 
 <div class="border-info text-center">
-    <h1 class="m-4">
-        <span class="float-md-left">
-            <a class="btn btn-outline-secondary" asp-route="default" asp-route-controller="categories" asp-route-action="all">
-                <i class="far fa-arrow-alt-circle-left"></i>
-            </a>
-        </span>
-        @Model.Name
-    </h1>
+    <partial name="_Heading" model="partialModel" />
     <p>
         @Model.Description
     </p>
@@ -23,10 +19,10 @@
 @if (this.User.IsInRole(AdministratorRoleName))
 {
     <div class="text-center">
-        <a class="btn btn-outline-info" asp-route="categoryWithAction" asp-route-name="@Model.Url" asp-route-id="@Model.Id" asp-route-action="update">
+        <a class="btn btn-outline-info" asp-route="category" asp-route-name="@Model.Url" asp-route-id="@Model.Id" asp-route-action="update">
             Update
         </a>
-        <a class="btn btn-outline-danger" asp-route="categoryWithAction" asp-route-name="@Model.Url" asp-route-id="@Model.Id" asp-route-action="delete">
+        <a class="btn btn-outline-danger" asp-route="category" asp-route-name="@Model.Url" asp-route-id="@Model.Id" asp-route-action="delete">
             Delete
         </a>
     </div>
