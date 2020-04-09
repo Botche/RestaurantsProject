@@ -1,14 +1,14 @@
 ﻿namespace RestaurantsPlatform.Web.Controllers
 {
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantsPlatform.Services.Data.Interfaces;
-    using RestaurantsPlatform.Web.ViewModels.Images;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
-
+    using RestaurantsPlatform.Web.ViewModels.RestaurantsImages;
     using static RestaurantsPlatform.Common.GlobalConstants;
 
     public class RestaurantImagesController : BaseController
@@ -53,6 +53,30 @@
             }
 
             return this.View(restaurantImages);
+        }
+
+        public IActionResult Update(int id, string imageUrl)
+        {
+            var restaurant = this.restaurantService.GetById<UpdateRestaurantImageViewModel>(id);
+            restaurant.ImageUrl = imageUrl;
+
+            return this.View(restaurant);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(UpdateRestaurantImageInputModel input)
+        {
+            await this.imageService
+                .UpdateRestaurantImageAsync(input.Id, input.RestaurantName, input.ImageUrl, input.OldImageUrl);
+
+            return this.RedirectToAction("Gallery", new { id = input.Id });
+        }
+
+        public async Task<IActionResult> Delete(int id, string imageUrl)
+        {
+            await this.restaurantService.DeleteImageByRestaurantIdAsync(id, imageUrl);
+
+            return this.RedirectToAction("Gallery", new { id });
         }
     }
 }

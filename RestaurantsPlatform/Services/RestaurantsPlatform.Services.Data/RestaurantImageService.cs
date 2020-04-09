@@ -41,8 +41,7 @@
 
         public async Task DeleteAllImagesAppenedToRestaurantAsync(int restaurantId)
         {
-            var images = this.imageRepository.All()
-                .Where(image => image.RestaurantId == restaurantId)
+            var images = this.GetImagesByRestaurantId(restaurantId)
                 .ToList();
 
             foreach (var image in images)
@@ -70,10 +69,26 @@
             return image.Id;
         }
 
+        public async Task<int> UpdateRestaurantImageAsync(int id, string restaurantName, string imageUrl, string oldImageUrl)
+        {
+            var image = this.GetImagesByRestaurantId(id)
+                .Where(image => image.ImageUrl == oldImageUrl)
+                .FirstOrDefault();
+
+            await this.DeleteImageAsync(image);
+            return await this.AddImageToRestaurantAsync(imageUrl, restaurantName, id);
+        }
+
         private IQueryable<RestaurantImage> GetImageById(int id)
         {
             return this.imageRepository.All()
                 .Where(resturant => resturant.Id == id);
+        }
+
+        private IQueryable<RestaurantImage> GetImagesByRestaurantId(int restaurantId)
+        {
+            return this.imageRepository.All()
+                .Where(resturant => resturant.RestaurantId == restaurantId);
         }
     }
 }

@@ -39,7 +39,9 @@
     </dl>
 
     <form class="text-center" asp-controller="Categories" asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" />
-        <a class="btn btn-secondary" asp-route="category" asp-route-id="@Model.Id" asp-route-name="@Model.Name">Back to Details</a>
+        <input type="submit" value="Delete" class="btn btn-outline-danger" />
+        <a class="btn btn-outline-secondary" asp-route="category" asp-route-id="@Model.Id" asp-route-name="@Model.Url">
+            Back to Details
+        </a>
     </form>
 </div>

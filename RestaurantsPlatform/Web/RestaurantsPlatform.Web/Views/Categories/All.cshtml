@@ -1,4 +1,5 @@
-﻿@model IEnumerable<RestaurantsPlatform.Web.ViewModels.Categories.AllCategoriesViewModel>
+﻿@using static RestaurantsPlatform.Common.GlobalConstants
+@model IEnumerable<RestaurantsPlatform.Web.ViewModels.Categories.AllCategoriesViewModel>
 
 @{
     ViewData["Title"] = "Restaurant Categories";
@@ -10,8 +11,14 @@
     @foreach (var category in Model)
     {
         <div class="row col-md-6 col-lg-4 media mb-4">
-            <div>
-                <img src="@category.ImageImageUrl" class="mr-3 rounded-lg w-100" alt="@category.Title"> 
+            <div class="position-relative imageContainer">
+                <img src="@category.ImageImageUrl" class="mr-3 rounded-lg w-100" alt="@category.Title">
+                @if (this.User.IsInRole(AdministratorRoleName))
+                {
+                    <a class="btn btn-primary position-absolute rounded-pill pictureBtn" asp-controller="CategoryImages" asp-action="Update" asp-route-id="@category.Id" asp-route-imageUrl="@category.ImageImageUrl">
+                        Change Picture
+                    </a>
+                }
             </div>
             <div class="media-body">
                 <h5 class="mt-2">
@@ -27,3 +34,8 @@
         </div>
     }
 </div>
+
+
+@section scripts{ 
+    <script type="text/javascript" src="~/js/functions/imagesButtonsFunction.js"></script>
+}

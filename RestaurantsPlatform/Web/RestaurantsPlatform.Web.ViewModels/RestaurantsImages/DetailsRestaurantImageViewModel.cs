@@ -1,4 +1,4 @@
-﻿namespace RestaurantsPlatform.Web.ViewModels.Images
+﻿namespace RestaurantsPlatform.Web.ViewModels.RestaurantsImages
 {
     using System.ComponentModel;
 

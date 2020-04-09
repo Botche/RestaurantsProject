@@ -16,5 +16,7 @@
         Task<int> UpdateCategoryAsync(int id, string description, string name, string title);
 
         Task<int> DeleteCategoryAsync(int id);
+
+        Task<int> UpdateCategoryImageAsync(int categoryId, string imageUrl);
     }
 }

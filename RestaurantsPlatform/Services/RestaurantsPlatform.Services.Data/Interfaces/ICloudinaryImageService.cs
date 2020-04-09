@@ -1,8 +1,7 @@
 ﻿namespace RestaurantsPlatform.Services.Data.Interfaces
 {
     using System.Threading.Tasks;
-
-    using RestaurantsPlatform.Web.ViewModels.Images;
+    using RestaurantsPlatform.Web.ViewModels.RestaurantsImages;
 
     public interface ICloudinaryImageService
     {

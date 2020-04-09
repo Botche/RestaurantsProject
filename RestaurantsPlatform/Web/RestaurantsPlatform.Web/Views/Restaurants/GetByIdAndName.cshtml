@@ -6,9 +6,9 @@
 }
 
 <div>
-    <h1 class="text-center">
+    <h1 class="text-center m-4">
         <span class="float-md-left">
-            <a class="btn btn-outline-secondary" asp-route="category" asp-route-id="@Model.CategoryId" asp-route-name="@Model.CategoryName">
+            <a class="btn btn-outline-secondary" asp-route="category" asp-route-id="@Model.CategoryId" asp-route-name="@Model.Url">
                 <i class="far fa-arrow-alt-circle-left"></i>
             </a>
             @if (Model.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
@@ -104,7 +104,7 @@
 <div class="text-center">
     @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.UserId)
     {
-        <form id="formToShow" method="POST" asp-controller="ImageRestaurant" asp-action="AddImageToRestaurant" >
+        <form id="formToShow" method="POST" asp-controller="RestaurantImages" asp-action="AddImageToRestaurant" >
             <div class="form-group">
                 <input asp-for="Id" class="form-control" hidden />
             </div>

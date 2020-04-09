@@ -7,7 +7,7 @@
     using Microsoft.Extensions.Configuration;
 
     using RestaurantsPlatform.Services.Data.Interfaces;
-    using RestaurantsPlatform.Web.ViewModels.Images;
+    using RestaurantsPlatform.Web.ViewModels.RestaurantsImages;
 
     public class CloudinaryImageService : ICloudinaryImageService
     {

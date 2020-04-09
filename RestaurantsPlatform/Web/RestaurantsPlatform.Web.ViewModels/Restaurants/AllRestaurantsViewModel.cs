@@ -4,7 +4,7 @@
 
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
-    using RestaurantsPlatform.Web.ViewModels.Images;
+    using RestaurantsPlatform.Web.ViewModels.RestaurantsImages;
 
     public class AllRestaurantsViewModel : IMapFrom<Restaurant>
     {

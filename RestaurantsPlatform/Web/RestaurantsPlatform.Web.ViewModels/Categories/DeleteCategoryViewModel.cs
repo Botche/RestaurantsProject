@@ -17,5 +17,7 @@
 
         [DisplayName("Image URL")]
         public string ImageImageUrl { get; set; }
+
+        public string Url => this.Name.Replace(' ', '-').ToLower();
     }
 }

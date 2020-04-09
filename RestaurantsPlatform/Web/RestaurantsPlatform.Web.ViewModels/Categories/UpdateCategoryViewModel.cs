@@ -22,5 +22,7 @@
         [Required]
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; }
+
+        public string Url => this.Name.Replace(' ', '-').ToLower();
     }
 }

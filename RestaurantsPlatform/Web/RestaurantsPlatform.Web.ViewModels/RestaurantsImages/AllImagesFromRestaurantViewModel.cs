@@ -1,4 +1,4 @@
-﻿namespace RestaurantsPlatform.Web.ViewModels.Images
+﻿namespace RestaurantsPlatform.Web.ViewModels.RestaurantsImages
 {
     using System.Collections.Generic;
 
@@ -12,5 +12,9 @@
         public int Id { get; set; }
 
         public string RestaurantName { get; set; }
+
+        public string UserId { get; set; }
+
+        public string Url => RestaurantName.Replace(' ', '-').ToLower();
     }
 }

@@ -13,5 +13,7 @@
         Task DeleteAllImagesAppenedToRestaurantAsync(int restaurantId);
 
         Task DeleteImageAsync(RestaurantImage image);
+
+        Task<int> UpdateRestaurantImageAsync(int id, string restaurantName, string imageUrl, string oldImageUrl);
     }
 }

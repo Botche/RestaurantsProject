@@ -1,14 +1,13 @@
 ﻿namespace RestaurantsPlatform.Services.Data
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
+    using RestaurantsPlatform.Web.ViewModels.CategoryImages;
 
     public class CategoryImageService : ICategoryImageService
     {
@@ -34,9 +33,9 @@
             await this.imageRepository.SaveChangesAsync();
         }
 
-        public async Task<int> AddImageToCategoryAsync(string imageUrl, string name)
+        public async Task<int> AddImageToCategoryAsync(string imageUrl, string categoryName)
         {
-            var result = await this.cloudinaryImageService.UploadCategoryImageToCloudinaryAsync(imageUrl, name);
+            var result = await this.cloudinaryImageService.UploadCategoryImageToCloudinaryAsync(imageUrl, categoryName);
 
             var image = new CategoryImage
             {
@@ -54,7 +53,7 @@
         {
             return this.imageRepository
                 .All()
-                .Where(resturant => resturant.Id == id);
+                .Where(image => image.Id == id);
         }
     }
 }

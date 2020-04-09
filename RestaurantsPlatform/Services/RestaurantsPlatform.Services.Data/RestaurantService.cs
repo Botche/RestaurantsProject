@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using Microsoft.EntityFrameworkCore;
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
@@ -105,9 +105,12 @@
 
         public T GetById<T>(int id)
         {
-            return this.GetRestaurantById(id)
+            var restaurant = this.GetRestaurantById(id)
+                .Include(restaurant => restaurant.Images)
                 .To<T>()
                 .FirstOrDefault();
+
+            return restaurant;
         }
 
         public T GetByIdAndName<T>(int id, string name)
@@ -125,10 +128,22 @@
             return this.restaurantRespository.All().Count();
         }
 
+        public async Task DeleteImageByRestaurantIdAsync(int id, string imageUrl)
+        {
+            var image = this.GetRestaurantById(id)
+                .Include(restaurant => restaurant.Images)
+                .Select(restaurant => restaurant.Images.FirstOrDefault(image => image.ImageUrl == imageUrl))
+                .FirstOrDefault();
+
+            await this.imageService.DeleteImageAsync(image);
+        }
+
         private IQueryable<Restaurant> GetRestaurantById(int id)
         {
-            return this.restaurantRespository.All()
+            var restaurant = this.restaurantRespository.All()
                 .Where(resturant => resturant.Id == id);
+
+            return restaurant;
         }
     }
 }

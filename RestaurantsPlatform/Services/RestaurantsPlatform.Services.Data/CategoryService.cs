@@ -8,6 +8,7 @@
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Services.Mapping;
+    using RestaurantsPlatform.Web.ViewModels.CategoryImages;
 
     public class CategoryService : ICategoryService
     {
@@ -100,6 +101,22 @@
             await this.categoriesRepository.SaveChangesAsync();
 
             return id;
+        }
+
+        public async Task<int> UpdateCategoryImageAsync(int categoryId, string imageUrl)
+        {
+            var imageInfo = this.GetById<PublicIdCategoryImageBindinModel>(categoryId);
+
+            await this.imageService.DeleteImageAsync(imageInfo.ImageId);
+            var imageId = await this.imageService.AddImageToCategoryAsync(imageUrl, imageInfo.Name);
+
+            var category = this.GetCategoryById(categoryId).FirstOrDefault();
+            category.ImageId = imageId;
+
+            this.categoriesRepository.Update(category);
+            await this.categoriesRepository.SaveChangesAsync();
+
+            return imageId;
         }
 
         private IQueryable<Category> GetCategoryById(int id)

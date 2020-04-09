@@ -20,5 +20,6 @@
         Task<int> DeleteRestaurantByIdAsync(int id);
 
         Task DeleteAllRestaurantsAppenedToCategoryAsync(int categoryId);
+        Task DeleteImageByRestaurantIdAsync(int id, string imageUrl);
     }
 }

@@ -1,12 +1,13 @@
-﻿@model RestaurantsPlatform.Web.ViewModels.Images.AllImagesFromRestaurantViewModel
+﻿@using System.Security.Claims;
+@model RestaurantsPlatform.Web.ViewModels.RestaurantsImages.AllImagesFromRestaurantViewModel
 
 @{
     ViewData["Title"] = "Gallery";
 }
 
-<h1 class="text-center">
+<h1 class="text-center m-4">
     <span class="float-md-left">
-        <a class="btn btn-outline-secondary" asp-route="restaurant" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantName">
+        <a class="btn btn-outline-secondary" asp-route="restaurant" asp-route-id="@Model.Id" asp-route-name="@Model.Url">
             <i class="far fa-arrow-alt-circle-left"></i>
         </a>
     </span>
@@ -17,6 +18,24 @@
 <div class="d-flex flex-wrap justify-content-between">
     @foreach (var item in Model.Images)
     {
-        <img class="mb-4 rounded-lg" src="@item.ImageUrl" alt="Image" />
+        <div class="imageContainer position-relative">
+            <img class="mb-4 rounded-lg" src="@item.ImageUrl" alt="Image" />
+            @if (Model.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                <div class="text-center position-absolute pictureBtn">
+                    <a class="btn btn-info rounded-pill " asp-controller="RestaurantImages" asp-action="Update" asp-route-id="@Model.Id" asp-route-imageUrl="@item.ImageUrl">
+                        Update
+                    </a>
+                    <a class="btn btn-danger rounded-pill" asp-controller="RestaurantImages" asp-action="Delete" asp-route-id="@Model.Id" asp-route-imageUrl="@item.ImageUrl">
+                        Delete
+                    </a>
+                </div>
+            }
+        </div>
     }
 </div>
+
+
+@section scripts{
+    <script type="text/javascript" src="~/js/functions/imagesButtonsFunction.js"></script>
+}
