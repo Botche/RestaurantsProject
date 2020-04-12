@@ -10,7 +10,7 @@
 
 
 <div class="border-info text-center">
-    <partial name="_Heading" model="partialModel" />
+    <partial name="./PartialViews/_Heading" model="partialModel" />
     <p>
         @Model.Description
     </p>
@@ -31,26 +31,7 @@
 <div class="row d-flex justify-content-around">
     @foreach (var restaurant in Model.Restaurants)
     {
-        string imageUrl = "https://res.cloudinary.com/djlskbceh/image/upload/v1585916924/restaurant/NoImage_lq3vxk.png";
-        if (restaurant.Images?.FirstOrDefault() != null)
-        {
-            imageUrl = restaurant.Images.FirstOrDefault().ImageUrl;
-        }
-
-        <div class="col-6 media mt-5">
-            <img src="@imageUrl" class="mr-3 restaurantImage" alt="@restaurant.RestaurantName">
-            <div class="media-body">
-                <h5>@restaurant.RestaurantName</h5>
-                <div class="workingTime">@restaurant.WorkingTime</div>
-                <div class="badge badge-pill status"></div>
-                <hr class="mb-3" />
-                <p>@restaurant.Address</p>
-                <div>
-                    <a asp-route="restaurant" asp-route-id="@restaurant.Id" asp-route-name="@restaurant.ParsedUrlName" class="btn btn-outline-success btn-sm">Details</a>
-                    <a class="likeBtn btn btn-outline-danger btn-sm"><i class="heartIcon fa-heart fa-w-16"></i></a>
-                </div>
-            </div>
-        </div>
+        <partial name="./PartialViews/_RestaurantDetailsInCategoryDetails" model="restaurant" />
     }
 </div>
 

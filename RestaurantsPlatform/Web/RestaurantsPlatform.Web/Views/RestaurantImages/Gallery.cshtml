@@ -8,21 +8,21 @@
     var partialModel = new HeadingPartialViewModel("Gallery", "restaurant", null, Model.Id, null, Model.Url);
 }
 
-<partial name="_Heading" model="partialModel" />
+<partial name="./PartialViews/_Heading" model="partialModel" />
 
 
 <div class="d-flex flex-wrap justify-content-between">
-    @foreach (var item in Model.Images)
+    @foreach (var image in Model.Images)
     {
         <div class="imageContainer position-relative">
-            <img class="mb-4 rounded-lg" src="@item.ImageUrl" alt="Image" />
+            <img class="mb-4 rounded-lg" src="@image.ImageUrl" alt="Image" />
             @if (Model.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
                 <div class="text-center position-absolute pictureBtn">
-                    <a class="btn btn-info rounded-pill " asp-route="restaurantImages" asp-route-id="@Model.Id" asp-route-name="@Model.Url" asp-route-action="update" asp-route-imageUrl="@item.ImageUrl">
+                    <a class="btn btn-info rounded-pill " asp-route="restaurantImages" asp-route-id="@Model.Id" asp-route-name="@Model.Url" asp-route-action="update" asp-route-imageUrl="@image.ImageUrl">
                         Update
                     </a>
-                    <a class="btn btn-danger rounded-pill" asp-route="restaurantImages" asp-route-id="@Model.Id" asp-route-name="@Model.Url" asp-route-action="delete" asp-route-imageUrl="@item.ImageUrl">
+                    <a class="btn btn-danger rounded-pill" asp-route="restaurantImages" asp-route-id="@Model.Id" asp-route-name="@Model.Url" asp-route-action="delete" asp-route-imageUrl="@image.ImageUrl">
                         Delete
                     </a>
                 </div>
