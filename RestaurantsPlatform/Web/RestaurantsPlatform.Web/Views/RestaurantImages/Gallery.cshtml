@@ -11,7 +11,7 @@
 <partial name="./PartialViews/_Heading" model="partialModel" />
 
 
-<div class="d-flex flex-wrap justify-content-between">
+<div class="d-flex flex-wrap justify-content-between gallery">
     @foreach (var image in Model.Images)
     {
         <div class="imageContainer position-relative">
@@ -22,7 +22,7 @@
                     <a class="btn btn-info rounded-pill " asp-route="restaurantImages" asp-route-id="@Model.Id" asp-route-name="@Model.Url" asp-route-action="update" asp-route-imageUrl="@image.ImageUrl">
                         Update
                     </a>
-                    <a class="btn btn-danger rounded-pill" asp-route="restaurantImages" asp-route-id="@Model.Id" asp-route-name="@Model.Url" asp-route-action="delete" asp-route-imageUrl="@image.ImageUrl">
+                    <a class="btn btn-danger rounded-pill delete" asp-route="restaurantImages" asp-route-id="@Model.Id" asp-route-name="@Model.Url" asp-route-action="delete" asp-route-imageUrl="@image.ImageUrl">
                         Delete
                     </a>
                 </div>
@@ -34,4 +34,19 @@
 
 @section scripts{
     <script type="text/javascript" src="~/js/functions/imagesButtonsFunction.js"></script>
+    <script type="text/javascript">
+        const deleteBtns = document.getElementsByClassName('delete');
+
+        Array.from(deleteBtns).forEach(deleteBtn => {
+            deleteBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                fetch(this.href)
+                    .then(response => {
+                        const gallery = document.getElementsByClassName('gallery')[0];
+                        gallery.removeChild(this.parentNode.parentNode);
+                    });
+            });
+        })
+    </script>
 }

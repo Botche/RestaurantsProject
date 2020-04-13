@@ -72,7 +72,7 @@
 
             int id = await this.categoryService.CreateCategoryAsync(input.Description, input.ImageUrl, input.Name, input.Title);
 
-            return this.RedirectToAction("GetByIdAndName", new { id = id, name = input.Name });
+            return this.RedirectToAction("GetByIdAndName", new { id = id, name = input.Name.ToLower().Replace(' ', '-') });
         }
 
         [Authorize(Roles = AdministratorRoleName)]
@@ -94,7 +94,7 @@
 
             int id = await this.categoryService.UpdateCategoryAsync(input.Id, input.Description, input.Name, input.Title);
 
-            return this.RedirectToAction("GetByIdAndName", new { id = id, name = input.Name });
+            return this.RedirectToAction("GetByIdAndName", new { id = id, name = input.Name.ToLower().Replace(' ', '-') });
         }
 
         [Authorize(Roles = AdministratorRoleName)]

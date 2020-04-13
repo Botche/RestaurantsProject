@@ -99,7 +99,7 @@
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input class="btn btn-outline-success" value="Add picture to gallery" type="submit" />
+                <input id="uploadPicture" class="btn btn-outline-success" value="Add picture to gallery" type="submit" />
             </div>
         </form>
         <button class="btn btn-outline-secondary" id="showForm">Add picture to gallery</button>
@@ -122,6 +122,21 @@
     <script type="text/javascript" src="~/js/functions/determinateRestaurantStatusByWorkingTime.js"></script>
     <script type="text/javascript" src="~/js/functions/favouriteButtonInRestaurantView.js"></script>
     <script type="text/javascript" src="~/js/functions/manipulateImageInputForm.js"></script>
+    <script type="text/javascript">
+        const uploadPictureBtn = document.getElementById('uploadPicture');
+
+        uploadPictureBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            let formData = new FormData(this.parentNode.parentNode);
+            const url = new URL('https://localhost:44319/RestaurantImages/AddImageToRestaurant');
+            fetch(url, {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => alert('Success'));
+        })
+    </script>
     @*<script type="text/javascript">
             async function getLatitude() {
                 const address = $('dt:contains("Address")').next().text();

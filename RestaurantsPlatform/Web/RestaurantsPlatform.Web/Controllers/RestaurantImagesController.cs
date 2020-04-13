@@ -9,6 +9,7 @@
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
     using RestaurantsPlatform.Web.ViewModels.RestaurantsImages;
+
     using static RestaurantsPlatform.Common.GlobalConstants;
 
     public class RestaurantImagesController : BaseController
@@ -40,7 +41,7 @@
 
             await this.imageService.AddImageToRestaurantAsync(input.ImageUrl, input.RestaurantName, input.Id);
 
-            return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.RestaurantName });
+            return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.RestaurantName.ToLower().Replace(' ', '-') });
         }
 
         public IActionResult Gallery(int id)
