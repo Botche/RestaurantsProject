@@ -58,17 +58,26 @@
             return categoryToDelete.Id;
         }
 
-        public IEnumerable<T> GetAllCategories<T>(int? count = null)
+        public IEnumerable<T> GetAllCategories<T>()
         {
             IQueryable<Category> query = this.categoriesRepository.All()
                 .OrderBy(category => category.Name);
 
-            if (count.HasValue)
+            return query.To<T>().ToList();
+        }
+
+        public IEnumerable<T> GetAllCategoriesWithPage<T>(int? take = null, int skip = 0)
+        {
+            var categories = this.categoriesRepository.All()
+                  .OrderBy(restaurant => restaurant.Name)
+                  .Skip(skip);
+
+            if (take.HasValue)
             {
-                query = query.Take(count.Value);
+                categories = categories.Take(take.Value);
             }
 
-            return query.To<T>().ToList();
+            return categories.To<T>().ToList();
         }
 
         public T GetById<T>(int id)
@@ -86,6 +95,11 @@
                 .Where(category => category.Name.ToLower() == nameWithoutDashes.ToLower())
                 .To<T>()
                 .FirstOrDefault();
+        }
+
+        public int GetCountOfAllCategories()
+        {
+            return this.categoriesRepository.All().Count();
         }
 
         public async Task<int> UpdateCategoryAsync(int id, string description, string name, string title)

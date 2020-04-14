@@ -15,6 +15,6 @@
 
         public string UserId { get; set; }
 
-        public string Url => RestaurantName.Replace(' ', '-').ToLower();
+        public string Url => this.RestaurantName.Replace(' ', '-').ToLower();
     }
 }

@@ -1,29 +1,23 @@
 ﻿namespace RestaurantsPlatform.Web.ViewModels.Categories
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using AutoMapper;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
 
-    public class AllCategoriesViewModel : IMapFrom<Category>
+    public class AllCategoriesViewModel : IHaveCustomMappings
     {
-        private const int ShortDescriptionLength = 125;
+        public IEnumerable<DetailsAllCategoriesViewModel> Categories { get; set; }
 
-        public int Id { get; set; }
+        public int CurrentPage { get; set; }
 
-        public string Name { get; set; }
+        public int PagesCount { get; set; }
 
-        public string Title { get; set; }
-
-        public string Description { get; set; }
-
-        public string ShortDescription =>
-             this.Description?.Length > ShortDescriptionLength
-                 ? this.Description?.Substring(0, ShortDescriptionLength) + "..."
-                 : this.Description;
-
-        public string ImageImageUrl { get; set; }
-
-        public int RestaurantsCount { get; set; }
-
-        public string UrlName => this.Name.Replace(' ', '-').ToLower();
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<IQueryable<Category>, AllCategoriesViewModel>()
+                .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src));
+        }
     }
 }

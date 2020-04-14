@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace RestaurantsPlatform.Data.Migrations
+﻿namespace RestaurantsPlatform.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddUserToRestaurantModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -24,9 +24,9 @@
 
         public const string SuccessfullyAddedImageToRestaurant = "Successfully added image to restaurant( {0} )!";
 
-        public const string SuccessfullyCreatedRestaurant = "Successfully created restaurant!";
+        public const string SuccessfullyCreatedRestaurant = "Successfully created restaurant! - {0}";
 
-        public const string SuccessfullyUpdatedRestaurant = "Successfully updated restaurant!";
+        public const string SuccessfullyUpdatedRestaurant = "Successfully updated restaurant! - {0}";
 
         public const string SuccessfullyDeletedRestaurant = "Successfully deteled restaurant!";
     }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RestaurantsPlatform.Web.ViewModels.Categories.AllCategoriesViewModel>
+﻿@model RestaurantsPlatform.Web.ViewModels.Categories.AllCategoriesViewModel
 
 @{
     ViewData["Title"] = "Restaurant Categories";
@@ -7,14 +7,15 @@
 <h1 class="m-4 text-center">Restaurant categories</h1>
 
 <div class="row d-flex justify-content-around">
-    @foreach (var category in Model)
+    @foreach (var category in Model.Categories)
     {
         <div class="row col-md-6 col-lg-4 media mb-4">
-            <partial name="./PartialViews/_CategoryDetails" model="category"/>
+            <partial name="./PartialViews/_CategoryDetails" model="category" />
         </div>
     }
 </div>
 
+<partial name="./PartialViews/_CategoriesPaginationView" model="@Model" />
 
 @section scripts{
     <script type="text/javascript" src="~/js/functions/imagesButtonsFunction.js"></script>

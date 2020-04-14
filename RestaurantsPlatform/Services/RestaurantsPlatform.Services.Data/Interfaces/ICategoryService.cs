@@ -5,7 +5,7 @@
 
     public interface ICategoryService
     {
-        IEnumerable<T> GetAllCategories<T>(int? count = null);
+        IEnumerable<T> GetAllCategories<T>();
 
         T GetByIdAndName<T>(int id, string name);
 
@@ -18,5 +18,9 @@
         Task<int> DeleteCategoryAsync(int id);
 
         Task<int> UpdateCategoryImageAsync(int categoryId, string imageUrl);
+
+        IEnumerable<T> GetAllCategoriesWithPage<T>(int? take = null, int skip = 0);
+
+        int GetCountOfAllCategories();
     }
 }

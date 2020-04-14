@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace RestaurantsPlatform.Data.Migrations
+﻿namespace RestaurantsPlatform.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddEntitiesImages : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,7 +24,7 @@ namespace RestaurantsPlatform.Data.Migrations
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     ImageUrl = table.Column<string>(nullable: false),
                     PublicId = table.Column<string>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: false)
+                    CategoryId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -48,7 +49,7 @@ namespace RestaurantsPlatform.Data.Migrations
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     ImageUrl = table.Column<string>(nullable: false),
                     PublicId = table.Column<string>(nullable: false),
-                    RestaurantId = table.Column<int>(nullable: false)
+                    RestaurantId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -96,7 +97,7 @@ namespace RestaurantsPlatform.Data.Migrations
                 table: "Categories",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: string.Empty);
         }
     }
 }

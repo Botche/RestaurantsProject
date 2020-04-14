@@ -15,7 +15,6 @@
                 .HasForeignKey(e => e.RoleId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
-
         }
     }
 }

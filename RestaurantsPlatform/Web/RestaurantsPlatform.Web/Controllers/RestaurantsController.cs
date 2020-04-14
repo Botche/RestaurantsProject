@@ -102,7 +102,7 @@
                 });
             }
 
-            this.TempData[SuccessNotification] = SuccessfullyCreatedRestaurant;
+            this.TempData[SuccessNotification] = string.Format(SuccessfullyCreatedRestaurant, input.RestaurantName);
             return this.RedirectToAction("GetByIdAndName", new
             {
                 id = restaurantId,
@@ -166,7 +166,7 @@
                 });
             }
 
-            this.TempData[SuccessNotification] = SuccessfullyUpdatedRestaurant;
+            this.TempData[SuccessNotification] = string.Format(SuccessfullyUpdatedRestaurant, input.RestaurantName);
             return this.RedirectToRoute(
                 "restaurant",
                 new { id = modelId, name = input.RestaurantName.ToLower().Replace(' ', '-') });

@@ -19,8 +19,8 @@
 
     public class CategoriesController : BaseController
     {
-        private const int RestaurantsPerPage = 6;
-        private const int CategoriesPerPage = 6;
+        private const int RestaurantsPerPage = 2;
+        private const int CategoriesPerPage = 3;
 
         private readonly ICategoryService categoryService;
         private readonly IRestaurantService restaurantService;
@@ -35,15 +35,40 @@
             this.restaurantService = restaurantService;
         }
 
-        public IActionResult All(int? count = null)
+        public IActionResult All(int page = 1)
         {
-            IEnumerable<AllCategoriesViewModel> categories = this.categoryService.GetAllCategories<AllCategoriesViewModel>(count);
+            if (page < 1)
+            {
+                page = 1;
+            }
 
-            return this.View(categories);
+            var categories = this.categoryService.GetAllCategoriesWithPage<DetailsAllCategoriesViewModel>(
+                    CategoriesPerPage,
+                    (page - 1) * CategoriesPerPage);
+
+            var allCategoriesViewModel = new AllCategoriesViewModel
+            {
+                Categories = categories,
+                CurrentPage = page,
+            };
+
+            var count = this.categoryService.GetCountOfAllCategories();
+            allCategoriesViewModel.PagesCount = (int)Math.Ceiling((double)count / CategoriesPerPage);
+            if (allCategoriesViewModel.PagesCount == 0)
+            {
+                allCategoriesViewModel.PagesCount = 1;
+            }
+
+            return this.View(allCategoriesViewModel);
         }
 
         public IActionResult GetByIdAndName(int id, string name, int page = 1)
         {
+            if (page < 1)
+            {
+                page = 1;
+            }
+
             var category = this.categoryService.GetByIdAndName<DetailsCategoryViewModel>(id, name);
 
             if (category == null)
@@ -58,6 +83,7 @@
 
             category.Restaurants = this.restaurantService.GetRestaurantsByCategoryId<AllRestaurantsViewModel>(category.Id, RestaurantsPerPage, (page - 1) * RestaurantsPerPage);
 
+            category.CurrentPage = page;
             var count = this.restaurantService.GetCountByCategoryId(category.Id);
             category.PagesCount = (int)Math.Ceiling((double)count / RestaurantsPerPage);
             if (category.PagesCount == 0)

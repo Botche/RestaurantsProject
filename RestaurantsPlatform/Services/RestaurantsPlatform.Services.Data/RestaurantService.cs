@@ -110,7 +110,7 @@
 
             if (take.HasValue)
             {
-                restaurants.Take(take.Value);
+                restaurants = restaurants.Take(take.Value);
             }
 
             return restaurants.To<T>().ToList();
@@ -131,14 +131,16 @@
             string nameWithoutDashes = name.Replace('-', ' ');
 
             return this.GetRestaurantById(id)
-                .Where(restaurant => restaurant.RestaurantName.ToLower() == nameWithoutDashes.ToLower())
+                .Where(restaurant => restaurant.RestaurantName.ToLower().Replace("-", " ") == nameWithoutDashes.ToLower())
                 .To<T>()
                 .FirstOrDefault();
         }
 
         public int GetCountByCategoryId(int id)
         {
-            return this.restaurantRespository.All().Count();
+            return this.restaurantRespository.All()
+                .Where(restaurant => restaurant.CategoryId == id)
+                .Count();
         }
 
         public async Task<int?> DeleteImageByRestaurantIdAsync(int id, string imageUrl)

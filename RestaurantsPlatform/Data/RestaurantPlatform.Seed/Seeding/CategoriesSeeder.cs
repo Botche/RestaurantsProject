@@ -44,7 +44,7 @@
                 .FirstOrDefault(image => image.ImageUrl == "https://res.cloudinary.com/djlskbceh/image/upload/v1586207865/restaurant/categories/pub/Pub_ihqbd2.jpg")
                 .Id;
 
-            List <(string Name, int ImageId, string Description)> categories
+            List<(string Name, int ImageId, string Description)> categories
                 = new List<(string Name, int ImageId, string Description)>
             {
                 (CafeteriaName, cafeteriaId, CafeteriaDescription),
