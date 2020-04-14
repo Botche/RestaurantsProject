@@ -1,8 +1,5 @@
 ﻿namespace RestaurantsPlatform.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -11,6 +8,7 @@
     using RestaurantsPlatform.Web.ViewModels.CategoryImages;
 
     using static RestaurantsPlatform.Common.GlobalConstants;
+    using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants;
 
     [Authorize(Roles = AdministratorRoleName)]
     public class CategoryImagesController : Controller
@@ -24,10 +22,11 @@
 
         public IActionResult Update(int id, string imageUrl)
         {
-            var image = new UpdateCategoryImageViewModel();
-
-            image.CategoryId = id;
-            image.ImageUrl = imageUrl;
+            var image = new UpdateCategoryImageViewModel
+            {
+                CategoryId = id,
+                ImageUrl = imageUrl,
+            };
 
             return this.View(image);
         }
@@ -35,8 +34,15 @@
         [HttpPost]
         public async Task<IActionResult> Update(UpdateCategoryImageInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[ErrorNotification] = WrontInput;
+                return this.View(input);
+            }
+
             await this.categoryService.UpdateCategoryImageAsync(input.CategoryId, input.ImageUrl);
 
+            this.TempData[SuccessNotification] = SuccessfullyUpdatedImage;
             return this.RedirectToAction("All", "Categories");
         }
     }

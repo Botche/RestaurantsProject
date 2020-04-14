@@ -6,14 +6,14 @@
 
     public interface IRestaurantImageService
     {
-        Task DeleteImageByIdAsync(int imageId);
+        Task<int?> DeleteImageByIdAsync(int imageId);
 
-        Task<int> AddImageToRestaurantAsync(string imageUrl, string name, int restaurantId);
+        Task<int?> AddImageToRestaurantAsync(string imageUrl, string name, int restaurantId);
 
-        Task DeleteAllImagesAppenedToRestaurantAsync(int restaurantId);
+        Task<int?> DeleteAllImagesAppenedToRestaurantAsync(int restaurantId);
 
-        Task DeleteImageAsync(RestaurantImage image);
+        Task<int?> DeleteImageAsync(RestaurantImage image);
 
-        Task<int> UpdateRestaurantImageAsync(int id, string restaurantName, string imageUrl, string oldImageUrl);
+        Task<int?> UpdateRestaurantImageAsync(int id, string restaurantName, string imageUrl, string oldImageUrl);
     }
 }

@@ -1,9 +1,9 @@
 ﻿namespace RestaurantsPlatform.Services.Data
 {
-    using System.Collections.Generic;
-    using System.Text;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
+
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Services.Data.Interfaces;

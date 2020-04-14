@@ -9,8 +9,6 @@ TODO:
 * RECaptcha
 * Facebook login
 * Add custom working time
-* Validation ( Error handling ) !!!
-* Notifications
 * Update header and footer
 * Elastic search
 * Pagination

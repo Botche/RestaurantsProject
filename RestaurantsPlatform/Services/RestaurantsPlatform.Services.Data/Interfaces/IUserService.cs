@@ -4,6 +4,6 @@
     {
         bool CheckIfCurrentUserIsAuthor(string authorId, string currentUserId);
 
-        bool CheckIfCurrentUserIsAuthorByGivenId(int restaurantId, string currentUserId);
+        bool CheckIfCurrentUserIsNotAuthorByGivenId(int restaurantId, string currentUserId);
     }
 }

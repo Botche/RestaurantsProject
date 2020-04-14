@@ -1,5 +1,7 @@
 ﻿@using RestaurantsPlatform.Common
-@using static RestaurantsPlatform.Common.GlobalConstants 
+@using static RestaurantsPlatform.Common.GlobalConstants
+@using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants
+
 
 <!DOCTYPE html>
 <html>
@@ -11,6 +13,7 @@
     <environment names="Development">
         <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/lib/fontawesome/css/all.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/toastr/build/toastr.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
     </environment>
     <environment names="Staging,Production">
@@ -58,7 +61,6 @@
             </div>
         </nav>
     </header>
-
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
@@ -77,16 +79,36 @@
         <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
+        <script src="~/lib/toastr/toastr.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+
     </environment>
     <environment names="Staging,Production">
         <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+        <script src="~/lib/toastr/toastr.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
+    <script type="text/javascript">
+
+        (document.getElementsByTagName('body')[0]).onload = function checkIfNotificationMessageIsGiven() {
+            if ('@this.TempData[SuccessNotification]') {
+                toastr.success('@this.TempData[SuccessNotification]');
+            }
+            if ('@this.TempData[ErrorNotification]') {
+                toastr.error('@this.TempData[ErrorNotification]');
+            }
+            if ('@this.TempData[WarningNotification]') {
+                toastr.warning('@this.TempData[WarningNotification]');
+            }
+            if ('@this.TempData[InfoNotification]') {
+                toastr.info('@this.TempData[InfoNotification]');
+            }
+        };
+    </script>
     @this.RenderSection("Scripts", required: false)
 </body>
 </html>

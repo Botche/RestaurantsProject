@@ -1,12 +1,11 @@
 ﻿namespace RestaurantsPlatform.Web.ViewModels.Restaurants
 {
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
-    using RestaurantsPlatform.Web.ViewModels.Categories;
+
     using static RestaurantsPlatform.Data.Common.Constants.Models.Restraurant;
 
     public class CreateRestaurantInputModel : IMapTo<Restaurant>

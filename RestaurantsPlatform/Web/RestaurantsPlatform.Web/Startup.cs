@@ -117,6 +117,15 @@
             {
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
+                app.Use(async (context, next) =>
+                {
+                    await next();
+                    if (context.Response.StatusCode == 404)
+                    {
+                        context.Request.Path = "/Home/Error";
+                        await next();
+                    }
+                });
             }
 
             app.UseResponseCompression();
@@ -148,17 +157,17 @@
                         new { controller = "RestaurantImages" });
 
                     endpoints.MapControllerRoute(
-                        name: "category",
-                        pattern: "c/{id:int}/{name:minlength(3)}",
-                        new { controller = "Categories", action = "GetByIdAndName" });
+                        name: "categoryImage",
+                        pattern: "c/{id:int}/{name:minlength(3)}/{action}/image",
+                        new { controller = "CategoryImages" });
                     endpoints.MapControllerRoute(
                         name: "categoryWithAction",
                         pattern: "c/{id:int}/{name:minlength(3)}/{action}",
                         new { controller = "Categories" });
                     endpoints.MapControllerRoute(
-                        name: "categoryImage",
-                        pattern: "c/{id:int}/{name:minlength(3)}/{action}/image",
-                        new { controller = "CategoryImages" });
+                        name: "category",
+                        pattern: "c/{id:int}/{name:minlength(3)}",
+                        new { controller = "Categories", action = "GetByIdAndName" });
 
                     endpoints.MapControllerRoute(
                         name: "areaRoute",

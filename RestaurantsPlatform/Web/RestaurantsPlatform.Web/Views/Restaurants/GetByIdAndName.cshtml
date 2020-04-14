@@ -71,7 +71,7 @@
     <div class="rounded-lg col-12 col-md-6 bg-secondary" style="height: 520px;" id="map"></div>
 </div>
 
-<div class="d-flex justify-content-around flex-wrap">
+<div class="d-flex justify-content-around flex-wrap" id="galleryInfo">
     @if (Model.Images.Count() != 0)
     {
         @foreach (var image in Model.Images.Take(3))
@@ -107,7 +107,7 @@
 
     @if (Model.Images.Count() != 0)
     {
-        <a class="btn btn-outline-info" asp-route="restaurantImages" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl" asp-route-action="gallery">
+        <a id="showGallery" class="btn btn-outline-info" asp-route="restaurantImages" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl" asp-route-action="gallery">
             Show gallery
         </a>
     }
@@ -122,21 +122,7 @@
     <script type="text/javascript" src="~/js/functions/determinateRestaurantStatusByWorkingTime.js"></script>
     <script type="text/javascript" src="~/js/functions/favouriteButtonInRestaurantView.js"></script>
     <script type="text/javascript" src="~/js/functions/manipulateImageInputForm.js"></script>
-    <script type="text/javascript">
-        const uploadPictureBtn = document.getElementById('uploadPicture');
-
-        uploadPictureBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            let formData = new FormData(this.parentNode.parentNode);
-            const url = new URL('https://localhost:44319/RestaurantImages/AddImageToRestaurant');
-            fetch(url, {
-                method: 'POST',
-                body: formData,
-            })
-                .then(response => alert('Success'));
-        })
-    </script>
+    <script type="text/javascript" src="~/js/functions/addImageAsync.js"></script>
     @*<script type="text/javascript">
             async function getLatitude() {
                 const address = $('dt:contains("Address")').next().text();

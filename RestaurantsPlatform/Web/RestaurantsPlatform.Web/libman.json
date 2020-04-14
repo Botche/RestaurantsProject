@@ -3,11 +3,11 @@
   "defaultProvider": "jsdelivr",
   "libraries": [
     {
-      "library": "jquery@3.4.1",
+      "library": "jquery@3.5.0",
       "destination": "wwwroot/lib/jquery/",
       "files": [
-        "dist/jquery.min.js",
-        "dist/jquery.js"
+        "dist/jquery.js",
+        "dist/jquery.min.js"
       ]
     },
     {
@@ -74,6 +74,15 @@
         "plugins/link/plugin.min.js",
         "plugins/code/plugin.min.js",
         "plugins/media/plugin.min.js"
+      ]
+    },
+    {
+      "library": "toastr@2.1.4",
+      "destination": "wwwroot/lib/toastr/",
+      "files": [
+        "toastr.js",
+        "toastr.min.js",
+        "build/toastr.css"
       ]
     }
   ]

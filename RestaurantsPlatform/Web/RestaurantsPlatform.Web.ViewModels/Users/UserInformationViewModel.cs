@@ -4,6 +4,7 @@
     using System.Linq;
 
     using AutoMapper;
+
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Services.Mapping;
 

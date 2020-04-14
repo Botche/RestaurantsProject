@@ -1,5 +1,6 @@
 ﻿namespace RestaurantsPlatform.Web.Controllers
 {
+    using System.Diagnostics;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -7,12 +8,16 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Services.Data.Interfaces;
+    using RestaurantsPlatform.Web.ViewModels;
     using RestaurantsPlatform.Web.ViewModels.Categories;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
 
     using static RestaurantsPlatform.Common.GlobalConstants;
+    using static RestaurantsPlatform.Web.Infrastructure.ErrorConstants;
+    using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants;
 
     public class RestaurantsController : BaseController
     {
@@ -28,6 +33,7 @@
             IUserService userService,
             IConfiguration configuration,
             UserManager<ApplicationUser> userManager)
+            : base(userService)
         {
             this.restaurantService = restaurantService;
             this.categoryService = categoryService;
@@ -42,7 +48,12 @@
 
             if (restaurant == null)
             {
-                return this.NotFound();
+                return this.View(ErrorViewName, new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
+                    Message = PageNotFound,
+                    StatusCode = 404,
+                });
             }
 
             this.ViewBag.GoogleMapsApiKey = this.configuration.GetSection("GoogleMaps")["ApiKey"];
@@ -55,6 +66,16 @@
         {
             var categories = this.categoryService.GetAllCategories<AllCategoriesToCreateRestaurantViewModel>();
 
+            if (categories == null)
+            {
+                return this.View(ErrorViewName, new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
+                    Message = NoRegisteredCategories,
+                    StatusCode = 404,
+                });
+            }
+
             this.ViewBag.Categories = categories;
 
             return this.View();
@@ -66,13 +87,24 @@
         {
             if (!this.ModelState.IsValid)
             {
+                this.TempData[ErrorNotification] = WrontInput;
                 return this.View(input);
             }
 
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             int restaurantId = await this.restaurantService.CreateRestaurantAsync(userId, input.Address, input.CategoryId, input.ContactInfo, input.Description, input.OwnerName, input.RestaurantName, input.WorkingTime);
 
-            return this.RedirectToAction("GetByIdAndName", new {
+            if (restaurantId == 0)
+            {
+                return this.View(ErrorViewName, new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
+                });
+            }
+
+            this.TempData[SuccessNotification] = SuccessfullyCreatedRestaurant;
+            return this.RedirectToAction("GetByIdAndName", new
+            {
                 id = restaurantId,
                 name = input.RestaurantName.ToLower().Replace(' ', '-'),
             });
@@ -83,15 +115,20 @@
         {
             var restaurant = this.restaurantService.GetById<UpdateRestaurantViewModel>(id);
 
-            string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (this.userService.CheckIfCurrentUserIsAuthor(restaurant.UserId, currentUserId))
-            {
-                return this.Unauthorized();
-            }
-
             if (restaurant == null)
             {
-                return this.NotFound();
+                return this.View(ErrorViewName, new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
+                    Message = PageNotFound,
+                    StatusCode = 404,
+                });
+            }
+
+            var result = this.AuthorizeIfRestaurantCreatorIsCurentUser(id);
+            if (result != null)
+            {
+                return result;
             }
 
             var categories = this.categoryService.GetAllCategories<AllCategoriesToCreateRestaurantViewModel>();
@@ -107,17 +144,29 @@
         {
             if (!this.ModelState.IsValid)
             {
+                this.TempData[ErrorNotification] = WrontInput;
                 return this.View(input);
             }
 
-            string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (this.userService.CheckIfCurrentUserIsAuthorByGivenId(input.Id, currentUserId))
+            var result = this.AuthorizeIfRestaurantCreatorIsCurentUser(input.Id);
+            if (result != null)
             {
-                return this.Unauthorized();
+                return result;
             }
 
-            int modelId = await this.restaurantService.UpdateRestaurantAsync(input.Id, input.OwnerName, input.RestaurantName, input.WorkingTime, input.Address, input.ContactInfo, input.Description, input.CategoryId);
+            int? modelId = await this.restaurantService.UpdateRestaurantAsync(input.Id, input.OwnerName, input.RestaurantName, input.WorkingTime, input.Address, input.ContactInfo, input.Description, input.CategoryId);
 
+            if (modelId == null)
+            {
+                return this.View(ErrorViewName, new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
+                    Message = RestaurantNotFound,
+                    StatusCode = 404,
+                });
+            }
+
+            this.TempData[SuccessNotification] = SuccessfullyUpdatedRestaurant;
             return this.RedirectToRoute(
                 "restaurant",
                 new { id = modelId, name = input.RestaurantName.ToLower().Replace(' ', '-') });
@@ -128,15 +177,20 @@
         {
             var restaurant = this.restaurantService.GetById<DeleteRestaurantViewModel>(id);
 
-            string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (this.userService.CheckIfCurrentUserIsAuthor(restaurant.UserId, currentUserId))
-            {
-                return this.Unauthorized();
-            }
-
             if (restaurant == null)
             {
-                return this.NotFound();
+                return this.View(ErrorViewName, new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
+                    Message = PageNotFound,
+                    StatusCode = 404,
+                });
+            }
+
+            var result = this.AuthorizeIfRestaurantCreatorIsCurentUser(id);
+            if (result != null)
+            {
+                return result;
             }
 
             return this.View(restaurant);
@@ -148,18 +202,29 @@
         {
             if (!this.ModelState.IsValid)
             {
+                this.TempData[ErrorNotification] = WrontInput;
                 return this.View(input);
             }
 
-            string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (this.userService.CheckIfCurrentUserIsAuthorByGivenId(input.Id, currentUserId))
+            var result = this.AuthorizeIfRestaurantCreatorIsCurentUser(input.Id);
+            if (result != null)
             {
-                return this.Unauthorized();
+                return result;
             }
 
-            await this.restaurantService.DeleteRestaurantByIdAsync(input.Id);
+            var id = await this.restaurantService.DeleteRestaurantByIdAsync(input.Id);
 
+            if (id == null)
+            {
+                return this.View(ErrorViewName, new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
+                    Message = RestaurantNotFound,
+                    StatusCode = 404,
+                });
+            }
+
+            this.TempData[SuccessNotification] = SuccessfullyDeletedRestaurant;
             return this.RedirectToAction("All", "Categories");
         }
     }

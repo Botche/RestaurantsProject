@@ -1,6 +1,5 @@
 ﻿namespace RestaurantsPlatform.Web.ViewModels.Restaurants
 {
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
     using RestaurantsPlatform.Data.Models.Restaurants;

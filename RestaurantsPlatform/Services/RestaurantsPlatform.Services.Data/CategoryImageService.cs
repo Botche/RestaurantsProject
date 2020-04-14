@@ -1,13 +1,11 @@
 ﻿namespace RestaurantsPlatform.Services.Data
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
-    using RestaurantsPlatform.Web.ViewModels.CategoryImages;
 
     public class CategoryImageService : ICategoryImageService
     {

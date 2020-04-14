@@ -20,26 +20,33 @@
             this.cloudinaryImageService = cloudinaryImageService;
         }
 
-        public async Task DeleteImageByIdAsync(int imageId)
+        public async Task<int?> DeleteImageByIdAsync(int imageId)
         {
             var image = this.GetImageById(imageId)
                 .FirstOrDefault();
 
-            await this.cloudinaryImageService.DeleteImageAsync(image.PublicId);
+            if (image == null)
+            {
+                return null;
+            }
 
-            this.imageRepository.Delete(image);
-            await this.imageRepository.SaveChangesAsync();
+            return await this.DeleteImageAsync(image);
         }
 
-        public async Task DeleteImageAsync(RestaurantImage image)
+        public async Task<int?> DeleteImageAsync(RestaurantImage image)
         {
+            if (image == null)
+            {
+                return null;
+            }
+
             await this.cloudinaryImageService.DeleteImageAsync(image.PublicId);
 
             this.imageRepository.Delete(image);
-            await this.imageRepository.SaveChangesAsync();
+            return await this.imageRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAllImagesAppenedToRestaurantAsync(int restaurantId)
+        public async Task<int?> DeleteAllImagesAppenedToRestaurantAsync(int restaurantId)
         {
             var images = this.GetImagesByRestaurantId(restaurantId)
                 .ToList();
@@ -49,12 +56,17 @@
                 await this.DeleteImageAsync(image);
             }
 
-            await this.imageRepository.SaveChangesAsync();
+            return await this.imageRepository.SaveChangesAsync();
         }
 
-        public async Task<int> AddImageToRestaurantAsync(string imageUrl, string name, int restaurantId)
+        public async Task<int?> AddImageToRestaurantAsync(string imageUrl, string name, int restaurantId)
         {
             var result = await this.cloudinaryImageService.UploadRestaurantImageToCloudinaryAsync(imageUrl, name);
+
+            if (result == null)
+            {
+                return null;
+            }
 
             var image = new RestaurantImage
             {
@@ -69,11 +81,16 @@
             return image.Id;
         }
 
-        public async Task<int> UpdateRestaurantImageAsync(int id, string restaurantName, string imageUrl, string oldImageUrl)
+        public async Task<int?> UpdateRestaurantImageAsync(int id, string restaurantName, string imageUrl, string oldImageUrl)
         {
             var image = this.GetImagesByRestaurantId(id)
                 .Where(image => image.ImageUrl == oldImageUrl)
                 .FirstOrDefault();
+
+            if (image == null)
+            {
+                return null;
+            }
 
             await this.DeleteImageAsync(image);
             return await this.AddImageToRestaurantAsync(imageUrl, restaurantName, id);

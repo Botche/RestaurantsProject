@@ -3,7 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
+
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
@@ -42,11 +44,16 @@
             return restaurant.Id;
         }
 
-        public async Task<int> DeleteRestaurantByIdAsync(int id)
+        public async Task<int?> DeleteRestaurantByIdAsync(int id)
         {
             var restaurant = this.restaurantRespository.All()
                 .Where(restaurant => restaurant.Id == id)
                 .FirstOrDefault();
+
+            if (restaurant == null)
+            {
+                return null;
+            }
 
             this.restaurantRespository.Delete(restaurant);
             await this.restaurantRespository.SaveChangesAsync();
@@ -56,7 +63,7 @@
             return restaurant.Id;
         }
 
-        public async Task DeleteAllRestaurantsAppenedToCategoryAsync(int categoryId)
+        public async Task<int> DeleteAllRestaurantsAppenedToCategoryAsync(int categoryId)
         {
             var restaurants = this.restaurantRespository.All()
                 .Where(restaurant => restaurant.CategoryId == categoryId)
@@ -67,13 +74,18 @@
                 await this.DeleteRestaurantByIdAsync(restaurant.Id);
             }
 
-            await this.restaurantRespository.SaveChangesAsync();
+            return await this.restaurantRespository.SaveChangesAsync();
         }
 
-        public async Task<int> UpdateRestaurantAsync(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description, int categoryId)
+        public async Task<int?> UpdateRestaurantAsync(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description, int categoryId)
         {
             Restaurant oldEntity = this.GetRestaurantById(id)
                 .FirstOrDefault();
+
+            if (oldEntity == null)
+            {
+                return null;
+            }
 
             oldEntity.OwnerName = ownerName;
             oldEntity.RestaurantName = restaurantName;
@@ -89,7 +101,7 @@
             return oldEntity.Id;
         }
 
-        public IEnumerable<T> GetByCategoryId<T>(int categoryId, int? take = null, int skip = 0)
+        public IEnumerable<T> GetRestaurantsByCategoryId<T>(int categoryId, int? take = null, int skip = 0)
         {
             IQueryable<Restaurant> restaurants = this.restaurantRespository.All()
                 .Where(restaurant => restaurant.CategoryId == categoryId)
@@ -129,14 +141,59 @@
             return this.restaurantRespository.All().Count();
         }
 
-        public async Task DeleteImageByRestaurantIdAsync(int id, string imageUrl)
+        public async Task<int?> DeleteImageByRestaurantIdAsync(int id, string imageUrl)
         {
             var image = this.GetRestaurantById(id)
                 .Include(restaurant => restaurant.Images)
                 .Select(restaurant => restaurant.Images.FirstOrDefault(image => image.ImageUrl == imageUrl))
                 .FirstOrDefault();
 
-            await this.imageService.DeleteImageAsync(image);
+            if (image == null)
+            {
+                return null;
+            }
+
+            return await this.imageService.DeleteImageAsync(image);
+        }
+
+        public T GetRestaurantByIdWithImage<T>(int id, string imageUrl)
+        {
+            var restaurant = this.GetRestaurantById(id)
+                .Include(t => t.Images)
+                .FirstOrDefault();
+
+            if (restaurant == null)
+            {
+                return default;
+            }
+
+            bool hasContains = this.CheckIfRestaurantImagesContainsImageUrl(restaurant, imageUrl);
+            if (!hasContains)
+            {
+                return default;
+            }
+
+            var restaurantToReturn = this.GetRestaurantById(id)
+                .To<T>()
+                .FirstOrDefault();
+
+            return restaurantToReturn;
+        }
+
+        private bool CheckIfRestaurantImagesContainsImageUrl(Restaurant restaurant, string imageUrl)
+        {
+            bool isValid = false;
+
+            foreach (var item in restaurant.Images)
+            {
+                if (item.ImageUrl == imageUrl)
+                {
+                    isValid = true;
+                    break;
+                }
+            }
+
+            return isValid;
         }
 
         private IQueryable<Restaurant> GetRestaurantById(int id)

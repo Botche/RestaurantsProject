@@ -34,19 +34,5 @@
 
 @section scripts{
     <script type="text/javascript" src="~/js/functions/imagesButtonsFunction.js"></script>
-    <script type="text/javascript">
-        const deleteBtns = document.getElementsByClassName('delete');
-
-        Array.from(deleteBtns).forEach(deleteBtn => {
-            deleteBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                fetch(this.href)
-                    .then(response => {
-                        const gallery = document.getElementsByClassName('gallery')[0];
-                        gallery.removeChild(this.parentNode.parentNode);
-                    });
-            });
-        })
-    </script>
+    <script type="text/javascript" src="~/js/functions/deleteImageAsync.js"></script>
 }

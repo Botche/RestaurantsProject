@@ -1,8 +1,5 @@
 ﻿namespace RestaurantsPlatform.Services.Data
 {
-    using Microsoft.AspNetCore.Identity;
-    using RestaurantsPlatform.Data.Models;
-    using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
 
@@ -21,7 +18,7 @@
             return authorId != currentUserId;
         }
 
-        public bool CheckIfCurrentUserIsAuthorByGivenId(int restaurantId, string currentUserId)
+        public bool CheckIfCurrentUserIsNotAuthorByGivenId(int restaurantId, string currentUserId)
         {
             string authorId = this.restaurantService.GetById<AuthorIdFromRestaurantBindingModel>(restaurantId).UserId;
 

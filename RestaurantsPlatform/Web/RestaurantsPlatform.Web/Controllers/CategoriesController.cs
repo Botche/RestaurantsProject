@@ -2,26 +2,34 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+
     using RestaurantsPlatform.Services.Data.Interfaces;
+    using RestaurantsPlatform.Web.ViewModels;
     using RestaurantsPlatform.Web.ViewModels.Categories;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
 
     using static RestaurantsPlatform.Common.GlobalConstants;
+    using static RestaurantsPlatform.Web.Infrastructure.ErrorConstants;
+    using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants;
 
     public class CategoriesController : BaseController
     {
         private const int RestaurantsPerPage = 6;
+        private const int CategoriesPerPage = 6;
 
         private readonly ICategoryService categoryService;
         private readonly IRestaurantService restaurantService;
 
         public CategoriesController(
             ICategoryService categoryService,
-            IRestaurantService restaurantService)
+            IRestaurantService restaurantService,
+            IUserService userService)
+            : base(userService)
         {
             this.categoryService = categoryService;
             this.restaurantService = restaurantService;
@@ -40,10 +48,15 @@
 
             if (category == null)
             {
-                return this.NotFound();
+                return this.View(ErrorViewName, new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
+                    Message = PageNotFound,
+                    StatusCode = 404,
+                });
             }
 
-            category.Restaurants = this.restaurantService.GetByCategoryId<AllRestaurantsViewModel>(category.Id, RestaurantsPerPage, (page - 1) * RestaurantsPerPage);
+            category.Restaurants = this.restaurantService.GetRestaurantsByCategoryId<AllRestaurantsViewModel>(category.Id, RestaurantsPerPage, (page - 1) * RestaurantsPerPage);
 
             var count = this.restaurantService.GetCountByCategoryId(category.Id);
             category.PagesCount = (int)Math.Ceiling((double)count / RestaurantsPerPage);
@@ -67,12 +80,15 @@
         {
             if (!this.ModelState.IsValid)
             {
+                this.TempData[ErrorNotification] = WrontInput;
                 return this.View(input);
             }
 
             int id = await this.categoryService.CreateCategoryAsync(input.Description, input.ImageUrl, input.Name, input.Title);
 
-            return this.RedirectToAction("GetByIdAndName", new { id = id, name = input.Name.ToLower().Replace(' ', '-') });
+            this.TempData[SuccessNotification] = string.Format(SuccessfullyCreatedCategory, input.Name);
+
+            return this.RedirectToRoute("category", new { id, name = input.Name.ToLower().Replace(' ', '-') });
         }
 
         [Authorize(Roles = AdministratorRoleName)]
@@ -89,12 +105,15 @@
         {
             if (!this.ModelState.IsValid)
             {
+                this.TempData[ErrorNotification] = WrontInput;
                 return this.View(input);
             }
 
             int id = await this.categoryService.UpdateCategoryAsync(input.Id, input.Description, input.Name, input.Title);
 
-            return this.RedirectToAction("GetByIdAndName", new { id = id, name = input.Name.ToLower().Replace(' ', '-') });
+            this.TempData[SuccessNotification] = string.Format(SuccessfullyUpdatedCategory, input.Name);
+
+            return this.RedirectToRoute("category", new { id, name = input.Name.ToLower().Replace(' ', '-') });
         }
 
         [Authorize(Roles = AdministratorRoleName)]
@@ -109,7 +128,9 @@
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteCategoryInputModel input)
         {
-            int id = await this.categoryService.DeleteCategoryAsync(input.Id);
+            await this.categoryService.DeleteCategoryAsync(input.Id);
+
+            this.TempData[SuccessNotification] = SuccessfullyDeletedCategory;
 
             return this.RedirectToAction("All");
         }
