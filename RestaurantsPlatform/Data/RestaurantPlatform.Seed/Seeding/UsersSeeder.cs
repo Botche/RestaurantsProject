@@ -18,13 +18,13 @@
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            await SeedUserAsync(userManager, UserEmail, UserPassword);
-            await SeedUserAsync(userManager, AdministratorEmail, AdministratorPassword);
-            await SeedUserAsync(userManager, RestaurantEmail, RestaurantPassword);
-            await SeedUserAsync(userManager, SecondRestaurantEmail, SecondRestaurantPassword);
+            await SeedUserAsync(userManager, UserEmail, UserPassword, UserRoleName);
+            await SeedUserAsync(userManager, AdministratorEmail, AdministratorPassword, AdministratorRoleName);
+            await SeedUserAsync(userManager, RestaurantEmail, RestaurantPassword, RestaurantRoleName);
+            await SeedUserAsync(userManager, SecondRestaurantEmail, SecondRestaurantPassword, RestaurantRoleName);
         }
 
-        private static async Task SeedUserAsync(UserManager<ApplicationUser> userManager, string email, string password)
+        private static async Task SeedUserAsync(UserManager<ApplicationUser> userManager, string email, string password, string role)
         {
             var user = await userManager.FindByEmailAsync(email);
             if (user == null)
@@ -36,8 +36,9 @@
                 };
 
                 var result = await userManager.CreateAsync(userToSignIn, password);
+                var addToRoleResult = await userManager.AddToRoleAsync(userToSignIn, role);
 
-                if (!result.Succeeded)
+                if (!result.Succeeded || !addToRoleResult.Succeeded)
                 {
                     throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
                 }

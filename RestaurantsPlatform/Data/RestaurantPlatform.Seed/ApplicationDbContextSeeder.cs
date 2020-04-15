@@ -3,14 +3,25 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using RestaurantsPlatform.Data;
     using RestaurantsPlatform.Seed.Seeding;
+    using RestaurantsPlatform.Services.Data;
+    using RestaurantsPlatform.Services.Data.Interfaces;
 
     public class ApplicationDbContextSeeder : ISeeder
     {
+        private readonly IConfiguration configuration;
+        private readonly ICloudinaryImageService imageService;
+
+        public ApplicationDbContextSeeder(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+            this.imageService = new CloudinaryImageService(this.configuration);
+        }
+
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             if (dbContext == null)
@@ -29,10 +40,10 @@
                           {
                               new RolesSeeder(),
                               new UsersSeeder(),
-                              new CategoryImagesSeeder(),
+                              new CategoryImagesSeeder(this.imageService),
                               new CategoriesSeeder(),
                               new RestaurantsSeeder(),
-                              new RestaurantImagesSeeder(),
+                              new RestaurantImagesSeeder(this.imageService),
                           };
 
             foreach (var seeder in seeders)

@@ -8,6 +8,7 @@
     using RestaurantsPlatform.Data;
     using RestaurantsPlatform.Data.Models.Restaurants;
 
+    using static RestaurantsPlatform.Common.GlobalConstants;
     using static RestaurantsPlatform.Data.Common.Seeding.Restaurants.SeedInfo;
 
     public class RestaurantsSeeder : ISeeder
@@ -20,11 +21,11 @@
             }
 
             string restaurantOwnerId = dbContext.Users
-                .FirstOrDefault(category => category.Email == "restaurantOwner@restaurantOwner.restaurantOwner").Id;
+                .FirstOrDefault(category => category.Email == RestaurantEmail).Id;
             string secondRestaurantOwnerId = dbContext.Users
-                .FirstOrDefault(category => category.Email == "test@test.test").Id;
+                .FirstOrDefault(category => category.Email == SecondRestaurantEmail).Id;
             string administratorId = dbContext.Users
-                .FirstOrDefault(category => category.Email == "administrator@administrator.administrator").Id;
+                .FirstOrDefault(category => category.Email == AdministratorEmail).Id;
 
             int cafeteriaId = dbContext.Categories.FirstOrDefault(category => category.Name == "Cafeteria").Id;
             int casualDiningId = dbContext.Categories.FirstOrDefault(category => category.Name == "Casual dining").Id;
@@ -43,6 +44,8 @@
                 (IndianName, IndianDescription, IndianAddress, IndianOwnerName, IndianWorkingTime, IndianContactInfo, ethnicId, administratorId),
                 (AladinName, AladinDescription, AladinAddress, AladinOwnerName, AladinWorkingTime, AladinContactInfo, fastFoodId, secondRestaurantOwnerId),
                 (Aladin2Name, Aladin2Description, Aladin2Address, Aladin2OwnerName, Aladin2WorkingTime, Aladin2ContactInfo, fastFoodId, secondRestaurantOwnerId),
+                (SkaptoName, SkaptoDescription, SkaptoAddress, SkaptoOwnerName, SkaptoWorkingTime, SkaptoContactInfo, fastFoodId, administratorId),
+                (WokName, WokDescription, WokAddress, WokOwnerName, WokWorkingTime, WokContactInfo, fastFoodId, administratorId),
             };
 
             foreach (var restaurant in restaurants)

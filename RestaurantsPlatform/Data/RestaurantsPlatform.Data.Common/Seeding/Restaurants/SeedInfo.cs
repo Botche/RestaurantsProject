@@ -36,5 +36,19 @@
         public const string Aladin2OwnerName = null;
         public const string Aladin2WorkingTime = "10:00 - 22:00";
         public const string Aladin2ContactInfo = "0700 44 744";
+
+        public const string SkaptoName = "Skapto-Mall of Sofia";
+        public const string SkaptoDescription = "We don’t like malls. And we like mall food even less, far less. So we opened up a spot at Mall of Sofia. And since 2017 we have been challenging the boring mall food head on with SKAPTOBURGER 2, where you are going to find all of the comfort of our mouthwatering burgers and hand-picked beers. And addictive house-cut fries.";
+        public const string SkaptoAddress = "bul. \"Aleksandar Stamboliyski\" 101, 1303 Zona B-5, Sofia";
+        public const string SkaptoOwnerName = null;
+        public const string SkaptoWorkingTime = "10:00 - 22:00";
+        public const string SkaptoContactInfo = "+359 87 744 5444";
+
+        public const string WokName = "Wok to Walk";
+        public const string WokDescription = "Wok to Walk started in 2004 in Amsterdam after a trip around Asia. We opened a tiny restaurant ’cause we wanted to have fun at work and cook the kind of food we’d like to eat in our hectic everyday: quick, fresh and yummy!";
+        public const string WokAddress = "bul.Vitosha 8, Sofia 1000, Bulgaria";
+        public const string WokOwnerName = null;
+        public const string WokWorkingTime = "11:00 - 23:45";
+        public const string WokContactInfo = "+359 88 412 2920";
     }
 }

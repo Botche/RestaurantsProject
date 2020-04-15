@@ -7,7 +7,7 @@
     using Microsoft.Extensions.Configuration;
 
     using RestaurantsPlatform.Services.Data.Interfaces;
-    using RestaurantsPlatform.Web.ViewModels.RestaurantsImages;
+    using RestaurantsPlatform.Web.ViewModels.CategoryImages;
 
     public class CloudinaryImageService : ICloudinaryImageService
     {
@@ -26,7 +26,7 @@
             await this.cloudinary.DestroyAsync(deletionParams);
         }
 
-        public async Task<CategoryImageBindingModel> UploadCategoryImageToCloudinaryAsync(string imageUrl, string categoryName = null)
+        public async Task<ImageBindingModel> UploadCategoryImageToCloudinaryAsync(string imageUrl, string categoryName = null)
         {
             string path = categoryName == null ? "restaurant/categories"
                 : $"restaurant/categories/{categoryName.ToLower().Replace(' ', '-')}";
@@ -34,7 +34,7 @@
             return await this.UploadImageToClodinary(imageUrl, path);
         }
 
-        public async Task<CategoryImageBindingModel> UploadRestaurantImageToCloudinaryAsync(string imageUrl, string restaurantName = null)
+        public async Task<ImageBindingModel> UploadRestaurantImageToCloudinaryAsync(string imageUrl, string restaurantName = null)
         {
             string path = restaurantName == null ? "restaurant/restaurants"
                    : $"restaurant/restaurants/{restaurantName.ToLower().Replace(' ', '-')}";
@@ -42,7 +42,7 @@
             return await this.UploadImageToClodinary(imageUrl, path);
         }
 
-        private async Task<CategoryImageBindingModel> UploadImageToClodinary(string imageUrl, string path)
+        private async Task<ImageBindingModel> UploadImageToClodinary(string imageUrl, string path)
         {
             var uploadParams = new ImageUploadParams()
             {
@@ -58,7 +58,7 @@
                 return null;
             }
 
-            var result = new CategoryImageBindingModel()
+            var result = new ImageBindingModel()
             {
                 ImageUrl = uploadResult.SecureUri.AbsoluteUri,
                 PublicId = uploadResult.PublicId,

@@ -20,28 +20,28 @@
             }
 
             int cafeteriaId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl == "https://res.cloudinary.com/djlskbceh/image/upload/v1585916185/restaurant/categories/cafeteria/Cafeteria_ety9so.jpg")
+                .FirstOrDefault(image => image.ImageUrl.Contains(CafeteriaName.ToLower().Replace(" ", "-")))
                 .Id;
             int casualDiningId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl == "https://res.cloudinary.com/djlskbceh/image/upload/v1586207894/restaurant/categories/casual-dining/CasualDining_hpng6o.jpg")
+                .FirstOrDefault(image => image.ImageUrl.Contains(CasualDiningName.ToLower().Replace(" ", "-")))
                 .Id;
             int ethnicId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl == "https://res.cloudinary.com/djlskbceh/image/upload/v1586207925/restaurant/categories/ethnic/Ethnic_ere5s0.jpg")
+                .FirstOrDefault(image => image.ImageUrl.Contains(EthnicName.ToLower().Replace(" ", "-")))
                 .Id;
             int familyStyleId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl == "https://res.cloudinary.com/djlskbceh/image/upload/v1586207928/restaurant/categories/family-style/FamilyStyle_brz7mq.jpg")
+                .FirstOrDefault(image => image.ImageUrl.Contains(FamilyStyleName.ToLower().Replace(" ", "-")))
                 .Id;
             int fastFoodId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl == "https://res.cloudinary.com/djlskbceh/image/upload/v1586207933/restaurant/categories/fast-food/FastFood_a5r5fa.jpg")
+                .FirstOrDefault(image => image.ImageUrl.Contains(FastFoodName.ToLower().Replace(" ", "-")))
                 .Id;
             int fineDiningId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl == "https://res.cloudinary.com/djlskbceh/image/upload/v1586207939/restaurant/categories/fine-dining/FineDining_lwyokf.jpg")
+                .FirstOrDefault(image => image.ImageUrl.Contains(FineDiningName.ToLower().Replace(" ", "-")))
                 .Id;
             int premiumCasualId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl == "https://res.cloudinary.com/djlskbceh/image/upload/v1586207943/restaurant/categories/premium-casual/PremiumCasual_xjynce.jpg")
+                .FirstOrDefault(image => image.ImageUrl.Contains(PremiumCasualName.ToLower().Replace(" ", "-")))
                 .Id;
             int pubId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl == "https://res.cloudinary.com/djlskbceh/image/upload/v1586207865/restaurant/categories/pub/Pub_ihqbd2.jpg")
+                .FirstOrDefault(image => image.ImageUrl.Contains(PubName.ToLower().Replace(" ", "-")))
                 .Id;
 
             List<(string Name, int ImageId, string Description)> categories

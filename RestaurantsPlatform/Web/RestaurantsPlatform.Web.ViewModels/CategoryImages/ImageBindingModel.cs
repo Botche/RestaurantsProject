@@ -1,9 +1,9 @@
-﻿namespace RestaurantsPlatform.Web.ViewModels.RestaurantsImages
+﻿namespace RestaurantsPlatform.Web.ViewModels.CategoryImages
 {
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
 
-    public class CategoryImageBindingModel : IMapTo<CategoryImage>
+    public class ImageBindingModel
     {
         public string ImageUrl { get; set; }
 
