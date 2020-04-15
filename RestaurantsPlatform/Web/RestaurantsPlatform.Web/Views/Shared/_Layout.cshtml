@@ -19,12 +19,13 @@
     <environment names="Staging,Production">
         <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/lib/fontawesome/css/all.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/toastr/build/toastr.min.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
     </environment>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-route="default" asp-route-controller="home" asp-route-action="index">@GlobalConstants.SystemName</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -35,7 +36,7 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-route="categoryArea" asp-route-controller="categories" asp-route-action="all">
+                            <a class="nav-link" asp-route="categoryArea" asp-route-controller="categories" asp-route-action="all">
                                 Restaurants Categories
                             </a>
                         </li>
@@ -43,7 +44,7 @@
                         @if (this.User.IsInRole(AdministratorRoleName) || this.User.IsInRole(RestaurantRoleName))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-route="restaurantArea" asp-route-controller="restaurants" asp-route-action="create">
+                                <a class="nav-link" asp-route="restaurantArea" asp-route-controller="restaurants" asp-route-action="create">
                                     Register your restaurant
                                 </a>
                             </li>
@@ -51,7 +52,7 @@
                         @if (this.User.IsInRole(AdministratorRoleName))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-route="categoryArea" asp-route-controller="categories" asp-route-action="create">
+                                <a class="nav-link" asp-route="categoryArea" asp-route-controller="categories" asp-route-action="create">
                                     Create new category
                                 </a>
                             </li>
@@ -68,7 +69,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer bg-dark text-white-50 text-muted">
         <div class="container">
             &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-route="default" asp-route-controller="home" asp-route-action="privacy">Privacy</a>
         </div>
@@ -80,6 +81,7 @@
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
         <script src="~/lib/toastr/toastr.js" asp-append-version="true"></script>
+        <script src="~/lib/moment/min/moment-with-locales.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
 
     </environment>
@@ -89,6 +91,7 @@
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
         <script src="~/lib/toastr/toastr.min.js" asp-append-version="true"></script>
+        <script src="~/lib/moment/min/moment-with-locales.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 

@@ -88,6 +88,7 @@
             services.AddTransient<IRestaurantImageService, RestaurantImageService>();
             services.AddTransient<ICategoryImageService, CategoryImageService>();
             services.AddTransient<IAdministrationService, AdministrationService>();
+            services.AddTransient<ICommentService, CommentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

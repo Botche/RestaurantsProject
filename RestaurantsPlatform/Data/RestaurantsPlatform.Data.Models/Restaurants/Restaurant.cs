@@ -12,6 +12,7 @@
         public Restaurant()
         {
             this.Images = new HashSet<RestaurantImage>();
+            this.Comments = new HashSet<Comment>();
         }
 
         [Required]
@@ -48,5 +49,7 @@
         public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<RestaurantImage> Images { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

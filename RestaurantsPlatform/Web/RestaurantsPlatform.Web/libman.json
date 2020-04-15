@@ -82,7 +82,16 @@
       "files": [
         "toastr.js",
         "toastr.min.js",
-        "build/toastr.css"
+        "build/toastr.css",
+        "build/toastr.min.css"
+      ]
+    },
+    {
+      "library": "moment@2.24.0",
+      "destination": "wwwroot/lib/moment/",
+      "files": [
+        "min/moment-with-locales.min.js",
+        "min/moment-with-locales.js"
       ]
     }
   ]

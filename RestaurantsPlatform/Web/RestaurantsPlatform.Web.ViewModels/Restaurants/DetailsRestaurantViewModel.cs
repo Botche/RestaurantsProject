@@ -5,6 +5,7 @@
 
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
+    using RestaurantsPlatform.Web.ViewModels.Comments;
     using RestaurantsPlatform.Web.ViewModels.RestaurantsImages;
 
     public class DetailsRestaurantViewModel : IMapFrom<Restaurant>
@@ -33,10 +34,15 @@
         [Url]
         public string ImageUrl { get; set; }
 
+        [Required]
+        public string CommentContent { get; set; }
+
         public string CategoryUrl => this.CategoryName.Replace(' ', '-').ToLower();
 
         public string RestaurantUrl => this.RestaurantName.Replace(' ', '-').ToLower();
 
         public IEnumerable<DetailsRestaurantImageViewModel> Images { get; set; }
+
+        public IEnumerable<DetailsCommentViewModel> Comments { get; set; }
     }
 }

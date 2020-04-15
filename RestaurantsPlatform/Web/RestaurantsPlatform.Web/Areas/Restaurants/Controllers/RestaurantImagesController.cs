@@ -43,7 +43,7 @@ namespace RestaurantsPlatform.Web.Areas.Restaurants.Controllers
             if (!this.ModelState.IsValid)
             {
                 this.TempData[ErrorNotification] = WrontInput;
-                return this.View(input);
+                return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.RestaurantName.ToLower().Replace(' ', '-') });
             }
 
             string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

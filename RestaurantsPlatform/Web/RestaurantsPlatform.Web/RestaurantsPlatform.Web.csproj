@@ -14,6 +14,13 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Restaurants\Views\Shared\**" />
+    <Content Remove="Areas\Restaurants\Views\Shared\**" />
+    <EmbeddedResource Remove="Areas\Restaurants\Views\Shared\**" />
+    <None Remove="Areas\Restaurants\Views\Shared\**" />
+  </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
@@ -49,9 +56,5 @@
     <ProjectReference Include="..\..\Services\RestaurantsPlatform.Services\RestaurantsPlatform.Services.csproj" />
     <ProjectReference Include="..\RestaurantsPlatform.Web.Infrastructure\RestaurantsPlatform.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\RestaurantsPlatform.Web.ViewModels\RestaurantsPlatform.Web.ViewModels.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Restaurants\Views\Shared\PartialViews\" />
   </ItemGroup>
 </Project>

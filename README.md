@@ -4,8 +4,11 @@ Project for my graduation at SoftUni.
 
 TODO:
 * Reviews with comments
-* Account page
+* Update and delete comments
+* Upvotes
+* Display most popular
 * Favourites restaurants
+* Account page
 * RECaptcha
 * Facebook login
 * Add custom working time

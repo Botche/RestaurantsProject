@@ -105,3 +105,20 @@ img {
 .pictureBtn:hover {
     opacity: 1.0;
 }
+
+.vertical-row {
+    Float: left;
+    height: auto;
+    width: 1px; /* edit this if you want */
+    background-color: black
+}
+
+.profile-picture {
+    width: 12rem !important;
+    height: 10rem !important;
+}
+
+.manipulateComment{
+    bottom: 1rem;
+    right: 1rem;
+}
