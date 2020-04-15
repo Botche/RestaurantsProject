@@ -1,4 +1,4 @@
-﻿namespace RestaurantsPlatform.Web.Controllers
+﻿namespace RestaurantsPlatform.Web.Areas.Categories.Controllers
 {
     using System.Threading.Tasks;
 
@@ -10,6 +10,7 @@
     using static RestaurantsPlatform.Common.GlobalConstants;
     using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants;
 
+    [Area("Categories")]
     [Authorize(Roles = AdministratorRoleName)]
     public class CategoryImagesController : Controller
     {

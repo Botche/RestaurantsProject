@@ -50,4 +50,8 @@
     <ProjectReference Include="..\RestaurantsPlatform.Web.Infrastructure\RestaurantsPlatform.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\RestaurantsPlatform.Web.ViewModels\RestaurantsPlatform.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Restaurants\Views\Shared\PartialViews\" />
+  </ItemGroup>
 </Project>

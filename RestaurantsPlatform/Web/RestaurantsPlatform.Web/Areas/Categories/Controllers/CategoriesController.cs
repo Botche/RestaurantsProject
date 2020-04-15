@@ -1,4 +1,4 @@
-﻿namespace RestaurantsPlatform.Web.Controllers
+﻿namespace RestaurantsPlatform.Web.Areas.Categories.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -7,8 +7,8 @@
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-
     using RestaurantsPlatform.Services.Data.Interfaces;
+    using RestaurantsPlatform.Web.Controllers;
     using RestaurantsPlatform.Web.ViewModels;
     using RestaurantsPlatform.Web.ViewModels.Categories;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
@@ -17,6 +17,7 @@
     using static RestaurantsPlatform.Web.Infrastructure.ErrorConstants;
     using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants;
 
+    [Area("Categories")]
     public class CategoriesController : BaseController
     {
         private const int RestaurantsPerPage = 2;

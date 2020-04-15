@@ -19,6 +19,7 @@
     using static RestaurantsPlatform.Web.Infrastructure.ErrorConstants;
     using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants;
 
+    [Area("Restaurants")]
     public class RestaurantsController : BaseController
     {
         private readonly IRestaurantService restaurantService;

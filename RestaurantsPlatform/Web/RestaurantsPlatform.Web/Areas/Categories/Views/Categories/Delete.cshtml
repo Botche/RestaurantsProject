@@ -38,7 +38,7 @@
         </dd>
     </dl>
 
-    <form class="text-center" asp-route="default" asp-route-controller="categories" asp-route-action="delete">
+    <form class="text-center" asp-route="categoryWithAction" asp-route-name="@Model.Url" asp-route-action="delete" asp-route-id="@Model.Id">
         <input type="submit" value="Delete" class="btn btn-outline-danger" />
         <a class="btn btn-outline-secondary" asp-route="category" asp-route-id="@Model.Id" asp-route-name="@Model.Url">
             Back to Details

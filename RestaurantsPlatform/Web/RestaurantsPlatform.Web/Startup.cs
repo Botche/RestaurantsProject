@@ -147,28 +147,38 @@
                     endpoints.MapControllerRoute(
                         name: "restaurant",
                         pattern: "r/{id:int}/{name:minlength(3)}",
-                        new { controller = "Restaurants", action = "GetByIdAndName" });
+                        defaults: new { area = "Restaurants", controller = "Restaurants", action = "GetByIdAndName" });
                     endpoints.MapControllerRoute(
                         name: "restaurantWithAction",
                         pattern: "r/{id:int}/{name:minlength(3)}/{action}",
-                        new { controller = "Restaurants" });
+                        defaults: new { area = "Restaurants", controller = "Restaurants" });
                     endpoints.MapControllerRoute(
                         name: "restaurantImages",
                         pattern: "r/{id:int}/{name:minlength(3)}/{action}/images",
-                        new { controller = "RestaurantImages" });
+                        defaults: new { area = "Restaurants", controller = "RestaurantImages" });
 
                     endpoints.MapControllerRoute(
                         name: "categoryImage",
                         pattern: "c/{id:int}/{name:minlength(3)}/{action}/image",
-                        new { controller = "CategoryImages" });
+                        defaults: new { area = "Categories", controller = "CategoryImages" });
                     endpoints.MapControllerRoute(
                         name: "categoryWithAction",
                         pattern: "c/{id:int}/{name:minlength(3)}/{action}",
-                        new { controller = "Categories" });
+                        defaults: new { area = "Categories", controller = "Categories" });
                     endpoints.MapControllerRoute(
                         name: "category",
                         pattern: "c/{id:int}/{name:minlength(3)}",
-                        new { controller = "Categories", action = "GetByIdAndName" });
+                        defaults: new { area = "Categories", controller = "Categories", action = "GetByIdAndName" });
+
+                    endpoints.MapControllerRoute(
+                        name: "categoryArea",
+                        pattern: "{controller}/{action}/{id?}",
+                        defaults: new { area = "Categories" });
+
+                    endpoints.MapControllerRoute(
+                        name: "restaurantArea",
+                        pattern: "{controller}/{action}/{id?}",
+                        defaults: new { area = "Restaurants" });
 
                     endpoints.MapControllerRoute(
                         name: "areaRoute",

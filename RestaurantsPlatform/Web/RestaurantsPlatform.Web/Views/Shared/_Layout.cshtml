@@ -35,7 +35,7 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-route="default" asp-route-controller="categories" asp-route-action="all">
+                            <a class="nav-link text-dark" asp-route="categoryArea" asp-route-controller="categories" asp-route-action="all">
                                 Restaurants Categories
                             </a>
                         </li>
@@ -43,7 +43,7 @@
                         @if (this.User.IsInRole(AdministratorRoleName) || this.User.IsInRole(RestaurantRoleName))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-route="default" asp-route-controller="restaurants" asp-route-action="create">
+                                <a class="nav-link text-dark" asp-route="restaurantArea" asp-route-controller="restaurants" asp-route-action="create">
                                     Register your restaurant
                                 </a>
                             </li>
@@ -51,7 +51,7 @@
                         @if (this.User.IsInRole(AdministratorRoleName))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-route="default" asp-route-controller="categories" asp-route-action="create">
+                                <a class="nav-link text-dark" asp-route="categoryArea" asp-route-controller="categories" asp-route-action="create">
                                     Create new category
                                 </a>
                             </li>

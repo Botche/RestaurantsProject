@@ -1,4 +1,6 @@
-﻿namespace RestaurantsPlatform.Web.Controllers
+﻿using RestaurantsPlatform.Web.Controllers;
+
+namespace RestaurantsPlatform.Web.Areas.Restaurants.Controllers
 {
     using System.Diagnostics;
     using System.Security.Claims;
@@ -16,6 +18,7 @@
     using static RestaurantsPlatform.Web.Infrastructure.ErrorConstants;
     using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants;
 
+    [Area("Restaurants")]
     public class RestaurantImagesController : BaseController
     {
         private readonly IRestaurantImageService imageService;
