@@ -8,6 +8,8 @@
 
         public const string ImageNotFound = "Image not found!";
 
+        public const string CommentNotFound = "Such a comment does not exists!";
+
         public const string RestaurantNotFound = "Such a restaurant does not exists!";
 
         public const string CategoryNotFound = "Such a category does not exists!";

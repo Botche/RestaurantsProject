@@ -89,6 +89,7 @@
             services.AddTransient<ICategoryImageService, CategoryImageService>();
             services.AddTransient<IAdministrationService, AdministrationService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IVoteService, VoteService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -145,6 +146,11 @@
             app.UseEndpoints(
                 endpoints =>
                 {
+                    endpoints.MapControllerRoute(
+                        name: "restaurantComment",
+                        pattern: "r/{id:int}/{name:minlength(3)}/comment/{commentId:int}/{action}",
+                        defaults: new { area = "Restaurants", controller = "Comments" });
+
                     endpoints.MapControllerRoute(
                         name: "restaurant",
                         pattern: "r/{id:int}/{name:minlength(3)}",

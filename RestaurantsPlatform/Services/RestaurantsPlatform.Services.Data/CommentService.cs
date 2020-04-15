@@ -1,6 +1,7 @@
 ﻿namespace RestaurantsPlatform.Services.Data
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models.Restaurants;
@@ -15,7 +16,7 @@
             this.commentRepostitory = commentRepostitory;
         }
 
-        public async Task<int?> AddCommentToRestaurant(int id, string commentContent, string userId)
+        public async Task<int?> AddCommentToRestaurantAsync(int id, string commentContent, string userId)
         {
             var comment = new Comment()
             {
@@ -25,6 +26,23 @@
             };
 
             await this.commentRepostitory.AddAsync(comment);
+            await this.commentRepostitory.SaveChangesAsync();
+
+            return comment.Id;
+        }
+
+        public async Task<int?> DeleteCommentFromRestaurantAsync(int commentId, int restaurantId)
+        {
+            var comment = this.commentRepostitory.All()
+                .Where(comment => comment.Id == commentId && comment.RestaurantId == restaurantId)
+                .FirstOrDefault();
+
+            if (comment == null)
+            {
+                return null;
+            }
+
+            this.commentRepostitory.Delete(comment);
             await this.commentRepostitory.SaveChangesAsync();
 
             return comment.Id;

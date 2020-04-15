@@ -9,6 +9,7 @@
 
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Web.Controllers;
+    using RestaurantsPlatform.Web.Infrastructure;
     using RestaurantsPlatform.Web.ViewModels;
     using RestaurantsPlatform.Web.ViewModels.Comments;
 
@@ -35,10 +36,11 @@
             }
 
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var id = await this.commentService.AddCommentToRestaurant(input.Id, input.CommentContent, userId);
+            var id = await this.commentService.AddCommentToRestaurantAsync(input.Id, input.CommentContent, userId);
 
             if (id == 0)
             {
+                this.TempData[ErrorNotification] = CommentNotFound;
                 return this.View(ErrorViewName, new ErrorViewModel
                 {
                     RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
@@ -47,6 +49,25 @@
 
             this.TempData[SuccessNotification] = string.Format(SuccessfullyCommentRestaurant, input.RestaurantName);
             return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.RestaurantName.ToLower().Replace(" ", "-") });
+        }
+
+        public async Task<IActionResult> Delete(DeleteCommentInputModel input)
+        {
+            var id = await this.commentService.DeleteCommentFromRestaurantAsync(input.CommentId, input.Id);
+
+            if (id == null)
+            {
+                this.TempData[ErrorNotification] = CommentNotFound;
+                return this.View(ErrorViewName, new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
+                    Message = CommentNotFound,
+                    StatusCode = 404,
+                });
+            }
+
+            this.TempData[SuccessNotification] = SuccessfullyDeletedCommentFromRestaurant;
+            return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.Name });
         }
     }
 }

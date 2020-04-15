@@ -153,26 +153,85 @@
                                 @comment.Content
                             </span>
                         </div>
-                        <div class="float-right text-center">
-                            <a class="nav-link" href="#">
-                                <i class="fa fa-arrow-up"></i>
-                            </a>
-                            <span class="text-primary">
-                                20*
-                            </span>
-                            <a class="nav-link" href="#">
-                                <i class="fa fa-arrow-down"></i>
-                            </a>
-                        </div>
+                        @if (this.User.Identity.Name != null)
+                        {
+                            <div class="float-right text-center">
+                                <form class="votesForm" method="post">
+                                    <input asp-for="@comment.Id" hidden />
+                                </form>
+                                @if (!comment.Votes.Any(vote => vote.UserId == (this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                                  || (int)(comment.Votes.FirstOrDefault(vote => vote.UserId == (this.User.FindFirstValue(ClaimTypes.NameIdentifier))).Type) == 0)
+                                {
+                                    <div>
+                                        <a class="nav-link upvote text-primary upvote">
+                                            <i class="fa fa-arrow-up"></i>
+                                        </a>
+                                    </div>
+                                    <div class="text-primary votes">
+                                        @comment.VotesSum
+                                    </div>
+                                    <div>
+                                        <a class="nav-link downvote text-primary downvote">
+                                            <i class="fa fa-arrow-down"></i>
+                                        </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @if ((int)(comment.Votes.FirstOrDefault(vote => vote.UserId == (this.User.FindFirstValue(ClaimTypes.NameIdentifier))).Type) == 1)
+                                    {
+                                        <div>
+                                            <a class="nav-link upvote text-primary upvote">
+                                                <i class="fas fa-arrow-circle-up"></i>
+                                            </a>
+                                        </div>
+                                        <div class="text-primary votes">
+                                            @comment.VotesSum
+                                        </div>
+                                        <div>
+                                            <a class="nav-link downvote text-primary downvote">
+                                                <i class="fa fa-arrow-down"></i>
+                                            </a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div>
+                                            <a class="nav-link upvote text-primary upvote">
+                                                <i class="fas fa-arrow-up"></i>
+                                            </a>
+                                        </div>
+                                        <div class="text-primary votes">
+                                            @comment.VotesSum
+                                        </div>
+                                        <div>
+                                            <a class="nav-link downvote text-primary downvote">
+                                                <i class="fa fa-arrow-circle-down"></i>
+                                            </a>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
 
                         @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == comment.AuthorId)
                         {
                             <div class="position-absolute manipulateComment text-muted text-decoration-none">
-                                <a>
+                                <a asp-route="restaurantComment" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl"
+                                   asp-route-commentId="@comment.Id" asp-route-action="update" class="update-comment">
                                     <i class="fas fa-pencil-alt"></i> Edit
                                 </a>
                                 &nbsp;
-                                <a href="#">
+                                <a asp-route="restaurantComment" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl"
+                                   asp-route-commentId="@comment.Id" asp-route-action="delete">
+                                    Delete <i class="fas fa-backspace"></i>
+                                </a>
+                            </div>
+                        }
+                        else if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == this.Model.UserId)
+                        {<div class="position-absolute manipulateComment text-muted text-decoration-none">
+                                <a asp-route="restaurantComment" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl"
+                                   asp-route-commentId="@comment.Id" asp-route-action="delete">
                                     Delete <i class="fas fa-backspace"></i>
                                 </a>
                             </div>
@@ -181,7 +240,7 @@
                 </div>
             }
             <div class="align-bottom bg-light p-3">
-                <a href="#fakelink"><i class="fa fa-share"></i> See all posts</a>
+                <a href="#fakelink"><i class="fa fa-share"></i> See all comments</a>
             </div>
         </div>
     </div>
@@ -212,15 +271,32 @@
     <i class="fas fa-arrow-up"></i>
 </a>
 
-
 @section scripts {
     <script type="text/javascript" src="~/js/functions/determinateRestaurantStatusByWorkingTime.js"></script>
     <script type="text/javascript" src="~/js/functions/favouriteButtonInRestaurantView.js"></script>
+    @if (this.User.Identity.Name != null)
+    {
+        <script type="text/javascript" src="~/js/functions/votesAsync.js"></script>
+    }
     @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.UserId)
     {
         <script type="text/javascript" src="~/js/functions/manipulateImageInputForm.js"></script>
         <script type="text/javascript" src="~/js/functions/addImageAsync.js"></script>
     }
+    <script type="text/javascript">
+        const updateBtns = document.getElementsByClassName('update-comment');
+
+        Array.from(updateBtns).forEach(updateBtn => {
+            updateBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const href = this.href;
+
+                console.log(href);
+            })
+        })
+
+
+    </script>
     @*<script type="text/javascript">
             async function getLatitude() {
                 const address = $('dt:contains("Address")').next().text();

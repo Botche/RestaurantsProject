@@ -4,6 +4,8 @@
 
     public interface ICommentService
     {
-        Task<int?> AddCommentToRestaurant(int id, string commentContent, string userId);
+        Task<int?> AddCommentToRestaurantAsync(int id, string commentContent, string userId);
+
+        Task<int?> DeleteCommentFromRestaurantAsync(int commentId, int restaurantId);
     }
 }

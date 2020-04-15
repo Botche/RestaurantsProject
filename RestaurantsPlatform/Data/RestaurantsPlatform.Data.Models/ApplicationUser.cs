@@ -7,6 +7,7 @@ namespace RestaurantsPlatform.Data.Models
     using Microsoft.AspNetCore.Identity;
 
     using RestaurantsPlatform.Data.Common.Models;
+    using RestaurantsPlatform.Data.Models.Restaurants;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
@@ -16,6 +17,9 @@ namespace RestaurantsPlatform.Data.Models
             this.UserRoles = new HashSet<ApplicationUserRole>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.Restaurants = new HashSet<Restaurant>();
+            this.Comments = new HashSet<Comment>();
+            this.Votes = new HashSet<Vote>();
         }
 
         // Audit info
@@ -33,5 +37,11 @@ namespace RestaurantsPlatform.Data.Models
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
         public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
+
+        public virtual ICollection<Restaurant> Restaurants { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
+
+        public virtual ICollection<Vote> Votes { get; set; }
     }
 }

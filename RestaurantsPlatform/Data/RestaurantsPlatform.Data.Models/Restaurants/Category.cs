@@ -29,7 +29,7 @@
         [Required]
         public int ImageId { get; set; }
 
-        public CategoryImage Image { get; set; }
+        public virtual CategoryImage Image { get; set; }
 
         public virtual IEnumerable<Restaurant> Restaurants { get; set; }
     }

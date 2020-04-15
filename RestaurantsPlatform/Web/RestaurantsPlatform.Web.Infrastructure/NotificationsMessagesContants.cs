@@ -31,5 +31,7 @@
         public const string SuccessfullyDeletedRestaurant = "Successfully deteled restaurant!";
 
         public const string SuccessfullyCommentRestaurant = "Successfully comment {0} restaurant!";
+
+        public const string SuccessfullyDeletedCommentFromRestaurant = "Successfully deleted comment from restaurant!";
     }
 }
