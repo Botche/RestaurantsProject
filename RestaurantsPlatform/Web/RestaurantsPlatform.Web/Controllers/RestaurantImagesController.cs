@@ -62,7 +62,7 @@
                 return this.View(ErrorViewName, new ErrorViewModel
                 {
                     RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
-                    Message = PageNotFound,
+                    Message = ImageNotFound,
                     StatusCode = 404,
                 });
             }

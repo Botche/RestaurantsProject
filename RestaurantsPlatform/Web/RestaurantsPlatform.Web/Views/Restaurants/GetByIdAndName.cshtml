@@ -1,20 +1,13 @@
 ﻿@using System.Security.Claims;
-@using RestaurantsPlatform.Web.ViewModels.PartialModels;
 @model RestaurantsPlatform.Web.ViewModels.Restaurants.DetailsRestaurantViewModel
 
 @{
     ViewData["Title"] = Model.RestaurantName;
-
-    var partialModel = new HeadingPartialViewModel(Model.RestaurantName, "category", null, Model.CategoryId, null, Model.CategoryUrl);
 }
 
 <div>
     <h1 class="text-center m-4">
-        @*<partial name="_Heading" model="partialModel" />*@
         <span class="float-md-left">
-            <a class="btn btn-outline-secondary" asp-route="category" asp-route-id="@Model.CategoryId" asp-route-name="@Model.CategoryUrl">
-                <i class="far fa-arrow-alt-circle-left"></i>
-            </a>
             @if (Model.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
                 <a class="btn btn-outline-primary" asp-route="restaurantWithAction" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl" asp-route-action="update">

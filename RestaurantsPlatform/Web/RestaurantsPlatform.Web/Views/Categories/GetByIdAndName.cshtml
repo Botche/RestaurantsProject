@@ -1,16 +1,14 @@
 ﻿@using static RestaurantsPlatform.Common.GlobalConstants
-@using RestaurantsPlatform.Web.ViewModels.PartialModels;
 @model RestaurantsPlatform.Web.ViewModels.Categories.DetailsCategoryViewModel
 
 @{
     ViewData["Title"] = Model.Name;
-
-    var partialModel = new HeadingPartialViewModel(Model.Name, "default", "categories", null, "all", null);
 }
 
-
 <div class="border-info text-center">
-    <partial name="./PartialViews/_Heading" model="partialModel" />
+    <h1 class="m-4">
+        @Model.Name
+    </h1>
     <p>
         @Model.Description
     </p>

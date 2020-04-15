@@ -1,15 +1,13 @@
 ﻿@using System.Security.Claims;
-@using RestaurantsPlatform.Web.ViewModels.PartialModels;
 @model RestaurantsPlatform.Web.ViewModels.RestaurantsImages.AllImagesFromRestaurantViewModel
 
 @{
     ViewData["Title"] = "Gallery";
-
-    var partialModel = new HeadingPartialViewModel("Gallery", "restaurant", null, Model.Id, null, Model.Url);
 }
 
-<partial name="./PartialViews/_Heading" model="partialModel" />
-
+<h1 class="text-center m-4">
+    Gallery - @Model.RestaurantName
+</h1>
 
 <div class="d-flex flex-wrap justify-content-between gallery">
     @foreach (var image in Model.Images)

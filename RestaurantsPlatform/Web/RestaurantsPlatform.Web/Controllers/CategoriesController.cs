@@ -46,14 +46,14 @@
                     CategoriesPerPage,
                     (page - 1) * CategoriesPerPage);
 
+            var count = this.categoryService.GetCountOfAllCategories();
             var allCategoriesViewModel = new AllCategoriesViewModel
             {
                 Categories = categories,
                 CurrentPage = page,
+                PagesCount = (int)Math.Ceiling((double)count / CategoriesPerPage),
             };
 
-            var count = this.categoryService.GetCountOfAllCategories();
-            allCategoriesViewModel.PagesCount = (int)Math.Ceiling((double)count / CategoriesPerPage);
             if (allCategoriesViewModel.PagesCount == 0)
             {
                 allCategoriesViewModel.PagesCount = 1;
@@ -62,7 +62,7 @@
             return this.View(allCategoriesViewModel);
         }
 
-        public IActionResult GetByIdAndName(int id, string name, int page = 1)
+        public IActionResult GetByIdAndName(int id, string name, int page = 1, int categoriesPage = 1)
         {
             if (page < 1)
             {
@@ -82,8 +82,9 @@
             }
 
             category.Restaurants = this.restaurantService.GetRestaurantsByCategoryId<AllRestaurantsViewModel>(category.Id, RestaurantsPerPage, (page - 1) * RestaurantsPerPage);
-
+            category.OldPage = categoriesPage;
             category.CurrentPage = page;
+
             var count = this.restaurantService.GetCountByCategoryId(category.Id);
             category.PagesCount = (int)Math.Ceiling((double)count / RestaurantsPerPage);
             if (category.PagesCount == 0)

@@ -53,7 +53,12 @@
 
             var uploadResult = await this.cloudinary.UploadAsync(uploadParams);
 
-            var result = new CategoryImageBindingModel
+            if (uploadResult.Error != null)
+            {
+                return null;
+            }
+
+            var result = new CategoryImageBindingModel()
             {
                 ImageUrl = uploadResult.SecureUri.AbsoluteUri,
                 PublicId = uploadResult.PublicId,
