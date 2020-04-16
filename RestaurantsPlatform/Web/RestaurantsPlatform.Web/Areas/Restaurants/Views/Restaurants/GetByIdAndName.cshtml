@@ -223,7 +223,7 @@
                                 </a>
                                 &nbsp;
                                 <a asp-route="restaurantComment" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl"
-                                   asp-route-commentId="@comment.Id" asp-route-action="delete">
+                                   asp-route-commentId="@comment.Id" asp-route-action="delete" class="delete-comment">
                                     Delete <i class="fas fa-backspace"></i>
                                 </a>
                             </div>
@@ -231,7 +231,7 @@
                         else if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == this.Model.UserId)
                         {<div class="position-absolute manipulateComment text-muted text-decoration-none">
                                 <a asp-route="restaurantComment" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl"
-                                   asp-route-commentId="@comment.Id" asp-route-action="delete">
+                                   asp-route-commentId="@comment.Id" asp-route-action="delete" class="delete-comment">
                                     Delete <i class="fas fa-backspace"></i>
                                 </a>
                             </div>
@@ -267,13 +267,14 @@
     </div>
 </div>
 
-<a href="#" id="scrollToTop" class="btn btn-lg btn-secondary button-to-top rounded-circle">
+<a id="scrollToTop" onclick="topFunction()" class="btn btn-lg btn-secondary button-to-top rounded-circle">
     <i class="fas fa-arrow-up"></i>
 </a>
 
 @section scripts {
     <script type="text/javascript" src="~/js/functions/determinateRestaurantStatusByWorkingTime.js"></script>
     <script type="text/javascript" src="~/js/functions/favouriteButtonInRestaurantView.js"></script>
+    <script type="text/javascript" src="~/js/functions/scrollsToTopFunction.js"></script>
     @if (this.User.Identity.Name != null)
     {
         <script type="text/javascript" src="~/js/functions/votesAsync.js"></script>
@@ -283,6 +284,7 @@
         <script type="text/javascript" src="~/js/functions/manipulateImageInputForm.js"></script>
         <script type="text/javascript" src="~/js/functions/addImageAsync.js"></script>
     }
+    <script type="text/javascript" src="~/js/functions/deleteCommentAsync.js"></script>
     <script type="text/javascript">
         const updateBtns = document.getElementsByClassName('update-comment');
 
@@ -293,8 +295,9 @@
 
                 console.log(href);
             })
-        })
+        });
 
+       
 
     </script>
     @*<script type="text/javascript">

@@ -11,6 +11,7 @@
 
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Services.Data.Interfaces;
+    using RestaurantsPlatform.Services.Messaging;
     using RestaurantsPlatform.Web.ViewModels;
     using RestaurantsPlatform.Web.ViewModels.Categories;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
