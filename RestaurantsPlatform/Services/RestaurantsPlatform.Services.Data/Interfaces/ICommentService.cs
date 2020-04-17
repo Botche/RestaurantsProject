@@ -7,5 +7,7 @@
         Task<int?> AddCommentToRestaurantAsync(int id, string commentContent, string userId);
 
         Task<int?> DeleteCommentFromRestaurantAsync(int commentId, int restaurantId);
+
+        Task<int> UpdateCommentAsync(int commentId, string content);
     }
 }

@@ -69,5 +69,23 @@
             this.TempData[SuccessNotification] = SuccessfullyDeletedCommentFromRestaurant;
             return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.Name });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Update([FromBody]UpdateCommentInputView input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            var updatedCommentId = await this.commentService.UpdateCommentAsync(input.CommentId, input.Content);
+
+            if (updatedCommentId == 0)
+            {
+                return this.NotFound();
+            }
+
+            return this.Json(new { content = input.Content });
+        }
     }
 }

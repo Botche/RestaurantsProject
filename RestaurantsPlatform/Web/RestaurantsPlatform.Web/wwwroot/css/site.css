@@ -98,13 +98,12 @@ img {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
     opacity: 0.5;
 }
 
-.pictureBtn:hover {
-    opacity: 1.0;
-}
+    .pictureBtn:hover {
+        opacity: 1.0;
+    }
 
 .vertical-row {
     Float: left;
@@ -118,7 +117,22 @@ img {
     height: 10rem !important;
 }
 
-.manipulateComment{
+.manipulateComment {
     bottom: 1rem;
     right: 1rem;
+}
+
+.button-link {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+}
+
+.button-link:hover {
+    text-decoration: underline;
+}
+
+.commentDiv {
+    overflow-y: auto;
+    max-height: 40rem;
 }

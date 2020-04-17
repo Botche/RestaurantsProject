@@ -47,5 +47,17 @@
 
             return comment.Id;
         }
+
+        public Task<int> UpdateCommentAsync(int commentId, string content)
+        {
+            var commentToUpdate = this.commentRepostitory.All()
+                .Where(comment => comment.Id == commentId)
+                .FirstOrDefault();
+
+            commentToUpdate.Content = content;
+
+            this.commentRepostitory.Update(commentToUpdate);
+            return this.commentRepostitory.SaveChangesAsync();
+        }
     }
 }

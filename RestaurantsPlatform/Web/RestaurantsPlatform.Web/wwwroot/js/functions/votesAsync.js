@@ -3,11 +3,11 @@
     const downvoteBtns = document.getElementsByClassName('downvote');
 
     Array.from(upvoteBtns).forEach(upvoteBtn => {
-        upvoteBtn.style.cursor = "pointer";
+        upvoteBtn.style.cursor = 'pointer';
         upvoteBtn.addEventListener('click', upvote);
     })
     Array.from(downvoteBtns).forEach(downvoteBtn => {
-        downvoteBtn.style.cursor = "pointer";
+        downvoteBtn.style.cursor = 'pointer';
         downvoteBtn.addEventListener('click', downvote);
     })
 
