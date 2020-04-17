@@ -19,6 +19,8 @@
     <Compile Remove="Migrations\20200406210307_AddEntitiesImages2.Designer.cs" />
     <Compile Remove="Migrations\20200414153729_Update.cs" />
     <Compile Remove="Migrations\20200414153729_Update.Designer.cs" />
+    <Compile Remove="Migrations\20200417100008_CheckForUpdates.cs" />
+    <Compile Remove="Migrations\20200417100008_CheckForUpdates.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

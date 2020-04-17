@@ -9,5 +9,7 @@
         Task DemoteAsync(string id, string roleName);
 
         Task BanAsync(string id);
+
+        Task UnBanAsync(string id);
     }
 }

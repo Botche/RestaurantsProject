@@ -5,24 +5,19 @@
 
         const icon = likeBtn.getElementsByTagName('i')[0];
 
-        icon.classList.add('far');
-        icon.classList.add('text-danger');
+        icon.classList.add('far', 'text-danger');
 
         likeBtn.addEventListener('mouseover', function () {
-            icon.classList.add('text-white');
-            icon.classList.remove('text-danger');
+            icon.classList.replace('text-danger', 'text-white');
         });
         likeBtn.addEventListener('mouseout', function () {
-            icon.classList.remove('text-white');
-            icon.classList.add('text-danger');
+            icon.classList.replace('text-white', 'text-danger');
         });
         likeBtn.addEventListener('click', function () {
             if (icon.classList.contains('fa')) {
-                icon.classList.remove('fa');
-                icon.classList.add('far');
+                icon.classList.replace('fa', 'far');
             } else {
-                icon.classList.remove('far');
-                icon.classList.add('fa');
+                icon.classList.replace('far', 'fa');
             }
         });
     });

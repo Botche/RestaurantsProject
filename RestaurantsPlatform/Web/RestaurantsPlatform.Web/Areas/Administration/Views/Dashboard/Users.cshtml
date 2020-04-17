@@ -34,25 +34,25 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var user in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
+                    @Html.DisplayFor(modelItem => user.UserName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @Html.DisplayFor(modelItem => user.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                    @Html.DisplayFor(modelItem => user.CreatedOn)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IsDeleted)
+                    @Html.DisplayFor(modelItem => user.IsDeleted)
                 </td>
                 <td>
-                    @if (item.IsDeleted)
+                    @if (user.IsDeleted)
                     {
-                        @Html.DisplayFor(modelItem => item.DeletedOn)
+                        @Html.DisplayFor(modelItem => user.DeletedOn)
                     }
                     else
                     {
@@ -60,10 +60,10 @@
                     }
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RoleName)
+                    @Html.DisplayFor(modelItem => user.RoleName)
                 </td>
                 <td>
-                    @if (item.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                    @if (user.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                     {
                         <a class="btn btn-primary disabled">
                             Promote
@@ -77,36 +77,45 @@
                     }
                     else
                     {
-                        @if (item.RoleName == UserRoleName)
+                        @if (user.RoleName == UserRoleName)
                         {
-                            <a class="btn btn-primary" asp-area="Administration" asp-controller="Dashboard" asp-action="Promote" asp-route-id="@item.Id" asp-route-roleName="@item.RoleName">
+                            <a class="btn btn-primary" asp-area="Administration" asp-controller="Dashboard" asp-action="Promote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
                                 Promote
                             </a>
                             <a class="btn btn-secondary disabled">
                                 Demote
                             </a>
                         }
-                        else if (item.RoleName == AdministratorRoleName)
+                        else if (user.RoleName == AdministratorRoleName)
                         {
                             <a class="btn btn-primary disabled">
                                 Promote
                             </a>
-                            <a class="btn btn-secondary" asp-area="Administration" asp-controller="Dashboard" asp-action="Demote" asp-route-id="@item.Id" asp-route-roleName="@item.RoleName">
+                            <a class="btn btn-secondary" asp-area="Administration" asp-controller="Dashboard" asp-action="Demote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
                                 Demote
                             </a>
                         }
                         else
                         {
-                            <a class="btn btn-primary" asp-area="Administration" asp-controller="Dashboard" asp-action="Promote" asp-route-id="@item.Id" asp-route-roleName="@item.RoleName">
+                            <a class="btn btn-primary" asp-area="Administration" asp-controller="Dashboard" asp-action="Promote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
                                 Promote
                             </a>
-                            <a class="btn btn-secondary" asp-area="Administration" asp-controller="Dashboard" asp-action="Demote" asp-route-id="@item.Id" asp-route-roleName="@item.RoleName">
+                            <a class="btn btn-secondary" asp-area="Administration" asp-controller="Dashboard" asp-action="Demote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
                                 Demote
                             </a>
                         }
-                        <a class="btn btn-danger" asp-area="Administration" asp-controller="Dashboard" asp-action="Ban" asp-route-id="@item.Id" asp-route-roleName="@item.RoleName">
-                            Ban
-                        </a>
+                        @if (user.IsDeleted)
+                        {
+                            <a class="btn btn-success" asp-area="Administration" asp-controller="Dashboard" asp-action="UnBan" asp-route-id="@user.Id">
+                                UnBan
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-danger" asp-area="Administration" asp-controller="Dashboard" asp-action="Ban" asp-route-id="@user.Id">
+                                Ban
+                            </a>
+                        }
                     }
                 </td>
             </tr>

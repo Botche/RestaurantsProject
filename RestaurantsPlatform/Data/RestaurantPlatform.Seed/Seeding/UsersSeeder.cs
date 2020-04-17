@@ -1,10 +1,12 @@
 ﻿namespace RestaurantsPlatform.Seed.Seeding
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
 
     using RestaurantsPlatform.Data;
@@ -17,16 +19,17 @@
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var usersFromDb = dbContext.Users.IgnoreQueryFilters().ToList();
 
-            await SeedUserAsync(userManager, UserEmail, UserPassword, UserRoleName);
-            await SeedUserAsync(userManager, AdministratorEmail, AdministratorPassword, AdministratorRoleName);
-            await SeedUserAsync(userManager, RestaurantEmail, RestaurantPassword, RestaurantRoleName);
-            await SeedUserAsync(userManager, SecondRestaurantEmail, SecondRestaurantPassword, RestaurantRoleName);
+            await SeedUserAsync(usersFromDb, userManager, UserEmail, UserPassword, UserRoleName);
+            await SeedUserAsync(usersFromDb, userManager, AdministratorEmail, AdministratorPassword, AdministratorRoleName);
+            await SeedUserAsync(usersFromDb, userManager, RestaurantEmail, RestaurantPassword, RestaurantRoleName);
+            await SeedUserAsync(usersFromDb, userManager, SecondRestaurantEmail, SecondRestaurantPassword, RestaurantRoleName);
         }
 
-        private static async Task SeedUserAsync(UserManager<ApplicationUser> userManager, string email, string password, string role)
+        private static async Task SeedUserAsync(List<ApplicationUser> usersFromDb, UserManager<ApplicationUser> userManager, string email, string password, string role)
         {
-            var user = await userManager.FindByEmailAsync(email);
+            var user = usersFromDb.FirstOrDefault(user => user.Email == email);
             if (user == null)
             {
                 ApplicationUser userToSignIn = new ApplicationUser()

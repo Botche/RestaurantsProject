@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
-
+    using Microsoft.EntityFrameworkCore;
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Services.Data.Interfaces;
@@ -26,9 +26,16 @@
         public async Task BanAsync(string id)
         {
             var user = await this.userManager.FindByIdAsync(id);
-            await this.userManager.SetLockoutEnabledAsync(user, true);
 
-            this.userRepository.Update(user);
+            this.userRepository.Delete(user);
+            await this.userRepository.SaveChangesAsync();
+        }
+
+        public async Task UnBanAsync(string id)
+        {
+            var user = await this.userRepository.AllWithDeleted().FirstOrDefaultAsync(user => user.Id == id);
+
+            this.userRepository.Undelete(user);
             await this.userRepository.SaveChangesAsync();
         }
 

@@ -19,15 +19,18 @@
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IAdministrationService administrationService;
+        private readonly IUserService userService;
         private readonly IEmailSender emailSender;
 
         public DashboardController(
             UserManager<ApplicationUser> userManager,
             IAdministrationService administrationService,
+            IUserService userService,
             IEmailSender emailSender)
         {
             this.userManager = userManager;
             this.administrationService = administrationService;
+            this.userService = userService;
             this.emailSender = emailSender;
         }
 
@@ -38,9 +41,8 @@
 
         public IActionResult Users()
         {
-            var users = this.userManager.Users.To<UserInformationViewModel>()
-                .OrderBy(user => user.Email)
-                .ToList();
+            var users = this.userService.GetAllUsersWithDeleted<UserInformationViewModel>()
+                .OrderBy(user => user.Email);
 
             return this.View(users);
         }
@@ -86,7 +88,23 @@
                 OwnersName,
                 user.Email,
                 "We are sorry!",
-                @"<h1>You have been banned from our web site - RestaurantsPlatform...</h1><p>If you want your account back, contact us!</p>");
+                @"<h1>You have been banned from our web site - Restaurants Platform...</h1><p>If you want your account back, contact us!</p>");
+
+            return this.RedirectToRoute("areaRoute", new { area = "Administration", controller = "Dashboard", action = "Users" });
+        }
+
+        public async Task<IActionResult> UnBan(string id)
+        {
+            await this.administrationService.UnBanAsync(id);
+
+            var user = await this.userManager.FindByIdAsync(id);
+
+            await this.emailSender.SendEmailAsync(
+                OwnersEmail,
+                OwnersName,
+                user.Email,
+                "We are happy to see you again!",
+                @"<h1>You have been unbanned from our web site - Restaurants Platform :)</h1>");
 
             return this.RedirectToRoute("areaRoute", new { area = "Administration", controller = "Dashboard", action = "Users" });
         }
