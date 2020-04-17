@@ -1,0 +1,48 @@
+﻿@using System.Security.Claims;
+@model RestaurantsPlatform.Web.ViewModels.Restaurants.DetailsRestaurantViewModel
+
+<div class="d-flex justify-content-around flex-wrap" id="galleryInfo">
+    @if (Model.Images.Any())
+    {
+        @foreach (var image in Model.Images.Take(3))
+        {
+            <div class="mb-3">
+                <img class="img-fluid display-image img-thumbnail" src="@image.ImageUrl" alt="Card image cap">
+            </div>
+        }
+    }
+</div>
+
+<div class="text-center">
+    @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.UserId)
+    {
+        <form id="formToShow" method="POST" asp-controller="RestaurantImages" asp-action="AddImageToRestaurant">
+            <div class="form-group">
+                <input asp-for="Id" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <input asp-for="RestaurantName" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                @if (!this.Model.Images.Any())
+                {
+                    <small id="imageUrlHelp" class="form-text text-muted">First uploaded image will appear as presentation image in categories search</small>
+                }
+            </div>
+            <div class="form-group">
+                <input id="uploadPicture" class="btn btn-outline-success" value="Add picture to gallery" type="submit" />
+            </div>
+        </form>
+        <button class="btn btn-outline-secondary" id="showForm">Add picture to gallery</button>
+    }
+
+    @if (Model.Images.Any())
+    {
+        <a id="showGallery" class="btn btn-outline-info" asp-route="restaurantImages" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl" asp-route-action="gallery">
+            Show gallery
+        </a>
+    }
+</div>

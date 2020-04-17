@@ -1,0 +1,136 @@
+﻿@using System.Security.Claims;
+@model RestaurantsPlatform.Web.ViewModels.Restaurants.DetailsRestaurantViewModel
+
+<div class="mt-5 border">
+    <div>
+        <nav class="d-flex flex-wrap justify-content-between bg-light">
+            <div class="mx-auto">
+                <div class="nav-item active">
+                    <a class="nav-link" href="#">
+                        <i class="fa fa-comments"></i>
+                        New Comments
+                    </a>
+                </div>
+            </div>
+            <div class="vertical-row"></div>
+            <div class="mx-auto">
+                <div class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fa fa-star"></i>
+                        Popular Posts
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        @foreach (var comment in Model.Comments.OrderByDescending(comment => comment.CreatedOn))
+        {
+            <div class="m-3 border rounded">
+                <div class="media position-relative">
+                    <img class="pl-2 mr-3 profile-picture rounded" src="https://res.cloudinary.com/djlskbceh/image/upload/v1586961617/restaurant/16-168770_user-iconset-no-profile-picture-icon-circle-clipart_uyxcky.jpg" alt="Profile picture">
+                    <div class="media-body">
+                        <h5 class="mt-3">
+                            @comment.AuthorUserName
+                            <small class="text-muted"><time datetime="@comment.CreatedOn.ToString("O")"></time></small>
+                            @if (comment.IsEdited)
+                            {
+                                <small class="float-right text-muted d-block"><i class="fas fa-pencil-alt"></i> Edited</small>
+                            }
+                        </h5>
+
+                        <span>
+                            @comment.Content
+                        </span>
+                    </div>
+                    @if (this.User.Identity.Name != null)
+                    {
+                        <div class="float-right text-center">
+                            <form class="votesForm" method="post">
+                                <input asp-for="@comment.Id" hidden />
+                            </form>
+                            @if (!comment.Votes.Any(vote => vote.UserId == (this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                       || (int)(comment.Votes.FirstOrDefault(vote => vote.UserId == (this.User.FindFirstValue(ClaimTypes.NameIdentifier))).Type) == 0)
+                            {
+                                <div>
+                                    <a class="nav-link upvote text-primary upvote">
+                                        <i class="fa fa-arrow-up"></i>
+                                    </a>
+                                </div>
+                                <div class="text-primary votes">
+                                    @comment.VotesSum
+                                </div>
+                                <div>
+                                    <a class="nav-link downvote text-primary downvote">
+                                        <i class="fa fa-arrow-down"></i>
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                @if ((int)(comment.Votes.FirstOrDefault(vote => vote.UserId == (this.User.FindFirstValue(ClaimTypes.NameIdentifier))).Type) == 1)
+                                {
+                                    <div>
+                                        <a class="nav-link upvote text-primary upvote">
+                                            <i class="fas fa-arrow-circle-up"></i>
+                                        </a>
+                                    </div>
+                                    <div class="text-primary votes">
+                                        @comment.VotesSum
+                                    </div>
+                                    <div>
+                                        <a class="nav-link downvote text-primary downvote">
+                                            <i class="fa fa-arrow-down"></i>
+                                        </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div>
+                                        <a class="nav-link upvote text-primary upvote">
+                                            <i class="fas fa-arrow-up"></i>
+                                        </a>
+                                    </div>
+                                    <div class="text-primary votes">
+                                        @comment.VotesSum
+                                    </div>
+                                    <div>
+                                        <a class="nav-link downvote text-primary downvote">
+                                            <i class="fa fa-arrow-circle-down"></i>
+                                        </a>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+
+                    @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == comment.AuthorId)
+                    {
+                        <div class="position-absolute manipulateComment text-muted text-decoration-none">
+                            <a asp-route="restaurantComment" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl"
+                               asp-route-commentId="@comment.Id" asp-route-action="update" class="update-comment">
+                                <i class="fas fa-pencil-alt"></i> Edit
+                            </a>
+                            &nbsp;
+                            <a asp-route="restaurantComment" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl"
+                               asp-route-commentId="@comment.Id" asp-route-action="delete" class="delete-comment">
+                                Delete <i class="fas fa-backspace"></i>
+                            </a>
+                        </div>
+                    }
+                    else if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == this.Model.UserId)
+                    {
+                        <div class="position-absolute manipulateComment text-muted text-decoration-none">
+                            <a asp-route="restaurantComment" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl"
+                               asp-route-commentId="@comment.Id" asp-route-action="delete" class="delete-comment">
+                                Delete <i class="fas fa-backspace"></i>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        <div class="align-bottom bg-light p-3">
+            <a href="#fakelink"><i class="fa fa-share"></i> See all comments</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+﻿@using static RestaurantsPlatform.Common.GlobalConstants
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-route="default" asp-route-controller="home" asp-route-action="index">@SystemName</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <partial name="_LoginPartial" />
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-route="categoryArea" asp-route-controller="categories" asp-route-action="all">
+                            Restaurants Categories
+                        </a>
+                    </li>
+
+                    @if (this.User.IsInRole(AdministratorRoleName) || this.User.IsInRole(RestaurantRoleName))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-route="restaurantArea" asp-route-controller="restaurants" asp-route-action="create">
+                                Register your restaurant
+                            </a>
+                        </li>
+                    }
+                    @if (this.User.IsInRole(AdministratorRoleName))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-route="categoryArea" asp-route-controller="categories" asp-route-action="create">
+                                Create new category
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

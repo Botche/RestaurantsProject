@@ -14,13 +14,6 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Areas\Restaurants\Views\Shared\**" />
-    <Content Remove="Areas\Restaurants\Views\Shared\**" />
-    <EmbeddedResource Remove="Areas\Restaurants\Views\Shared\**" />
-    <None Remove="Areas\Restaurants\Views\Shared\**" />
-  </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
