@@ -70,7 +70,14 @@
             {
                 options.HeaderName = "X-CSRF-TOKEN";
             });
+
             services.AddRazorPages();
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = this.configuration.GetSection("Facebook")["AppId"];
+                facebookOptions.AppSecret = this.configuration.GetSection("Facebook")["AppSecret"];
+                facebookOptions.AccessDeniedPath = "/Identity/Account/Login";
+            });
 
             services.AddSingleton(this.configuration);
 
