@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -25,15 +26,18 @@
 
         private readonly ICategoryService categoryService;
         private readonly IRestaurantService restaurantService;
+        private readonly IFavouriteService favouriteService;
 
         public CategoriesController(
             ICategoryService categoryService,
             IRestaurantService restaurantService,
-            IUserService userService)
+            IUserService userService,
+            IFavouriteService favouriteService)
             : base(userService)
         {
             this.categoryService = categoryService;
             this.restaurantService = restaurantService;
+            this.favouriteService = favouriteService;
         }
 
         public IActionResult All(int page = 1)
@@ -83,6 +87,13 @@
             }
 
             category.Restaurants = this.restaurantService.GetRestaurantsByCategoryId<AllRestaurantsViewModel>(category.Id, RestaurantsPerPage, (page - 1) * RestaurantsPerPage);
+
+            foreach (var restaurant in category.Restaurants)
+            {
+                restaurant.IsFavourite = this.favouriteService
+                    .CheckIfRestaurantIsFavourite(restaurant.Id, this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            }
+
             category.OldPage = categoriesPage;
             category.CurrentPage = page;
 

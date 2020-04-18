@@ -1,11 +1,14 @@
 ﻿namespace RestaurantsPlatform.Services.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
+    using RestaurantsPlatform.Services.Mapping;
 
     public class CommentService : ICommentService
     {
@@ -46,6 +49,24 @@
             await this.commentRepostitory.SaveChangesAsync();
 
             return comment.Id;
+        }
+
+        public IEnumerable<T> GetLatestComments<T>(int restaurantId)
+        {
+            return this.commentRepostitory.All()
+                .Where(comment => comment.RestaurantId == restaurantId)
+                .OrderByDescending(comment => comment.CreatedOn)
+                .To<T>()
+                .ToList();
+        }
+
+        public IEnumerable<T> GetMostPopularComments<T>(int restaurantId)
+        {
+            return this.commentRepostitory.All()
+                .Where(comment => comment.RestaurantId == restaurantId)
+                .OrderByDescending(comment => comment.Votes.Sum(vote => (int)vote.Type))
+                .To<T>()
+                .ToList();
         }
 
         public Task<int> UpdateCommentAsync(int commentId, string content)

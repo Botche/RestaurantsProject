@@ -20,8 +20,19 @@
         </span>
         @Model.RestaurantName
         <span class="badge badge-pill status">Open</span>
-        <a class="likeBtn"><i class="heartIcon fa-heart float-right"></i></a>
+        @if (this.User.Identity.Name != null)
+        {
+            @if (Model.IsFavourite)
+            {
+                <a class="likeBtn"><i class="heartIcon fa-heart fa float-right"></i></a>
+            }
+            else
+            {
+                <a class="likeBtn"><i class="heartIcon fa-heart far float-right"></i></a>
+            }
+        }
     </h1>
+    <form class="d-none" id="favourites">@Html.AntiForgeryToken() <input asp-for="Id" /></form>
 </div>
 <hr />
 <div class="row mb-4">
@@ -68,10 +79,15 @@
 
 @if (this.Model.Comments.Any())
 {
-    <partial name="./PartialViews/_CommentsView" model="Model" />
+    <div class="mt-5 border comments-container">
+        <partial name="./PartialViews/_CommentsView" model="Model" />
+    </div>
 }
 
-<partial name="./PartialViews/_CommentsFormPartialView" model="Model" />
+@if (this.User.Identity.Name != null)
+{
+    <partial name="./PartialViews/_CommentsFormPartialView" model="Model" />
+}
 
 <a id="scrollToTop" onclick="topFunction()" class="btn btn-lg btn-secondary button-to-top rounded-circle">
     <i class="fas fa-arrow-up"></i>
@@ -93,143 +109,143 @@
     <script type="text/javascript" src="~/js/functions/deleteCommentAsync.js" asp-append-version="true"></script>
     <script type="text/javascript">
         (() => {
-    const updateBtns = document.getElementsByClassName('update-comment');
+            const updateBtns = document.getElementsByClassName('update-comment');
 
-    Array.from(updateBtns).forEach(updateBtn => {
-        updateBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            const href = this.href;
+            Array.from(updateBtns).forEach(updateBtn => {
+                updateBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const href = this.href;
 
-            Array.from(document.getElementsByClassName('undo-button')).forEach(undoButton => {
-                undoButton.click();
-            });
+                    Array.from(document.getElementsByClassName('undo-button')).forEach(undoButton => {
+                        undoButton.click();
+                    });
 
-            // old comment body
-            const commentBody = this.parentNode.parentNode.getElementsByClassName('comment-content')[0];
-            const commentBodyParentNode = commentBody.parentNode;
-            commentBody.parentNode.removeChild(commentBody);
+                    // old comment body
+                    const commentBody = this.parentNode.parentNode.getElementsByClassName('comment-content')[0];
+                    const commentBodyParentNode = commentBody.parentNode;
+                    commentBody.parentNode.removeChild(commentBody);
 
-            // form
-            const form = document.createElement('form');
-            form.href = href;
-            form.id = 'submit-form';
+                    // form
+                    const form = document.createElement('form');
+                    form.href = href;
+                    form.id = 'submit-form';
 
-            // restaurant name
-            const restaurantIdDiv = document.createElement('div');
-            restaurantIdDiv.classList.add('form-group');
+                    // restaurant name
+                    const restaurantIdDiv = document.createElement('div');
+                    restaurantIdDiv.classList.add('form-group');
 
-            // comment id
-            const commentIdDiv = document.createElement('div');
-            commentIdDiv.classList.add('form-group');
+                    // comment id
+                    const commentIdDiv = document.createElement('div');
+                    commentIdDiv.classList.add('form-group');
 
-            const commentIdInput = document.createElement('input');
-            commentIdInput.classList.add('form-control');
-            commentIdInput.hidden = true;
-            commentIdInput.required = true;
-            commentIdInput.type = 'number';
-            commentIdInput.name = 'commentId';
-            commentIdInput.value = commentBodyParentNode.getElementsByClassName('comment-id')[0].textContent;
+                    const commentIdInput = document.createElement('input');
+                    commentIdInput.classList.add('form-control');
+                    commentIdInput.hidden = true;
+                    commentIdInput.required = true;
+                    commentIdInput.type = 'number';
+                    commentIdInput.name = 'commentId';
+                    commentIdInput.value = commentBodyParentNode.getElementsByClassName('comment-id')[0].textContent;
 
-            // new comment content
-            const commentContentDiv = document.createElement('div');
-            commentContentDiv.classList.add('form-group');
+                    // new comment content
+                    const commentContentDiv = document.createElement('div');
+                    commentContentDiv.classList.add('form-group');
 
-            const editableCommentBody = document.createElement('textarea');
-            editableCommentBody.value = commentBody.textContent.trim();
-            editableCommentBody.classList.add('comment-content', 'form-control');
-            editableCommentBody.required = true;
-            editableCommentBody.name = 'content';
+                    const editableCommentBody = document.createElement('textarea');
+                    editableCommentBody.value = commentBody.textContent.trim();
+                    editableCommentBody.classList.add('comment-content', 'form-control');
+                    editableCommentBody.required = true;
+                    editableCommentBody.name = 'content';
 
-            commentIdDiv.appendChild(commentIdInput);
-            commentContentDiv.appendChild(editableCommentBody);
+                    commentIdDiv.appendChild(commentIdInput);
+                    commentContentDiv.appendChild(editableCommentBody);
 
-            form.innerHTML = '@Html.AntiForgeryToken()';
-            form.appendChild(commentIdDiv);
-            form.appendChild(commentContentDiv);
+                    form.innerHTML = '@Html.AntiForgeryToken()';
+                    form.appendChild(commentIdDiv);
+                    form.appendChild(commentContentDiv);
 
-            form.setAttribute('asp-action', 'update');
-            commentBodyParentNode.appendChild(form);
+                    form.setAttribute('asp-action', 'update');
+                    commentBodyParentNode.appendChild(form);
 
-            const editButtonParentNode = this.parentNode;
+                    const editButtonParentNode = this.parentNode;
 
-            const editButton = this;
-            const deleteButton = editButtonParentNode.getElementsByClassName('delete-comment')[0];
+                    const editButton = this;
+                    const deleteButton = editButtonParentNode.getElementsByClassName('delete-comment')[0];
 
-            editButtonParentNode.removeChild(editButton);
-            editButtonParentNode.removeChild(deleteButton);
+                    editButtonParentNode.removeChild(editButton);
+                    editButtonParentNode.removeChild(deleteButton);
 
-            // submit button
-            const submitButton = document.createElement('button');
-            submitButton.classList.add('text-primary', 'button-link');
-            submitButton.innerHTML = '<i class="fas fa-check"></i> Submit';
-            submitButton.style.cursor = 'pointer';
-            submitButton.addEventListener('click', submit);
+                    // submit button
+                    const submitButton = document.createElement('button');
+                    submitButton.classList.add('text-primary', 'button-link');
+                    submitButton.innerHTML = '<i class="fas fa-check"></i> Submit';
+                    submitButton.style.cursor = 'pointer';
+                    submitButton.addEventListener('click', submit);
 
-            // return button
-            const returnButton = document.createElement('button');
-            returnButton.classList.add('text-primary', 'button-link', 'undo-button');
-            returnButton.innerHTML = 'Undo <i class="fas fa-undo"></i>';
-            returnButton.style.cursor = 'pointer';
-            returnButton.addEventListener('click', undo);
+                    // return button
+                    const returnButton = document.createElement('button');
+                    returnButton.classList.add('text-primary', 'button-link', 'undo-button');
+                    returnButton.innerHTML = 'Undo <i class="fas fa-undo"></i>';
+                    returnButton.style.cursor = 'pointer';
+                    returnButton.addEventListener('click', undo);
 
-            editButtonParentNode.prepend(submitButton);
-            editButtonParentNode.appendChild(returnButton);
+                    editButtonParentNode.prepend(submitButton);
+                    editButtonParentNode.appendChild(returnButton);
 
-            const heading = commentBodyParentNode.getElementsByClassName('comment-heading')[0];
-            function submit(e) {
-                e.preventDefault();
-                const submitForm = document.getElementById('submit-form');
-                const token = submitForm.querySelector('input[name=__RequestVerificationToken]').value;
-                const json = {
-                    content: submitForm.elements['content'].value,
-                    commentId: +submitForm.elements['commentId'].value,
-                };
+                    const heading = commentBodyParentNode.getElementsByClassName('comment-heading')[0];
+                    function submit(e) {
+                        e.preventDefault();
+                        const submitForm = document.getElementById('submit-form');
+                        const token = submitForm.querySelector('input[name=__RequestVerificationToken]').value;
+                        const json = {
+                            content: submitForm.elements['content'].value,
+                            commentId: +submitForm.elements['commentId'].value,
+                        };
 
-                fetch(submitForm.href, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': token,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(json)
+                        fetch(submitForm.href, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': token,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(json)
+                        })
+                            .then(response => {
+                                undo(e);
+                                if (response.ok) {
+                                    toastr.success('Successfully updated your comment!');
+
+                                    if (!heading.getElementsByClassName('fa-pencil-alt')[0]) {
+                                        const editedSmall = document.createElement('small');
+                                        editedSmall.innerHTML = '<i class="fas fa-pencil-alt"></i> Edited';
+                                        editedSmall.classList.add('float-right', 'text-muted', 'd-block');
+
+                                        heading.appendChild(editedSmall);
+                                    }
+                                    return response.json();
+                                } else {
+                                    throw new Error();
+                                }
+                            })
+                            .then(json => {
+                                commentBody.textContent = json.content;
+                            })
+                            .catch(error => toastr.error('Something went wrong!'));
+                    }
+
+                    function undo(e) {
+                        e.preventDefault();
+                        commentBodyParentNode.removeChild(document.getElementById('submit-form'));
+                        commentBodyParentNode.appendChild(commentBody);
+
+                        editButtonParentNode.removeChild(submitButton);
+                        editButtonParentNode.removeChild(returnButton);
+
+                        editButtonParentNode.prepend(editButton);
+                        editButtonParentNode.appendChild(deleteButton);
+                    }
                 })
-                    .then(response => {
-                        undo(e);
-                        if (response.ok) {
-                            toastr.success('Successfully updated your comment!');
-
-                            if (!heading.getElementsByClassName('fa-pencil-alt')[0]) {
-                                const editedSmall = document.createElement('small');
-                                editedSmall.innerHTML = '<i class="fas fa-pencil-alt"></i> Edited';
-                                editedSmall.classList.add('float-right', 'text-muted', 'd-block');
-
-                                heading.appendChild(editedSmall);
-                            }
-                            return response.json();
-                        } else {
-                            throw new Error();
-                        }
-                    })
-                    .then(json => {
-                        commentBody.textContent = json.content;
-                    })
-                    .catch(error => toastr.error('Something went wrong!'));
-            }
-
-            function undo(e) {
-                e.preventDefault();
-                commentBodyParentNode.removeChild(document.getElementById('submit-form'));
-                commentBodyParentNode.appendChild(commentBody);
-
-                editButtonParentNode.removeChild(submitButton);
-                editButtonParentNode.removeChild(returnButton);
-
-                editButtonParentNode.prepend(editButton);
-                editButtonParentNode.appendChild(deleteButton);
-            }
-        })
-    });
-})();
+            });
+        })();
     </script>
     @*<script type="text/javascript">
             async function getLatitude() {

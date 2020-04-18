@@ -18,6 +18,8 @@
 
         public string WorkingTime { get; set; }
 
+        public bool IsFavourite { get; set; }
+
         public virtual IEnumerable<DetailsRestaurantImageViewModel> Images { get; set; }
 
         public string ParsedUrlName => this.RestaurantName.Replace(' ', '-').ToLower();

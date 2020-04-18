@@ -27,6 +27,7 @@
         private readonly ICategoryService categoryService;
         private readonly IUserService userService;
         private readonly IConfiguration configuration;
+        private readonly IFavouriteService favouriteService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public RestaurantsController(
@@ -34,6 +35,7 @@
             ICategoryService categoryService,
             IUserService userService,
             IConfiguration configuration,
+            IFavouriteService favouriteService,
             UserManager<ApplicationUser> userManager)
             : base(userService)
         {
@@ -41,6 +43,7 @@
             this.categoryService = categoryService;
             this.userService = userService;
             this.configuration = configuration;
+            this.favouriteService = favouriteService;
             this.userManager = userManager;
         }
 
@@ -48,6 +51,8 @@
         {
             var restaurant = this.restaurantService.GetByIdAndName<DetailsRestaurantViewModel>(id, name);
 
+            restaurant.IsFavourite =
+                this.favouriteService.CheckIfRestaurantIsFavourite(restaurant.Id, this.User.FindFirstValue(ClaimTypes.NameIdentifier));
             if (restaurant == null)
             {
                 return this.View(ErrorViewName, new ErrorViewModel

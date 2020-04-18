@@ -3,27 +3,31 @@
     const icon = document.getElementsByClassName('heartIcon')[0];
 
     likeBtn.style.cursor = 'pointer';
-    icon.classList.add('far', 'text-danger');
+    icon.classList.add('text-danger');
 
-    likeBtn.addEventListener('mouseover', liked);
-    likeBtn.addEventListener('mouseout', liked);
     likeBtn.addEventListener('click', function () {
-        if (icon.classList.contains('far')) {
-            icon.classList.replace('far', 'fa');
-            likeBtn.addEventListener('mouseover', liked);
-            likeBtn.addEventListener('mouseout', liked);
-        } else {
-            icon.classList.replace('fa', 'far');
-            likeBtn.addEventListener('mouseover', liked);
-            likeBtn.addEventListener('mouseout', liked);
-        }
-    });
+        const form = document.getElementById('favourites');
+        const token = form.querySelector('input[name=__RequestVerificationToken]').value;
+        const restaurantId = +form.querySelector('input[name=Id]').value;
+        let json = {};
 
-    function liked() {
         if (icon.classList.contains('far')) {
             icon.classList.replace('far', 'fa');
+
+            json = { isFavourite: true, restaurantId: restaurantId };
         } else {
             icon.classList.replace('fa', 'far');
+
+            json = { isFavourite: false, restaurantId: restaurantId };
         }
-    }
+
+        fetch('/api/FavouriteRestaurants', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(json)
+        });
+    });
 })();

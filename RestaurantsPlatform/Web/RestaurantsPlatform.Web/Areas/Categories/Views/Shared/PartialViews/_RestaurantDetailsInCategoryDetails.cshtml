@@ -17,7 +17,18 @@
         <p>@Model.Address</p>
         <div>
             <a asp-route="restaurant" asp-route-id="@Model.Id" asp-route-name="@Model.ParsedUrlName" class="btn btn-outline-success btn-sm">Details</a>
-            <a class="likeBtn btn btn-outline-danger btn-sm"><i class="heartIcon fa-heart fa-w-16"></i></a>
+            @if (this.User.Identity.Name != null)
+            {
+                @if (Model.IsFavourite)
+                {
+                    <a class="likeBtn btn btn-outline-danger btn-sm"><i class="heartIcon fa fa-heart fa-w-16"></i></a>
+                }
+                else
+                {
+                    <a class="likeBtn btn btn-outline-danger btn-sm"><i class="heartIcon far fa-heart fa-w-16"></i></a>
+                }
+                <form class="d-none" id="favourites">@Html.AntiForgeryToken() <input value="@Model.Id" name="Id"/></form>
+            }
         </div>
     </div>
 </div>

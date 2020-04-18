@@ -20,6 +20,7 @@ namespace RestaurantsPlatform.Data.Models
             this.Restaurants = new HashSet<Restaurant>();
             this.Comments = new HashSet<Comment>();
             this.Votes = new HashSet<Vote>();
+            this.FavouriteRestaurants = new HashSet<FavouriteRestaurant>();
         }
 
         // Audit info
@@ -43,5 +44,7 @@ namespace RestaurantsPlatform.Data.Models
         public virtual ICollection<Comment> Comments { get; set; }
 
         public virtual ICollection<Vote> Votes { get; set; }
+
+        public virtual ICollection<FavouriteRestaurant> FavouriteRestaurants { get; set; }
     }
 }

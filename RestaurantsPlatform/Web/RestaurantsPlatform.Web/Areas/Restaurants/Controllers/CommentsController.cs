@@ -1,5 +1,6 @@
 ﻿namespace RestaurantsPlatform.Web.Areas.Restaurants.Controllers
 {
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -86,6 +87,20 @@
             }
 
             return this.Json(new { content = input.Content });
+        }
+
+        public IActionResult LatestComments(int id)
+        {
+            var comments = this.commentService.GetLatestComments<DetailsCommentViewModel>(id);
+
+            return this.Json(new { comments });
+        }
+
+        public ActionResult<IEnumerable<DetailsCommentViewModel>> MostPopularComments(int id)
+        {
+            var comments = this.commentService.GetMostPopularComments<DetailsCommentViewModel>(id);
+
+            return new List<DetailsCommentViewModel>(comments);
         }
     }
 }

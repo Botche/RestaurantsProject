@@ -2,10 +2,11 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using AutoMapper;
+
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
     using RestaurantsPlatform.Web.ViewModels.Comments;
+    using RestaurantsPlatform.Web.ViewModels.Favourites;
     using RestaurantsPlatform.Web.ViewModels.RestaurantsImages;
 
     public class DetailsRestaurantViewModel : IMapFrom<Restaurant>
@@ -36,6 +37,8 @@
 
         [Required]
         public string CommentContent { get; set; }
+
+        public bool IsFavourite { get; set; }
 
         public string CategoryUrl => this.CategoryName.Replace(' ', '-').ToLower();
 
