@@ -21,21 +21,21 @@
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var usersFromDb = dbContext.Users.IgnoreQueryFilters().ToList();
 
-            await SeedUserAsync(usersFromDb, userManager, UserEmail, UserPassword, UserRoleName);
-            await SeedUserAsync(usersFromDb, userManager, AdministratorEmail, AdministratorPassword, AdministratorRoleName);
-            await SeedUserAsync(usersFromDb, userManager, RestaurantEmail, RestaurantPassword, RestaurantRoleName);
-            await SeedUserAsync(usersFromDb, userManager, SecondRestaurantEmail, SecondRestaurantPassword, RestaurantRoleName);
+            await SeedUserAsync(usersFromDb, userManager, UserEmail, UserUsername, UserPassword, UserRoleName);
+            await SeedUserAsync(usersFromDb, userManager, AdministratorEmail, AdministratorUsername, AdministratorPassword, AdministratorRoleName);
+            await SeedUserAsync(usersFromDb, userManager, RestaurantEmail, RestaurantUsername, RestaurantPassword, RestaurantRoleName);
+            await SeedUserAsync(usersFromDb, userManager, SecondRestaurantEmail, SecondRestaurantUsername, SecondRestaurantPassword, RestaurantRoleName);
         }
 
-        private static async Task SeedUserAsync(List<ApplicationUser> usersFromDb, UserManager<ApplicationUser> userManager, string email, string password, string role)
+        private static async Task SeedUserAsync(List<ApplicationUser> usersFromDb, UserManager<ApplicationUser> userManager, string email, string username, string password, string role)
         {
-            var user = usersFromDb.FirstOrDefault(user => user.Email == email);
+            var user = usersFromDb.FirstOrDefault(user => user.Email == email || user.UserName == username);
             if (user == null)
             {
                 ApplicationUser userToSignIn = new ApplicationUser()
                 {
                     Email = email,
-                    UserName = email,
+                    UserName = username,
                 };
 
                 var result = await userManager.CreateAsync(userToSignIn, password);
