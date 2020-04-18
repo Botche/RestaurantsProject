@@ -20,7 +20,7 @@
         </span>
         @Model.RestaurantName
         <span class="badge badge-pill status">Open</span>
-        <a class="likeBtn" href="#"><i class="heartIcon fa-heart float-right"></i></a>
+        <a class="likeBtn"><i class="heartIcon fa-heart float-right"></i></a>
     </h1>
 </div>
 <hr />
@@ -78,19 +78,19 @@
 </a>
 
 @section scripts {
-    <script type="text/javascript" src="~/js/functions/determinateRestaurantStatusByWorkingTime.js"></script>
-    <script type="text/javascript" src="~/js/functions/favouriteButtonInRestaurantView.js"></script>
-    <script type="text/javascript" src="~/js/functions/scrollsToTopFunction.js"></script>
+    <script type="text/javascript" src="~/js/functions/determinateRestaurantStatusByWorkingTime.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/functions/favouriteButtonInRestaurantView.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/functions/scrollsToTopFunction.js" asp-append-version="true"></script>
     @if (this.User.Identity.Name != null)
     {
-        <script type="text/javascript" src="~/js/functions/votesAsync.js"></script>
+        <script type="text/javascript" src="~/js/functions/votesAsync.js" asp-append-version="true"></script>
     }
     @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.UserId)
     {
-        <script type="text/javascript" src="~/js/functions/manipulateImageInputForm.js"></script>
-        <script type="text/javascript" src="~/js/functions/addImageAsync.js"></script>
+        <script type="text/javascript" src="~/js/functions/manipulateImageInputForm.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/functions/addImageAsync.js" asp-append-version="true"></script>
     }
-    <script type="text/javascript" src="~/js/functions/deleteCommentAsync.js"></script>
+    <script type="text/javascript" src="~/js/functions/deleteCommentAsync.js" asp-append-version="true"></script>
     <script type="text/javascript">
         (() => {
     const updateBtns = document.getElementsByClassName('update-comment');
