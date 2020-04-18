@@ -133,11 +133,12 @@
 
             if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = this.Input.Email, Email = this.Input.Email };
+                var user = new ApplicationUser { UserName = this.Input.Username, Email = this.Input.Email };
                 var result = await this.userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
                     result = await this.userManager.AddLoginAsync(user, info);
+                    await this.userManager.AddToRoleAsync(user, UserRoleName);
                     if (result.Succeeded)
                     {
                         this.logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);

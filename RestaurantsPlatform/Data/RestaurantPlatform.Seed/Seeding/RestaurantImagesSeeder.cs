@@ -16,6 +16,7 @@
     using static RestaurantsPlatform.Data.Common.Seeding.RestaurantImages.MomaSeedInfo;
     using static RestaurantsPlatform.Data.Common.Seeding.RestaurantImages.SkaptoSeedInfo;
     using static RestaurantsPlatform.Data.Common.Seeding.RestaurantImages.WokToWalkSeedInfo;
+    using static RestaurantsPlatform.Data.Common.Seeding.Restaurants.SeedInfo;
 
     public class RestaurantImagesSeeder : ISeeder
     {
@@ -40,14 +41,14 @@
                     restaurant.Id,
                     restaurant.RestaurantName,
                 })
-                .FirstOrDefault(restaurant => restaurant.RestaurantName == "Aladin Foods");
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == AladinName);
             var aladinFoods2 = dbContext.Restaurants
                 .Select(restaurant => new
                 {
                     restaurant.Id,
                     restaurant.RestaurantName,
                 })
-                .Where(restaurant => restaurant.RestaurantName == "Aladin Foods")
+                .Where(restaurant => restaurant.RestaurantName == Aladin2Name)
                 .ToList()[1];
 
             // Furna
@@ -57,7 +58,7 @@
                     restaurant.Id,
                     restaurant.RestaurantName,
                 })
-                .FirstOrDefault(restaurant => restaurant.RestaurantName == "Furna");
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == FurnaName);
 
             // Indian restaurant kohinoor
             var indian = dbContext.Restaurants
@@ -66,7 +67,7 @@
                     restaurant.Id,
                     restaurant.RestaurantName,
                 })
-                .FirstOrDefault(restaurant => restaurant.RestaurantName == "Indian Restaurant Kohinoor");
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == IndianName);
 
             // Indian restaurant kohinoor
             var moma = dbContext.Restaurants
@@ -75,7 +76,7 @@
                     restaurant.Id,
                     restaurant.RestaurantName,
                 })
-                .FirstOrDefault(restaurant => restaurant.RestaurantName == "Moma Bulgarian Food and Wine");
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == MomaName);
 
             // Indian restaurant kohinoor
             var skapto = dbContext.Restaurants
@@ -84,7 +85,7 @@
                     restaurant.Id,
                     restaurant.RestaurantName,
                 })
-                .FirstOrDefault(restaurant => restaurant.RestaurantName == "Skapto-Mall of Sofia");
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == SkaptoName);
 
             // Indian restaurant kohinoor
             var wok = dbContext.Restaurants
@@ -93,7 +94,7 @@
                     restaurant.Id,
                     restaurant.RestaurantName,
                 })
-                .FirstOrDefault(restaurant => restaurant.RestaurantName == "Wok to Walk");
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == WokName);
 
             var aladinFoodImageLogo =
                 await this.UploadImagesToCloudinaryAsync(AladinFoodsLogo, aladinFoods.RestaurantName.ToLower().Replace(" ", "-"));

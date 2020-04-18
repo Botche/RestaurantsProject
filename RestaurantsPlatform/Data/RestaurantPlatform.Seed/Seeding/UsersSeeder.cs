@@ -25,6 +25,8 @@
             await SeedUserAsync(usersFromDb, userManager, AdministratorEmail, AdministratorUsername, AdministratorPassword, AdministratorRoleName);
             await SeedUserAsync(usersFromDb, userManager, RestaurantEmail, RestaurantUsername, RestaurantPassword, RestaurantRoleName);
             await SeedUserAsync(usersFromDb, userManager, SecondRestaurantEmail, SecondRestaurantUsername, SecondRestaurantPassword, RestaurantRoleName);
+            await SeedUserAsync(usersFromDb, userManager, RealUserEmailOne, RealUserUsernameOne, RealUserPasswordOne, UserRoleName);
+            await SeedUserAsync(usersFromDb, userManager, RealUserEmailTwo, RealUserUsernameTwo, RealUserPasswordTwo, UserRoleName);
         }
 
         private static async Task SeedUserAsync(List<ApplicationUser> usersFromDb, UserManager<ApplicationUser> userManager, string email, string username, string password, string role)
@@ -36,6 +38,7 @@
                 {
                     Email = email,
                     UserName = username,
+                    EmailConfirmed = true,
                 };
 
                 var result = await userManager.CreateAsync(userToSignIn, password);

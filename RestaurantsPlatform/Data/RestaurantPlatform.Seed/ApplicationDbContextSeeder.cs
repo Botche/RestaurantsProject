@@ -44,6 +44,9 @@
                               new CategoriesSeeder(),
                               new RestaurantsSeeder(),
                               new RestaurantImagesSeeder(this.imageService),
+                              new FavouritesSeeder(),
+                              new CommentsSeeder(),
+                              new VotesSeeder(),
                           };
 
             foreach (var seeder in seeders)
