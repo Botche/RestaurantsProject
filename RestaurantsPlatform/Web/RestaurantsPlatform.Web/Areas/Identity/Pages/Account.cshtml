@@ -10,14 +10,14 @@
 
 <div class="container-fluid mt-4 border rounded">
     <div class="row">
-        <div class="col-12 col-md-4 ml-0">
+        <div class="col-12 col-md-4 ml-0 my-auto">
             <img src="@Model.ImageUrl" class="img-fluid">
         </div>
 
         <div class="col-12 col-md-6 mt-3 table-responsive">
             <table class="table">
                 <tbody>
-                    <tr>
+                    <tr class="without-border">
                         <th scope="row">Username</th>
                         <td>@Model.CurrentUser.UserName</td>
                     </tr>
@@ -33,20 +33,20 @@
                     {
                         <tr>
                             <th scope="row">Created Restaurants</th>
-                            <td>@Model.CurrentUser.Restaurants.Count()</td>
+                            <td>@Model.CurrentUser.RestaurantsCount</td>
                         </tr>
                     }
                     <tr>
                         <th scope="row">Favourite Restaurants</th>
-                        <td>@Model.CurrentUser.FavouriteRestaurants.Count()</td>
+                        <td>@Model.CurrentUser.FavouriteRestaurantsCount</td>
                     </tr>
                     <tr>
                         <th scope="row">Created Comments</th>
-                        <td>@Model.CurrentUser.Comments.Count()</td>
+                        <td>@Model.CurrentUser.CommentsCount</td>
                     </tr>
                     <tr>
                         <th scope="row">Voted Comments</th>
-                        <td>@Model.CurrentUser.Votes.Count()</td>
+                        <td>@Model.CurrentUser.VotesCount</td>
                     </tr>
                 </tbody>
             </table>

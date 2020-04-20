@@ -154,3 +154,11 @@ img {
 .commentDiv::-webkit-scrollbar-thumb:hover {
     background-color: #347deb;
 }
+
+.without-border > th{
+    border-top: 0 !important;
+}
+
+.without-border > td{
+    border-top: 0 !important;
+}

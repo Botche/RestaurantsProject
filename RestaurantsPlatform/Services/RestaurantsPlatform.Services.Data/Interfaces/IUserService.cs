@@ -11,6 +11,6 @@
 
         IEnumerable<T> GetAllUsersWithDeleted<T>();
 
-        ApplicationUser GetCurrentUserInfo(string userId);
+        T GetCurrentUserInfo<T>(string userId);
     }
 }

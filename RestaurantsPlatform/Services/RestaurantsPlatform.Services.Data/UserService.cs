@@ -39,14 +39,10 @@
             return this.usersRepository.AllWithDeleted().To<T>().ToList();
         }
 
-        public ApplicationUser GetCurrentUserInfo(string userId)
+        public T GetCurrentUserInfo<T>(string userId)
         {
             return this.usersRepository.All()
-                .Where(user => user.Id == userId)
-                .Include(user => user.Restaurants)
-                .Include(user => user.FavouriteRestaurants)
-                .Include(user => user.Comments)
-                .Include(user => user.Votes)
+                .To<T>()
                 .FirstOrDefault();
         }
     }

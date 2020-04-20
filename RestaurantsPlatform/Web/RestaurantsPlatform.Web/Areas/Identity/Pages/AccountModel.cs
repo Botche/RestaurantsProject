@@ -10,7 +10,7 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Services.Data.Interfaces;
-
+    using RestaurantsPlatform.Web.ViewModels.Users;
     using static RestaurantsPlatform.Common.GlobalConstants;
 
     [Authorize]
@@ -25,11 +25,11 @@
 
         public string ImageUrl => DefaultProfilePicture;
 
-        public ApplicationUser CurrentUser { get; set; }
+        public DetailsUserViewModel CurrentUser { get; set; }
 
         public void OnGet()
         {
-            this.CurrentUser = this.userService.GetCurrentUserInfo(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            this.CurrentUser = this.userService.GetCurrentUserInfo<DetailsUserViewModel>(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
         }
     }
 }
