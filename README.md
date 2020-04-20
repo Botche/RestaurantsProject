@@ -4,9 +4,8 @@ Project for my graduation at SoftUni.
 
 TODO:
 * Reviews with comments
-* Account page
+* Subcomments
 * RECaptcha
-* Facebook login
 * Add custom working time
 * Update header and footer
 * Elastic search

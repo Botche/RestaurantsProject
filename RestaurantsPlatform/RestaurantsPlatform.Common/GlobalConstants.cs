@@ -33,5 +33,7 @@
         public const string RealUserPasswordTwo = "Password123";
 
         public const string AdministratorOrRestaurantOwner = AdministratorRoleName + "," + RestaurantRoleName;
+
+        public const string DefaultProfilePicture = "https://res.cloudinary.com/djlskbceh/image/upload/v1587384697/restaurant/16-168770_user-iconset-no-profile-picture-icon-circle-clipart_uyxcky_m0bt2z.jpg";
     }
 }

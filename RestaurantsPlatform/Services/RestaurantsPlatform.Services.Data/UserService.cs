@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-
+    using Microsoft.EntityFrameworkCore;
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Services.Data.Interfaces;
@@ -37,6 +37,17 @@
         public IEnumerable<T> GetAllUsersWithDeleted<T>()
         {
             return this.usersRepository.AllWithDeleted().To<T>().ToList();
+        }
+
+        public ApplicationUser GetCurrentUserInfo(string userId)
+        {
+            return this.usersRepository.All()
+                .Where(user => user.Id == userId)
+                .Include(user => user.Restaurants)
+                .Include(user => user.FavouriteRestaurants)
+                .Include(user => user.Comments)
+                .Include(user => user.Votes)
+                .FirstOrDefault();
         }
     }
 }

@@ -1,0 +1,62 @@
+﻿@page
+@using static RestaurantsPlatform.Common.GlobalConstants
+
+@model AccountModel
+@{
+    ViewData["Title"] = "Account";
+}
+
+<h1 class="text-center display-3">@ViewData["Title"]</h1>
+
+<div class="container-fluid mt-4 border rounded">
+    <div class="row">
+        <div class="col-12 col-md-4 ml-0">
+            <img src="@Model.ImageUrl" class="img-fluid">
+        </div>
+
+        <div class="col-12 col-md-6 mt-3 table-responsive">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th scope="row">Username</th>
+                        <td>@Model.CurrentUser.UserName</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Email</th>
+                        <td>@Model.CurrentUser.Email</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Created on</th>
+                        <td><time datetime="@Model.CurrentUser.CreatedOn.ToString("O")"></time></td>
+                    </tr>
+                    @if (Model.User.IsInRole(RestaurantRoleName) || Model.User.IsInRole(AdministratorRoleName))
+                    {
+                        <tr>
+                            <th scope="row">Created Restaurants</th>
+                            <td>@Model.CurrentUser.Restaurants.Count()</td>
+                        </tr>
+                    }
+                    <tr>
+                        <th scope="row">Favourite Restaurants</th>
+                        <td>@Model.CurrentUser.FavouriteRestaurants.Count()</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Created Comments</th>
+                        <td>@Model.CurrentUser.Comments.Count()</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Voted Comments</th>
+                        <td>@Model.CurrentUser.Votes.Count()</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-12 col-md-2 text-center mt-3">
+            <a class="btn btn-info" asp-area="Identity" asp-page="/Account/Manage/Index">
+                <i class="fas fa-cog"></i>
+                Settings
+            </a>
+        </div>
+    </div>
+</div>
