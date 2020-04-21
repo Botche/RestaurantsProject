@@ -163,6 +163,11 @@
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteCategoryInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
             await this.categoryService.DeleteCategoryAsync(input.Id);
 
             this.TempData[SuccessNotification] = SuccessfullyDeletedCategory;

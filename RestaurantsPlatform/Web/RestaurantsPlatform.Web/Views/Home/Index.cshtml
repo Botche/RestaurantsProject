@@ -5,7 +5,7 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    @if (this.User.Identity.Name == null)
+    @if (!this.User.Identity.IsAuthenticated)
     {
         <p><a href="/Identity/Account/Login">Login</a> to browse a lot of restaurants .</p>
     }

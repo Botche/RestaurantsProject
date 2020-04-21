@@ -20,7 +20,7 @@
         </span>
         @Model.RestaurantName
         <span class="badge badge-pill status">Open</span>
-        @if (this.User.Identity.Name != null)
+        @if (this.User.Identity.IsAuthenticated)
         {
             @if (Model.IsFavourite)
             {
@@ -84,7 +84,7 @@
     </div>
 }
 
-@if (this.User.Identity.Name != null)
+@if (this.User.Identity.IsAuthenticated)
 {
     <partial name="./PartialViews/_CommentsFormPartialView" model="Model" />
 }
@@ -97,7 +97,7 @@
     <script type="text/javascript" src="~/js/functions/determinateRestaurantStatusByWorkingTime.js" asp-append-version="true"></script>
     <script type="text/javascript" src="~/js/functions/favouriteButtonInRestaurantView.js" asp-append-version="true"></script>
     <script type="text/javascript" src="~/js/functions/scrollsToTopFunction.js" asp-append-version="true"></script>
-    @if (this.User.Identity.Name != null)
+    @if (this.User.Identity.IsAuthenticated)
     {
         <script type="text/javascript" src="~/js/functions/votesAsync.js" asp-append-version="true"></script>
     }

@@ -17,7 +17,7 @@
         <p>@Model.Address</p>
         <div>
             <a asp-route="restaurant" asp-route-id="@Model.Id" asp-route-name="@Model.ParsedUrlName" class="btn btn-outline-success btn-sm">Details</a>
-            @if (this.User.Identity.Name != null)
+            @if (this.User.Identity.IsAuthenticated)
             {
                 @if (Model.IsFavourite)
                 {

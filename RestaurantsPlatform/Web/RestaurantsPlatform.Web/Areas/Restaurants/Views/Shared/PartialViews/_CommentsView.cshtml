@@ -41,7 +41,7 @@
                         @comment.Content
                     </span>
                 </div>
-                @if (this.User.Identity.Name != null)
+                @if (this.User.Identity.IsAuthenticated)
                 {
                     <div class="float-right text-center">
                         <form class="votesForm" method="post">

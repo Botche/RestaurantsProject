@@ -357,3 +357,4 @@ MigrationBackup/
 appsettings.Production.json
 *.min.css
 *.min.js
+settings.json

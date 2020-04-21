@@ -59,7 +59,7 @@
 
         public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
-            if (this.User.Identity.Name != null)
+            if (this.User.Identity.IsAuthenticated)
             {
                 return this.RedirectToRoute("default");
             }
