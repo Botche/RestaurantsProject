@@ -31,9 +31,7 @@
         public CategoriesController(
             ICategoryService categoryService,
             IRestaurantService restaurantService,
-            IUserService userService,
             IFavouriteService favouriteService)
-            : base(userService)
         {
             this.categoryService = categoryService;
             this.restaurantService = restaurantService;

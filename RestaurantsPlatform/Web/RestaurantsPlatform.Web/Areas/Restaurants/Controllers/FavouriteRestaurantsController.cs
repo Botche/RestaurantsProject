@@ -1,5 +1,6 @@
 ﻿namespace RestaurantsPlatform.Web.Areas.Restaurants.Controllers
 {
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
@@ -14,14 +15,10 @@
     public class FavouriteRestaurantsController : ControllerBase
     {
         private readonly IFavouriteService favouriteService;
-        private readonly UserManager<ApplicationUser> userManager;
 
-        public FavouriteRestaurantsController(
-            IFavouriteService favouriteService,
-            UserManager<ApplicationUser> userManager)
+        public FavouriteRestaurantsController(IFavouriteService favouriteService)
         {
             this.favouriteService = favouriteService;
-            this.userManager = userManager;
         }
 
         [HttpPost]
@@ -32,7 +29,7 @@
                 return this.BadRequest();
             }
 
-            var userId = this.userManager.GetUserId(this.User);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await this.favouriteService.FavouriteAsync(input.RestaurantId, userId, input.IsFavourite);
 
             return this.Ok();

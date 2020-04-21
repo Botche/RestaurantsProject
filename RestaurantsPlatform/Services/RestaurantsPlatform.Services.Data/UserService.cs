@@ -42,6 +42,7 @@
         public T GetCurrentUserInfo<T>(string userId)
         {
             return this.usersRepository.All()
+                .Where(user => user.Id == userId)
                 .To<T>()
                 .FirstOrDefault();
         }

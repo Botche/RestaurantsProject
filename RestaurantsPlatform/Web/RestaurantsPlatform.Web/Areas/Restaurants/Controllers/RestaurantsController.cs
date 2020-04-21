@@ -28,15 +28,13 @@
         private readonly IUserService userService;
         private readonly IConfiguration configuration;
         private readonly IFavouriteService favouriteService;
-        private readonly UserManager<ApplicationUser> userManager;
 
         public RestaurantsController(
             IRestaurantService restaurantService,
             ICategoryService categoryService,
             IUserService userService,
             IConfiguration configuration,
-            IFavouriteService favouriteService,
-            UserManager<ApplicationUser> userManager)
+            IFavouriteService favouriteService)
             : base(userService)
         {
             this.restaurantService = restaurantService;
@@ -44,15 +42,12 @@
             this.userService = userService;
             this.configuration = configuration;
             this.favouriteService = favouriteService;
-            this.userManager = userManager;
         }
 
         public IActionResult GetByIdAndName(int id, string name)
         {
             var restaurant = this.restaurantService.GetByIdAndName<DetailsRestaurantViewModel>(id, name);
 
-            restaurant.IsFavourite =
-                this.favouriteService.CheckIfRestaurantIsFavourite(restaurant.Id, this.User.FindFirstValue(ClaimTypes.NameIdentifier));
             if (restaurant == null)
             {
                 return this.View(ErrorViewName, new ErrorViewModel
@@ -62,6 +57,8 @@
                     StatusCode = 404,
                 });
             }
+            restaurant.IsFavourite =
+                this.favouriteService.CheckIfRestaurantIsFavourite(restaurant.Id, this.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             this.ViewBag.GoogleMapsApiKey = this.configuration.GetSection("GoogleMaps")["ApiKey"];
 

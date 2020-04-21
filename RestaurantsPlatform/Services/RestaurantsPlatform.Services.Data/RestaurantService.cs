@@ -119,7 +119,6 @@
         public T GetById<T>(int id)
         {
             var restaurant = this.GetRestaurantById(id)
-                .Include(restaurant => restaurant.Images)
                 .To<T>()
                 .FirstOrDefault();
 
@@ -146,7 +145,6 @@
         public async Task<int?> DeleteImageByRestaurantIdAsync(int id, string imageUrl)
         {
             var image = this.GetRestaurantById(id)
-                .Include(restaurant => restaurant.Images)
                 .Select(restaurant => restaurant.Images.FirstOrDefault(image => image.ImageUrl == imageUrl))
                 .FirstOrDefault();
 

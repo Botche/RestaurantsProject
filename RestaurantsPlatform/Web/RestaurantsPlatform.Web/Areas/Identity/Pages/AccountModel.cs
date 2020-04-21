@@ -11,6 +11,7 @@
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Web.ViewModels.Users;
+
     using static RestaurantsPlatform.Common.GlobalConstants;
 
     [Authorize]

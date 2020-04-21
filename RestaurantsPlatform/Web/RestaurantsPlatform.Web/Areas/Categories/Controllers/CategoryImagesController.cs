@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantsPlatform.Services.Data.Interfaces;
+    using RestaurantsPlatform.Web.Controllers;
     using RestaurantsPlatform.Web.ViewModels.CategoryImages;
 
     using static RestaurantsPlatform.Common.GlobalConstants;
@@ -12,11 +13,13 @@
 
     [Area("Categories")]
     [Authorize(Roles = AdministratorRoleName)]
-    public class CategoryImagesController : Controller
+    public class CategoryImagesController : BaseController
     {
         private readonly ICategoryService categoryService;
 
-        public CategoryImagesController(ICategoryService categoryService)
+        public CategoryImagesController(
+            ICategoryService categoryService,
+            IUserService userService)
         {
             this.categoryService = categoryService;
         }
