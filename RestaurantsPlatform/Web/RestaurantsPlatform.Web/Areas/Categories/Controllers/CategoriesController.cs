@@ -1,7 +1,6 @@
 ﻿namespace RestaurantsPlatform.Web.Areas.Categories.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -65,7 +64,7 @@
             return this.View(allCategoriesViewModel);
         }
 
-        public IActionResult GetByIdAndName(int id, string name, int page = 1, int categoriesPage = 1)
+        public IActionResult GetByIdAndName(int id, string name, int page = 1)
         {
             if (page < 1)
             {
@@ -78,7 +77,7 @@
             {
                 return this.View(ErrorViewName, new ErrorViewModel
                 {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
+                    RequestId = Activity.Current?.Id ?? this.HttpContext?.TraceIdentifier,
                     Message = PageNotFound,
                     StatusCode = 404,
                 });
@@ -92,7 +91,6 @@
                     .CheckIfRestaurantIsFavourite(restaurant.Id, this.User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
 
-            category.OldPage = categoriesPage;
             category.CurrentPage = page;
 
             var count = this.restaurantService.GetCountByCategoryId(category.Id);

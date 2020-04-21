@@ -57,6 +57,7 @@
                     StatusCode = 404,
                 });
             }
+
             restaurant.IsFavourite =
                 this.favouriteService.CheckIfRestaurantIsFavourite(restaurant.Id, this.User.FindFirstValue(ClaimTypes.NameIdentifier));
 

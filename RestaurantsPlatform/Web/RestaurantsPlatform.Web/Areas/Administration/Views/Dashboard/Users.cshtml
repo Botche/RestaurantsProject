@@ -7,7 +7,7 @@
 }
 
 <h1 class="text-center">Users</h1>
-<table class="table ml-0">
+<table class="table ml-0 table-responsive">
     <thead>
         <tr>
             <th>
@@ -47,7 +47,7 @@
                     @Html.DisplayFor(modelItem => user.CreatedOn)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => user.IsDeleted)
+                    <input type="checkbox" class="flipswitch" checked="@user.IsDeleted" disabled/>
                 </td>
                 <td>
                     @if (user.IsDeleted)
@@ -65,54 +65,60 @@
                 <td>
                     @if (user.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                     {
-                        <a class="btn btn-primary disabled">
+                        <a class="btn btn-primary disabled mt-1">
                             Promote
                         </a>
-                        <a class="btn btn-secondary disabled">
+                        <a class="btn btn-secondary disabled mt-1">
                             Demote
                         </a>
-                        <a class="btn btn-danger disabled">
+                        <a class="btn btn-danger disabled mt-1">
                             Ban
                         </a>
                     }
                     else
                     {
-                        @if (user.RoleName == UserRoleName)
-                        {
-                            <a class="btn btn-primary" asp-area="Administration" asp-controller="Dashboard" asp-action="Promote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
-                                Promote
-                            </a>
-                            <a class="btn btn-secondary disabled">
-                                Demote
-                            </a>
-                        }
-                        else if (user.RoleName == AdministratorRoleName)
-                        {
-                            <a class="btn btn-primary disabled">
-                                Promote
-                            </a>
-                            <a class="btn btn-secondary" asp-area="Administration" asp-controller="Dashboard" asp-action="Demote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
-                                Demote
-                            </a>
-                        }
-                        else
-                        {
-                            <a class="btn btn-primary" asp-area="Administration" asp-controller="Dashboard" asp-action="Promote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
-                                Promote
-                            </a>
-                            <a class="btn btn-secondary" asp-area="Administration" asp-controller="Dashboard" asp-action="Demote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
-                                Demote
-                            </a>
-                        }
                         @if (user.IsDeleted)
                         {
-                            <a class="btn btn-success" asp-area="Administration" asp-controller="Dashboard" asp-action="UnBan" asp-route-id="@user.Id">
+                            <a class="btn btn-primary disabled mt-1">
+                                Promote
+                            </a>
+                            <a class="btn btn-secondary disabled mt-1">
+                                Demote
+                            </a>
+                            <a class="btn btn-success  mt-1" asp-area="Administration" asp-controller="Dashboard" asp-action="UnBan" asp-route-id="@user.Id">
                                 UnBan
                             </a>
                         }
                         else
                         {
-                            <a class="btn btn-danger" asp-area="Administration" asp-controller="Dashboard" asp-action="Ban" asp-route-id="@user.Id">
+                            @if (user.RoleName == UserRoleName)
+                            {
+                                <a class="btn btn-primary mt-1" asp-area="Administration" asp-controller="Dashboard" asp-action="Promote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
+                                    Promote
+                                </a>
+                                <a class="btn btn-secondary disabled mt-1">
+                                    Demote
+                                </a>
+                            }
+                            else if (user.RoleName == AdministratorRoleName)
+                            {
+                                <a class="btn btn-primary disabled mt-1">
+                                    Promote
+                                </a>
+                                <a class="btn btn-secondary" asp-area="Administration" asp-controller="Dashboard" asp-action="Demote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
+                                    Demote
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-primary mt-1" asp-area="Administration" asp-controller="Dashboard" asp-action="Promote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
+                                    Promote
+                                </a>
+                                <a class="btn btn-secondary mt-1" asp-area="Administration" asp-controller="Dashboard" asp-action="Demote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
+                                    Demote
+                                </a>
+                            }
+                            <a class="btn btn-danger mt-1" asp-area="Administration" asp-controller="Dashboard" asp-action="Ban" asp-route-id="@user.Id">
                                 Ban
                             </a>
                         }
