@@ -247,7 +247,7 @@
             });
         })();
     </script>
-    @*<script type="text/javascript">
+    <script type="text/javascript">
             async function getLatitude() {
                 const address = $('dt:contains("Address")').next().text();
                 const encodedAddress = encodeURI(address);
@@ -282,5 +282,5 @@
                 });
             }
         </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=@this.ViewBag.GoogleMapsApiKey&callback=InitializeMap" async defer></script>*@
+        <script src="https://maps.googleapis.com/maps/api/js?key=@this.ViewBag.GoogleMapsApiKey&callback=InitializeMap" async defer></script>
 }
