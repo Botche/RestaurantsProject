@@ -20,19 +20,6 @@
             this.cloudinaryImageService = cloudinaryImageService;
         }
 
-        public async Task<int?> DeleteImageByIdAsync(int imageId)
-        {
-            var image = this.GetImageById(imageId)
-                .FirstOrDefault();
-
-            if (image == null)
-            {
-                return null;
-            }
-
-            return await this.DeleteImageAsync(image);
-        }
-
         public async Task<int?> DeleteImageAsync(RestaurantImage image)
         {
             if (image == null)

@@ -17,9 +17,7 @@
     {
         private readonly ICategoryService categoryService;
 
-        public CategoryImagesController(
-            ICategoryService categoryService,
-            IUserService userService)
+        public CategoryImagesController(ICategoryService categoryService)
         {
             this.categoryService = categoryService;
         }

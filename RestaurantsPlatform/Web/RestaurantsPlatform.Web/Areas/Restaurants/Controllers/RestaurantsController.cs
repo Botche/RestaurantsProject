@@ -1,17 +1,14 @@
 ﻿namespace RestaurantsPlatform.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
-
-    using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Services.Data.Interfaces;
-    using RestaurantsPlatform.Services.Messaging;
     using RestaurantsPlatform.Web.ViewModels;
     using RestaurantsPlatform.Web.ViewModels.Categories;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
@@ -71,11 +68,11 @@
         {
             var categories = this.categoryService.GetAllCategories<AllCategoriesToCreateRestaurantViewModel>();
 
-            if (categories == null)
+            if (!categories.Any())
             {
                 return this.View(ErrorViewName, new ErrorViewModel
                 {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
+                    RequestId = Activity.Current?.Id ?? this.HttpContext?.TraceIdentifier,
                     Message = NoRegisteredCategories,
                     StatusCode = 404,
                 });
@@ -99,6 +96,7 @@
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             int restaurantId = await this.restaurantService.CreateRestaurantAsync(userId, input.Address, input.CategoryId, input.ContactInfo, input.Description, input.OwnerName, input.RestaurantName, input.WorkingTime);
 
+            // Untestable
             if (restaurantId == 0)
             {
                 return this.View(ErrorViewName, new ErrorViewModel

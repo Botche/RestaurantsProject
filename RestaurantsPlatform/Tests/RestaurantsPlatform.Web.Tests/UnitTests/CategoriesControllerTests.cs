@@ -1,5 +1,6 @@
 ﻿namespace RestaurantsPlatform.Web.Tests.UnitTests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
@@ -42,7 +43,6 @@
         private readonly IRestaurantService restaurantService;
         private readonly ICategoryImageService categoryImageService;
         private readonly ICategoryService categoryService;
-        private readonly IUserService userService;
         private readonly IFavouriteService favouriteService;
 
         private readonly CategoriesController controller;
@@ -69,7 +69,6 @@
 
             this.categoryImageService = new CategoryImageService(this.categoryImageRepository, this.cloudinaryService);
             this.categoryService = new CategoryService(this.categoryRepository, this.categoryImageService, this.restaurantService);
-            this.userService = new UserService(this.restaurantService, this.userRepository);
             this.favouriteService = new FavouriteService(this.favouriteRepository);
 
             var httpContext = new DefaultHttpContext();
@@ -79,6 +78,8 @@
             {
                 TempData = tempData,
             };
+
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
         }
 
         [Fact]
@@ -93,18 +94,21 @@
             var expectedPagesCount = 1;
             var expectedPage = 1;
             var expectedCount = 2;
+
             await this.categoryRepository.AddAsync(new Category
             {
                 Id = 1,
-                Name = "Category" + 1,
+                Name = "Category1",
                 Image = new CategoryImage { },
             });
+
             await this.categoryRepository.AddAsync(new Category
             {
                 Id = 2,
-                Name = "Category" + 2,
+                Name = "Category2",
                 Image = new CategoryImage { },
             });
+
             await this.categoryRepository.SaveChangesAsync();
 
             AutoMapperConfig.RegisterMappings(typeof(AllCategoriesViewModel).Assembly);
@@ -125,30 +129,34 @@
             var expectedCount = 1;
             var expectedPage = 2;
             var expectedPagesCount = 2;
+
             await this.categoryRepository.AddAsync(new Category
             {
                 Id = 1,
-                Name = "Category",
+                Name = "Category1",
                 Image = new CategoryImage { },
             });
+
             await this.categoryRepository.AddAsync(new Category
             {
                 Id = 2,
-                Name = "Category",
+                Name = "Category2",
                 Image = new CategoryImage { },
             });
             await this.categoryRepository.AddAsync(new Category
             {
                 Id = 3,
-                Name = "Category",
+                Name = "Category3",
                 Image = new CategoryImage { },
             });
+
             await this.categoryRepository.AddAsync(new Category
             {
                 Id = 4,
-                Name = "Category",
+                Name = "Category4",
                 Image = new CategoryImage { },
             });
+
             await this.categoryRepository.SaveChangesAsync();
 
             AutoMapperConfig.RegisterMappings(typeof(AllCategoriesViewModel).Assembly);
@@ -204,15 +212,16 @@
         [Fact]
         public async Task CategoriesController_GetByIdAndName()
         {
-            var expectedId = 1;
-            var expectedName = "Category";
             await this.categoryRepository.AddAsync(new Category
             {
-                Id = expectedId,
-                Name = expectedName,
+                Id = 1,
+                Name = "Category",
                 Image = new CategoryImage { },
             });
             await this.categoryRepository.SaveChangesAsync();
+
+            var expectedId = 1;
+            var expectedName = "Category";
 
             AutoMapperConfig.RegisterMappings(typeof(DetailsCategoryViewModel).Assembly);
 
@@ -228,45 +237,30 @@
         [Fact]
         public async Task CategoriesController_GetByIdAndName_WihtRestaurants()
         {
-            var expectedId = 1;
-            var expectedName = "Category";
-
-            await this.userRepository.AddAsync(new ApplicationUser
-            {
-                Id = "1",
-                UserName = "Pesho",
-                FavouriteRestaurants = new List<FavouriteRestaurant>
-                {
-                    new FavouriteRestaurant
-                    {
-                        Id = "1",
-                        UserId = "1",
-                        RestaurantId = 1,
-                    },
-                },
-            });
             await this.categoryRepository.AddAsync(new Category
             {
-                Id = expectedId,
-                Name = expectedName,
+                Id = 1,
+                Name = "Category",
                 Image = new CategoryImage { },
-                Restaurants = new List<Restaurant>
-                {
-                    new Restaurant
-                    {
-                        Id = 1,
-                        RestaurantName = "Name",
-                        UserId = "1",
-                    },
-                    new Restaurant
-                    {
-                        Id = 2,
-                        RestaurantName = "Name",
-                        UserId = "1",
-                    },
-                },
             });
             await this.categoryRepository.SaveChangesAsync();
+
+            await this.restaurantRepository.AddAsync(new Restaurant
+            {
+                Id = 1,
+                RestaurantName = "Name",
+                CategoryId = 1,
+            });
+            await this.restaurantRepository.AddAsync(new Restaurant
+            {
+                Id = 2,
+                RestaurantName = "Name2",
+                CategoryId = 1,
+            });
+            await this.restaurantRepository.SaveChangesAsync();
+
+            var expectedId = 1;
+            var expectedName = "Category";
 
             AutoMapperConfig.RegisterMappings(typeof(DetailsCategoryViewModel).Assembly);
 
@@ -296,19 +290,19 @@
         [Fact]
         public async Task CategoriesController_GetByIdAndName_WithWrongPage()
         {
+            await this.categoryRepository.AddAsync(new Category
+            {
+                Id = 1,
+                Name = "Category",
+                Image = new CategoryImage { },
+            });
+            await this.categoryRepository.SaveChangesAsync();
+
             var expectedPagesCount = 1;
             var expectedPage = 1;
             var expectedCount = 0;
             var expectedId = 1;
             var expectedName = "Category";
-
-            await this.categoryRepository.AddAsync(new Category
-            {
-                Id = expectedId,
-                Name = expectedName,
-                Image = new CategoryImage { },
-            });
-            await this.categoryRepository.SaveChangesAsync();
 
             AutoMapperConfig.RegisterMappings(typeof(DetailsCategoryViewModel).Assembly);
 
@@ -349,14 +343,6 @@
         [Fact]
         public async Task CategoriesController_Create_Post()
         {
-            await this.categoryRepository.AddAsync(new Category
-            {
-                Id = 1,
-                Name = "Category",
-                Image = new CategoryImage { },
-            });
-            await this.categoryRepository.SaveChangesAsync();
-
             AutoMapperConfig.RegisterMappings(typeof(DetailsCategoryViewModel).Assembly);
 
             var result = await this.controller.Create(new CreateCategoryInputModel
@@ -370,7 +356,7 @@
             var model = Assert.IsAssignableFrom<RedirectToRouteResult>(
                 result);
 
-            var expected = 2;
+            var expected = 1;
             var actual = this.categoryRepository.All().Count();
             Assert.Equal(expected, actual);
             Assert.Equal("category", model.RouteName);
@@ -401,18 +387,8 @@
         }
 
         [Fact]
-        public async Task CategoriesController_Update_Get()
+        public void CategoriesController_Update_Get()
         {
-            await this.categoryRepository.AddAsync(new Category
-            {
-                Id = 1,
-                Name = "Category",
-                Image = new CategoryImage { },
-            });
-            await this.categoryRepository.SaveChangesAsync();
-
-            AutoMapperConfig.RegisterMappings(typeof(UpdateCategoryViewModel).Assembly);
-
             var result = this.controller.Update(1);
 
             Assert.IsType<ViewResult>(result);
@@ -483,16 +459,8 @@
         }
 
         [Fact]
-        public async Task CategoriesController_Delete_Get()
+        public void CategoriesController_Delete_Get()
         {
-            await this.categoryRepository.AddAsync(new Category
-            {
-                Id = 1,
-                Name = "Category",
-                Image = new CategoryImage { },
-            });
-            await this.categoryRepository.SaveChangesAsync();
-
             var result = this.controller.Delete(1);
 
             Assert.IsType<ViewResult>(result);
@@ -501,39 +469,65 @@
         [Fact]
         public async Task CategoriesController_Delete_Post()
         {
-            await this.categoryRepository.AddAsync(new Category
+            await this.controller.Create(new CreateCategoryInputModel
             {
-                Id = 1,
-                Name = "Category",
-                Image = new CategoryImage
-                {
-                    PublicId = "1",
-                    ImageUrl = "123",
-                },
+                Name = "Name",
+                Title = "Title",
+                Description = "Description",
+                ImageUrl = "https://www.capital.bg/shimg/zx620_3323939.jpg",
             });
-            await this.categoryRepository.AddAsync(new Category
-            {
-                Id = 2,
-                Name = "Category",
-                Image = new CategoryImage
-                {
-                    PublicId = "1",
-                    ImageUrl = "123",
-                },
-            });
-            await this.categoryRepository.SaveChangesAsync();
 
             var result = await this.controller.Delete(new DeleteCategoryInputModel
             {
                 Id = 1,
             });
 
-            var action = Assert.IsAssignableFrom<RedirectToActionResult>(result);
+            Assert.IsAssignableFrom<RedirectToActionResult>(result);
 
-            var expected = 1;
+            var expected = 0;
             var actual = this.categoryRepository.All().Count();
 
+            var expectedCountOfImages = 0;
+            var actualCountOfImages = this.categoryImageRepository.All().Count();
+
             Assert.Equal(expected, actual);
+            Assert.Equal(expectedCountOfImages, actualCountOfImages);
+        }
+
+        [Fact]
+        public async Task CategoriesController_Delete_Post_WithRestaurants()
+        {
+            await this.controller.Create(new CreateCategoryInputModel
+            {
+                Name = "Name",
+                Title = "Title",
+                Description = "Description",
+                ImageUrl = "https://www.capital.bg/shimg/zx620_3323939.jpg",
+            });
+
+            await this.restaurantRepository.AddAsync(new Restaurant
+            {
+                Id = 1,
+                RestaurantName = "Name",
+                CategoryId = 1,
+            });
+            await this.restaurantRepository.SaveChangesAsync();
+
+            var result = await this.controller.Delete(new DeleteCategoryInputModel
+            {
+                Id = 1,
+            });
+
+            Assert.IsAssignableFrom<RedirectToActionResult>(result);
+
+            var expected = 0;
+            var actual = this.categoryRepository.All().Count();
+
+            var expectedCountOfRestaurants = 0;
+            var actualCountOfRestaurants = this.restaurantRepository.All().Count();
+
+            Assert.Equal(expected, actual);
+            Assert.Equal(expectedCountOfRestaurants, actualCountOfRestaurants);
         }
 
         [Fact]
@@ -543,13 +537,10 @@
             {
                 Id = 1,
                 Name = "Category",
-                Image = new CategoryImage
-                {
-                    PublicId = "1",
-                    ImageUrl = "123",
-                },
+                Image = new CategoryImage { },
             });
             await this.categoryRepository.SaveChangesAsync();
+
             AutoMapperConfig.RegisterMappings(typeof(UpdateCategoryInputModel).Assembly);
 
             this.controller.ModelState.AddModelError("test", "test");

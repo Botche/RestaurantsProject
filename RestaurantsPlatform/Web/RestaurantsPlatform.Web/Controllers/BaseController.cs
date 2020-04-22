@@ -31,7 +31,7 @@
             {
                 return this.View(ErrorViewName, new ErrorViewModel
                 {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
+                    RequestId = Activity.Current?.Id ?? this.HttpContext?.TraceIdentifier,
                     Message = UnauthorizedMessage,
                     StatusCode = 401,
                 });

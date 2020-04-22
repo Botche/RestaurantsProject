@@ -29,7 +29,7 @@
 
         public bool CheckIfCurrentUserIsNotAuthorByGivenId(int restaurantId, string currentUserId)
         {
-            string authorId = this.restaurantService.GetById<AuthorIdFromRestaurantBindingModel>(restaurantId).UserId;
+            string authorId = this.restaurantService.GetById<AuthorIdFromRestaurantBindingModel>(restaurantId)?.UserId;
 
             return authorId != currentUserId;
         }
