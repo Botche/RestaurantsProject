@@ -1,4 +1,8 @@
-﻿namespace RestaurantsPlatform.Seed.Seeding
+﻿// <copyright file="CategoryImagesSeeder.cs" company="RestaurantsPlatform">
+// Copyright (c) RestaurantsPlatform. All Rights Reserved.
+// </copyright>
+
+namespace RestaurantsPlatform.Seed.Seeding
 {
     using System;
     using System.Collections.Generic;
@@ -13,15 +17,28 @@
     using static RestaurantsPlatform.Data.Common.Seeding.Categories.SeedInfo;
     using static RestaurantsPlatform.Data.Common.Seeding.CategoryImages.SeedInfo;
 
+    /// <summary>
+    /// Category seeder.
+    /// </summary>
     public class CategoryImagesSeeder : ISeeder
     {
         private readonly ICloudinaryImageService imageService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CategoryImagesSeeder"/> class.
+        /// </summary>
+        /// <param name="imageService">Image service to upload images in cloud.</param>
         public CategoryImagesSeeder(ICloudinaryImageService imageService)
         {
             this.imageService = imageService;
         }
 
+        /// <summary>
+        /// Seeding method.
+        /// </summary>
+        /// <param name="dbContext">Database.</param>
+        /// <param name="serviceProvider">Service provider.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             if (dbContext.CategoryImages.Any())

@@ -1,4 +1,8 @@
-﻿namespace RestaurantsPlatform.Seed.Seeding
+﻿// <copyright file="VotesSeeder.cs" company="RestaurantsPlatform">
+// Copyright (c) RestaurantsPlatform. All Rights Reserved.
+// </copyright>
+
+namespace RestaurantsPlatform.Seed.Seeding
 {
     using System;
     using System.Collections.Generic;
@@ -10,8 +14,17 @@
 
     using static RestaurantsPlatform.Common.GlobalConstants;
 
+    /// <summary>
+    /// Seeder for votes.
+    /// </summary>
     public class VotesSeeder : ISeeder
     {
+        /// <summary>
+        /// Method to seed votes to database.
+        /// </summary>
+        /// <param name="dbContext">Database to seed in.</param>
+        /// <param name="serviceProvider">Service provider.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             if (dbContext.Votes.Any())

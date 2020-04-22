@@ -1,4 +1,8 @@
-﻿namespace RestaurantsPlatform.Seed.Seeding
+﻿// <copyright file="CommentsSeeder.cs" company="RestaurantsPlatform">
+// Copyright (c) RestaurantsPlatform. All Rights Reserved.
+// </copyright>
+
+namespace RestaurantsPlatform.Seed.Seeding
 {
     using System;
     using System.Collections.Generic;
@@ -12,8 +16,17 @@
     using static RestaurantsPlatform.Data.Common.Seeding.Comments.SeedInfo;
     using static RestaurantsPlatform.Data.Common.Seeding.Restaurants.SeedInfo;
 
+    /// <summary>
+    /// Category seeder.
+    /// </summary>
     public class CommentsSeeder : ISeeder
     {
+        /// <summary>
+        /// Seeding method.
+        /// </summary>
+        /// <param name="dbContext">Database.</param>
+        /// <param name="serviceProvider">Service provider.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             if (dbContext.Comments.Any())

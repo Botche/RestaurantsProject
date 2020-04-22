@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+
     using RestaurantsPlatform.Data.Common.Models;
 
     public class FavouriteRestaurant : BaseModel<string>

@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace RestaurantsPlatform.Data.Migrations
+﻿namespace RestaurantsPlatform.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class Votes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -1,4 +1,8 @@
-﻿namespace RestaurantsPlatform.Seed.Seeding
+﻿// <copyright file="RolesSeeder.cs" company="RestaurantsPlatform">
+// Copyright (c) RestaurantsPlatform. All Rights Reserved.
+// </copyright>
+
+namespace RestaurantsPlatform.Seed.Seeding
 {
     using System;
     using System.Linq;

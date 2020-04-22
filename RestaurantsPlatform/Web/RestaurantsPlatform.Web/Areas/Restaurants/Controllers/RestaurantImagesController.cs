@@ -1,6 +1,4 @@
-﻿using RestaurantsPlatform.Web.Controllers;
-
-namespace RestaurantsPlatform.Web.Areas.Restaurants.Controllers
+﻿namespace RestaurantsPlatform.Web.Areas.Restaurants.Controllers
 {
     using System.Diagnostics;
     using System.Security.Claims;
@@ -8,8 +6,8 @@ namespace RestaurantsPlatform.Web.Areas.Restaurants.Controllers
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-
     using RestaurantsPlatform.Services.Data.Interfaces;
+    using RestaurantsPlatform.Web.Controllers;
     using RestaurantsPlatform.Web.ViewModels;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
     using RestaurantsPlatform.Web.ViewModels.RestaurantsImages;

@@ -1,7 +1,6 @@
 ﻿namespace RestaurantsPlatform.Services.Data.Interfaces
 {
     using System.Collections.Generic;
-    using RestaurantsPlatform.Data.Models;
 
     public interface IUserService
     {

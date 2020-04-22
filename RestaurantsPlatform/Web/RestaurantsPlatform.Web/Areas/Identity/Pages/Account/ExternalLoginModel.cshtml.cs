@@ -51,17 +51,6 @@
         [TempData]
         public string ErrorMessage { get; set; }
 
-        public class InputModel
-        {
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
-
-            [Required]
-            [MaxLength(20)]
-            public string Username { get; set; }
-        }
-
         public IActionResult OnGetAsync()
         {
             return this.RedirectToPage("./Login");
@@ -180,6 +169,17 @@
             this.LoginProvider = info.LoginProvider;
             this.ReturnUrl = returnUrl;
             return this.Page();
+        }
+
+        public class InputModel
+        {
+            [Required]
+            [EmailAddress]
+            public string Email { get; set; }
+
+            [Required]
+            [MaxLength(20)]
+            public string Username { get; set; }
         }
     }
 }
