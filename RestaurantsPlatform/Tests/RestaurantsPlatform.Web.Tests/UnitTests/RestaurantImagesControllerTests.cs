@@ -1,6 +1,5 @@
 ﻿namespace RestaurantsPlatform.Web.Tests.UnitTests
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
@@ -33,18 +32,12 @@
         private readonly ApplicationDbContext dbContext;
 
         private readonly IDeletableEntityRepository<Restaurant> restaurantRepository;
-        private readonly IDeletableEntityRepository<Category> categoryRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
-        private readonly IRepository<FavouriteRestaurant> favouriteRepository;
         private readonly IDeletableEntityRepository<RestaurantImage> restaurantImagesRepository;
-        private readonly IDeletableEntityRepository<CategoryImage> categoryImageRepository;
 
         private readonly IRestaurantImageService restaurantImagesService;
         private readonly ICloudinaryImageService cloudinaryService;
         private readonly IRestaurantService restaurantService;
-        private readonly ICategoryImageService categoryImageService;
-        private readonly ICategoryService categoryService;
-        private readonly IFavouriteService favouriteService;
         private readonly IUserService userService;
 
         private readonly RestaurantImagesController controller;
@@ -59,20 +52,13 @@
                     .Build();
 
             this.restaurantImagesRepository = new EfDeletableEntityRepository<RestaurantImage>(this.dbContext);
-            this.categoryImageRepository = new EfDeletableEntityRepository<CategoryImage>(this.dbContext);
             this.restaurantRepository = new EfDeletableEntityRepository<Restaurant>(this.dbContext);
-            this.categoryRepository = new EfDeletableEntityRepository<Category>(this.dbContext);
             this.userRepository = new EfDeletableEntityRepository<ApplicationUser>(this.dbContext);
-            this.favouriteRepository = new EfRepository<FavouriteRestaurant>(this.dbContext);
 
             this.cloudinaryService = new CloudinaryImageService(this.configuration);
             this.restaurantImagesService = new RestaurantImageService(this.restaurantImagesRepository, this.cloudinaryService);
             this.restaurantService = new RestaurantService(this.restaurantRepository, this.restaurantImagesService);
             this.userService = new UserService(this.restaurantService, this.userRepository);
-
-            this.categoryImageService = new CategoryImageService(this.categoryImageRepository, this.cloudinaryService);
-            this.categoryService = new CategoryService(this.categoryRepository, this.categoryImageService, this.restaurantService);
-            this.favouriteService = new FavouriteService(this.favouriteRepository);
 
             var httpContext = new DefaultHttpContext();
             var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());

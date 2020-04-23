@@ -207,3 +207,28 @@ img {
 textarea {
     resize: none;
 }
+
+.image-container {
+    position: relative;
+}
+
+.image-container img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.contact-image{
+    height: 22rem;
+}
+
+.contact-fieldset {
+    border-width: 2px !important;
+    border-style: solid;
+    border-color: #28a745 !important;
+}
+
+.contact-fieldset legend {
+    width: 8.7rem;
+}

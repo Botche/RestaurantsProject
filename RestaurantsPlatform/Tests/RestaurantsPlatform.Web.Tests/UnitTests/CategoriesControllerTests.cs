@@ -1,7 +1,5 @@
 ﻿namespace RestaurantsPlatform.Web.Tests.UnitTests
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -13,7 +11,6 @@
     using Moq;
     using RestaurantsPlatform.Data;
     using RestaurantsPlatform.Data.Common.Repositories;
-    using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Data.Repositories;
     using RestaurantsPlatform.Services.Data;
@@ -33,7 +30,6 @@
 
         private readonly IDeletableEntityRepository<Restaurant> restaurantRepository;
         private readonly IDeletableEntityRepository<Category> categoryRepository;
-        private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IRepository<FavouriteRestaurant> favouriteRepository;
         private readonly IDeletableEntityRepository<RestaurantImage> restaurantImagesRepository;
         private readonly IDeletableEntityRepository<CategoryImage> categoryImageRepository;
@@ -60,7 +56,6 @@
             this.categoryImageRepository = new EfDeletableEntityRepository<CategoryImage>(this.dbContext);
             this.restaurantRepository = new EfDeletableEntityRepository<Restaurant>(this.dbContext);
             this.categoryRepository = new EfDeletableEntityRepository<Category>(this.dbContext);
-            this.userRepository = new EfDeletableEntityRepository<ApplicationUser>(this.dbContext);
             this.favouriteRepository = new EfRepository<FavouriteRestaurant>(this.dbContext);
 
             this.cloudinaryService = new CloudinaryImageService(this.configuration);

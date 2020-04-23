@@ -89,18 +89,18 @@
             return this.Json(new { content = input.Content });
         }
 
-        public IActionResult LatestComments(int id)
-        {
-            var comments = this.commentService.GetLatestComments<DetailsCommentViewModel>(id);
+        // public IActionResult LatestComments(int id)
+        // {
+        //    var comments = this.commentService.GetLatestComments<DetailsCommentViewModel>(id);
 
-            return this.Json(new { comments });
-        }
+        // return this.Json(new { comments });
+        // }
 
-        public ActionResult<IEnumerable<DetailsCommentViewModel>> MostPopularComments(int id)
-        {
-            var comments = this.commentService.GetMostPopularComments<DetailsCommentViewModel>(id);
+        // public ActionResult<IEnumerable<DetailsCommentViewModel>> MostPopularComments(int id)
+        // {
+        //    var comments = this.commentService.GetMostPopularComments<DetailsCommentViewModel>(id);
 
-            return new List<DetailsCommentViewModel>(comments);
-        }
+        // return new List<DetailsCommentViewModel>(comments);
+        // }
     }
 }

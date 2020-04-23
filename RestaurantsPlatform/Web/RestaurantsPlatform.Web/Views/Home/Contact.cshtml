@@ -1,0 +1,42 @@
+﻿@model RestaurantsPlatform.Web.ViewModels.ContactInputModel
+
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<div class="row">
+    <div class="d-none d-lg-block col-sm-6 image-container">
+        <img src="~/Contact-Picture.png" class="contact-image" alt="Contact image">
+    </div>
+    <div class="col-xs-12 col-lg-6">
+        <form method="POST" asp-route="default" asp-route-controller="home" asp-route-action="contact">
+            <fieldset class="p-3 rounded contact-fieldset">
+                <legend class="font-weight-bold text-success d-inline">Get in touch</legend>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="EmailTo" class="control-label"></label>
+                    <input asp-for="EmailTo" class="form-control" readonly />
+                    <span asp-validation-for="EmailTo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Subject" class="control-label"></label>
+                    <input asp-for="Subject" class="form-control" />
+                    <span asp-validation-for="Subject" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Content" class="control-label"></label>
+                    <textarea asp-for="Content" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <div class="form-group text-center">
+                    <input type="submit" value="Send email" class="btn btn-outline-success form-control" />
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
