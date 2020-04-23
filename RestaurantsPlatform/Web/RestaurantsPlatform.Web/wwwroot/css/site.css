@@ -203,3 +203,7 @@ img {
     left: 53%;
     content: "YES";
 }
+
+textarea {
+    resize: none;
+}
