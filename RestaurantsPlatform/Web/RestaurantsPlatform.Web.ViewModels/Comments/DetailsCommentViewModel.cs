@@ -20,6 +20,8 @@
 
         public string AuthorId { get; set; }
 
+        public string AuthorImageUrl { get; set; }
+
         public DateTime ModifiedOn { get; set; }
 
         public bool IsEdited => this.ModifiedOn.Year > 2000;

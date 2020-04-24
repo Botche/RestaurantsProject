@@ -9,7 +9,9 @@
 }
 <div class="col-12 col-md-6 mt-lg-5 mt-3 row">
     <div class="col-12 col-lg-6 restaurant-image-container">
-        <img src="@imageUrl" class="restaurant-image mx-auto" alt="@Model.RestaurantName">
+        <a asp-route="restaurant" asp-route-id="@Model.Id" asp-route-name="@Model.ParsedUrlName">
+            <img src="@imageUrl" class="restaurant-image mx-auto" alt="@Model.RestaurantName">
+        </a>
     </div>
     <div class="col-12 col-lg-6 text-center mt-lg-0 mt-3">
         <h5>@Model.RestaurantName</h5>

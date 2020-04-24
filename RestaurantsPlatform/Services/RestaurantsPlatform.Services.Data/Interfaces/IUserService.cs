@@ -10,6 +10,6 @@
 
         IEnumerable<T> GetAllUsersWithDeleted<T>();
 
-        T GetCurrentUserInfo<T>(string userId);
+        T GetUserInfoByUsername<T>(string username);
     }
 }

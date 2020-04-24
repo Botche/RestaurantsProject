@@ -75,7 +75,8 @@
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await this.signInManager.PasswordSignInAsync(this.Input.Username, this.Input.Password, this.Input.RememberMe, lockoutOnFailure: false);
+                var username = (await this.userManager.FindByEmailAsync(this.Input.Email)).UserName;
+                var result = await this.signInManager.PasswordSignInAsync(username, this.Input.Password, this.Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     this.logger.LogInformation("User logged in.");
@@ -107,8 +108,9 @@
         public class InputModel
         {
             [Required]
-            [MaxLength(20)]
-            public string Username { get; set; }
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; }
 
             [Required]
             [DataType(DataType.Password)]

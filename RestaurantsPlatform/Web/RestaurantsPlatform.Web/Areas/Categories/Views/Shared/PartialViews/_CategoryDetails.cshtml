@@ -2,22 +2,31 @@
 @model RestaurantsPlatform.Web.ViewModels.Categories.DetailsAllCategoriesViewModel
 
 <div class="position-relative imageContainer">
-    <img src="@Model.ImageImageUrl" class="mr-3 rounded-lg w-100" alt="@Model.Title">
     @if (this.User.IsInRole(AdministratorRoleName))
     {
+        <img src="@Model.ImageImageUrl" class="mr-3 rounded-lg w-100" alt="@Model.Title">
         <a class="btn btn-primary position-absolute rounded-pill pictureBtn" asp-route="categoryImage" asp-route-id="@Model.Id" asp-route-name="@Model.UrlName" asp-route-action="update" asp-route-imageUrl="@Model.ImageImageUrl">
             Change Picture
         </a>
     }
+    else
+    {
+        <a asp-route="category" asp-route-name="@Model.UrlName" asp-route-id="@Model.Id">
+            <img src="@Model.ImageImageUrl" class="mr-3 rounded-lg w-100" alt="@Model.Title">
+        </a>
+    }
 </div>
-<div class="media-body">
+<div class="media-body category-body">
     <h5 class="mt-2">
         <a asp-route="category" asp-route-name="@Model.UrlName" asp-route-id="@Model.Id">
             @Model.Name (@Model.RestaurantsCount)
         </a>
     </h5>
     <hr class="mb-3" />
-    <p class="">
+    <p class="category-description d-block">
         @Model.ShortDescription
+    </p>
+    <p class="category-description d-none">
+        @Model.Description
     </p>
 </div>

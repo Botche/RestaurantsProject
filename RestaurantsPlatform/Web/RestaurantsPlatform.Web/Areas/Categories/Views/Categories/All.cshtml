@@ -9,7 +9,7 @@
 <div class="row d-flex justify-content-around">
     @foreach (var category in Model.Categories)
     {
-        <div class="row col-md-6 col-lg-4 media mb-4">
+        <div class="row col-md-6 col-lg-4 media mb-4 flex-column">
             <partial name="./PartialViews/_CategoryDetails" model="category" />
         </div>
     }
@@ -19,4 +19,38 @@
 
 @section scripts{
     <script type="text/javascript" src="~/js/functions/imagesButtonsFunction.js" asp-append-version="true"></script>
+
+    <script type="text/javascript">
+        (() => {
+            const medias = document.getElementsByClassName('category-body');
+
+            Array.from(medias).forEach(media => {
+                const shortDescription = media.getElementsByClassName('category-description')[0];
+                const fullDescription = media.getElementsByClassName('category-description')[1];
+
+                shortDescription.title = 'Show full description';
+                fullDescription.title = 'Hide full description';
+
+                if (shortDescription.innerText.endsWith('...')) {
+                    shortDescription.innerHTML += '&nbsp;<a class="text-primary">Read More</a>';
+
+                    shortDescription.style.cursor = 'pointer';
+                    fullDescription.style.cursor = 'pointer';
+
+                    shortDescription.onclick = showFullDescription;
+                    fullDescription.onclick = showShortDescription;
+
+                    function showFullDescription() {
+                        fullDescription.classList.replace('d-none', 'd-block');
+                        shortDescription.classList.replace('d-block', 'd-none');
+                    }
+
+                    function showShortDescription() {
+                        shortDescription.classList.replace('d-none', 'd-block');
+                        fullDescription.classList.replace('d-block', 'd-none');
+                    }
+                }
+            });
+        })();
+    </script>
 }

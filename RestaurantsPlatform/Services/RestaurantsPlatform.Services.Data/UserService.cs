@@ -39,10 +39,10 @@
             return this.usersRepository.AllWithDeleted().To<T>().ToList();
         }
 
-        public T GetCurrentUserInfo<T>(string userId)
+        public T GetUserInfoByUsername<T>(string username)
         {
             return this.usersRepository.All()
-                .Where(user => user.Id == userId)
+                .Where(user => user.UserName == username)
                 .To<T>()
                 .FirstOrDefault();
         }

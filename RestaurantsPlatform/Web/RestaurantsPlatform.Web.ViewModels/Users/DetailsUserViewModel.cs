@@ -1,19 +1,24 @@
 ﻿namespace RestaurantsPlatform.Web.ViewModels.Users
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
 
     using AutoMapper;
-
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
 
     public class DetailsUserViewModel : IMapFrom<ApplicationUser>, IHaveCustomMappings
     {
+        public string Id { get; set; }
+
         public string Email { get; set; }
 
         public string UserName { get; set; }
+
+        public string RoleName { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
@@ -31,7 +36,11 @@
                 .ForMember(
                     dest => dest.VotesCount,
                     ori => ori.MapFrom(from => from.Votes
-                        .Count(vote => vote.Type != VoteType.Neutral)));
+                        .Count(vote => vote.Type != VoteType.Neutral)))
+                .ForMember(
+                    dest => dest.RoleName,
+                    ori => ori.MapFrom(from => from.UserRoles.FirstOrDefault()
+                                                                .Role.Name));
         }
     }
 }

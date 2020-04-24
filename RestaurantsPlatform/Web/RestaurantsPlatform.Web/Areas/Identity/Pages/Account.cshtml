@@ -21,15 +21,22 @@
                         <th scope="row">Username</th>
                         <td>@Model.CurrentUser.UserName</td>
                     </tr>
-                    <tr>
-                        <th scope="row">Email</th>
-                        <td>@Model.CurrentUser.Email</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Created on</th>
-                        <td><time datetime="@Model.CurrentUser.CreatedOn.ToString("O")"></time></td>
-                    </tr>
-                    @if (Model.User.IsInRole(RestaurantRoleName) || Model.User.IsInRole(AdministratorRoleName))
+                    @if (Model.CurrentUser.UserName == this.User.Identity.Name)
+                    {
+                        // TODO check if user wants to show their email
+                        <tr>
+                            <th scope="row">Email</th>
+                            <td>@Model.CurrentUser.Email</td>
+                        </tr>
+                    }
+                    @if (Model.CurrentUser.UserName == this.User.Identity.Name)
+                    {
+                        <tr>
+                            <th scope="row">Created on</th>
+                            <td><time datetime="@Model.CurrentUser.CreatedOn.ToString("O")"></time></td>
+                        </tr>
+                    }
+                    @if (Model.CurrentUser.RoleName == RestaurantRoleName || Model.CurrentUser.RoleName == AdministratorRoleName)
                     {
                         <tr>
                             <th scope="row">Created Restaurants</th>
@@ -52,11 +59,14 @@
             </table>
         </div>
 
-        <div class="col-12 col-md-2 text-center mt-3">
-            <a class="btn btn-info" asp-area="Identity" asp-page="/Account/Manage/Index">
-                <i class="fas fa-cog"></i>
-                Settings
-            </a>
-        </div>
+        @if (Model.CurrentUser.UserName == this.User.Identity.Name)
+        {
+            <div class="col-12 col-md-2 text-center mt-3">
+                <a class="btn btn-info" asp-area="Identity" asp-page="/Account/Manage/Index">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </div>
+        }
     </div>
 </div>
