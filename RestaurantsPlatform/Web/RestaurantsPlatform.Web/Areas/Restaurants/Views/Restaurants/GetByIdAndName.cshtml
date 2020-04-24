@@ -24,11 +24,11 @@
         {
             @if (Model.IsFavourite)
             {
-                <a class="likeBtn"><i class="heartIcon fa-heart fa float-right"></i></a>
+                <a class="likeBtn"><i class="heartIcon fa-heart fa float-right d-none d-sm-block"></i></a>
             }
             else
             {
-                <a class="likeBtn"><i class="heartIcon fa-heart far float-right"></i></a>
+                <a class="likeBtn"><i class="heartIcon fa-heart far float-right d-none d-sm-block"></i></a>
             }
         }
     </h1>
@@ -72,7 +72,7 @@
             </dl>
         </div>
     </div>
-    <div class="rounded-lg col-12 col-md-6 bg-secondary" style="height: 520px;" id="map"></div>
+    <div class="rounded-lg col-12 col-md-6 bg-secondary" id="map"></div>
 </div>
 
 <partial name="./PartialViews/_GalleryPartialView" model="Model" />
@@ -95,10 +95,10 @@
 
 @section scripts {
     <script type="text/javascript" src="~/js/functions/determinateRestaurantStatusByWorkingTime.js" asp-append-version="true"></script>
-    <script type="text/javascript" src="~/js/functions/favouriteButtonInRestaurantView.js" asp-append-version="true"></script>
     <script type="text/javascript" src="~/js/functions/scrollsToTopFunction.js" asp-append-version="true"></script>
     @if (this.User.Identity.IsAuthenticated)
     {
+        <script type="text/javascript" src="~/js/functions/favouriteButtonInRestaurantView.js" asp-append-version="true"></script>
         <script type="text/javascript" src="~/js/functions/votesAsync.js" asp-append-version="true"></script>
     }
     @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.UserId)
@@ -281,6 +281,6 @@
                     title: '@Model.RestaurantName'
                 });
             }
-        </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=@this.ViewBag.GoogleMapsApiKey&callback=InitializeMap" async defer></script>
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=@this.ViewBag.GoogleMapsApiKey&callback=InitializeMap" async defer></script>
 }

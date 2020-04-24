@@ -9,5 +9,4 @@ TODO:
 * Add custom working time
 * Update header and footer
 * Elastic search
-* Pagination
 * Display recent comments and most popular --Later

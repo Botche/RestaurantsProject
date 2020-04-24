@@ -7,9 +7,11 @@
         imageUrl = Model.Images.FirstOrDefault().ImageUrl;
     }
 }
-<div class="col-6 media mt-5">
-    <img src="@imageUrl" class="mr-3 restaurantImage" alt="@Model.RestaurantName">
-    <div class="media-body">
+<div class="col-12 col-md-6 mt-lg-5 mt-3 row">
+    <div class="col-12 col-lg-6 restaurant-image-container">
+        <img src="@imageUrl" class="restaurant-image mx-auto" alt="@Model.RestaurantName">
+    </div>
+    <div class="col-12 col-lg-6 text-center mt-lg-0 mt-3">
         <h5>@Model.RestaurantName</h5>
         <div class="workingTime">@Model.WorkingTime</div>
         <div class="badge badge-pill status"></div>

@@ -8,10 +8,10 @@
     <h1 class="text-center m-4">
         @Model.RestaurantName
     </h1>
-    <img class="mx-auto d-block" src="@Model.ImageUrl" alt="Category Image" />
+    <img class="mx-auto d-block img-fluid" src="@Model.ImageUrl" alt="Category Image" />
 </div>
 
-<form class="text-center" method="POST" asp-controller="RestaurantImages" asp-action="Update">
+<form class="text-center w-75 mx-auto" method="POST" asp-controller="RestaurantImages" asp-action="Update">
     <div class="form-group">
         <input asp-for="Id" class="form-control" hidden />
     </div>

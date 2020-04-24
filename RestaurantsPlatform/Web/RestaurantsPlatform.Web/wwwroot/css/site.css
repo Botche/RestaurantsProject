@@ -1,4 +1,10 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+﻿@import "comments.css";
+@import "contactForm.css";
+@import "forms.css";
+@import "restaurantGetByIdName.css";
+@import "usersTable.css";
+
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 * {
     box-sizing: border-box;
@@ -61,34 +67,6 @@ body {
     line-height: 60px; /* Vertically center the text there */
 }
 
-img {
-    position: relative;
-    width: 22rem;
-    height: 13rem;
-}
-
-.restaurantImage {
-    width: 13rem;
-    height: 13rem;
-    border: 1px solid black;
-    border-radius: 50% !important;
-}
-
-.required:after {
-    content: " *";
-    color: red;
-}
-
-.button-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 56px;
-    text-decoration: none;
-    color: #000;
-    background-color: rgba(35,68,101,.5);
-    z-index: 1035;
-}
-
 .display-image {
     width: 22rem;
     height: 15rem;
@@ -105,130 +83,6 @@ img {
     opacity: 1.0;
 }
 
-.vertical-row {
-    Float: left;
-    height: auto;
-    width: 1px; /* edit this if you want */
-    background-color: black
-}
-
-.profile-picture {
-    width: 12rem !important;
-    height: 10rem !important;
-}
-
-.manipulateComment {
-    bottom: 1rem;
-    right: 1rem;
-}
-
-.button-link {
-    background: none !important;
-    border: none;
-    padding: 0 !important;
-}
-
-.button-link:hover {
-    text-decoration: underline;
-}
-
-.commentDiv {
-    overflow-y: auto;
-    max-height: 35rem;
-}
-
-.commentDiv::-webkit-scrollbar {
-    width: 20px;
-}
-
-.commentDiv::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
-    border-radius: 10px;
-}
-
-.commentDiv::-webkit-scrollbar-thumb {
-    background-color: #34baeb;
-    border-radius: 10px;
-}
-
-.commentDiv::-webkit-scrollbar-thumb:hover {
-    background-color: #347deb;
-}
-
-.without-border > th{
-    border-top: 0 !important;
-}
-
-.without-border > td{
-    border-top: 0 !important;
-}
-
-.flipswitch {
-    position: relative;
-    background: white;
-    width: 6rem;
-    height: 2.5rem;
-    -webkit-appearance: initial;
-    border-radius: 3px;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    outline: none;
-    font-size: 14px;
-    font-family: Trebuchet, Arial, sans-serif;
-    font-weight: bold;
-    border: 1px solid #ddd;
-}
-
-.flipswitch:after {
-    position: absolute;
-    top: 5%;
-    display: block;
-    line-height: 32px;
-    width: 45%;
-    height: 90%;
-    background: #fff;
-    box-sizing: border-box;
-    text-align: center;
-    transition: all 0.3s ease-in 0s;
-    color: black;
-    border: #888 1px solid;
-    border-radius: 3px;
-}
-
-.flipswitch:after {
-    left: 2%;
-    content: "NO";
-}
-
-.flipswitch:checked:after {
-    left: 53%;
-    content: "YES";
-}
-
 textarea {
     resize: none;
-}
-
-.image-container {
-    position: relative;
-}
-
-.image-container img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.contact-image{
-    height: 22rem;
-}
-
-.contact-fieldset {
-    border-width: 2px !important;
-    border-style: solid;
-    border-color: #28a745 !important;
-}
-
-.contact-fieldset legend {
-    width: 8.7rem;
 }

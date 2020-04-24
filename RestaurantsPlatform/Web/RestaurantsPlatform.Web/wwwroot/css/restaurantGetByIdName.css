@@ -1,0 +1,43 @@
+﻿img {
+    position: relative;
+    width: 22rem;
+    height: 13rem;
+}
+
+.restaurant-image-container {
+    position: relative;
+    width: 13rem !important;
+    height: 13rem !important;
+}
+
+.restaurant-image {
+    width: 13rem;
+    height: 13rem;
+    border: 1px solid black;
+    border-radius: 50% !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.image-container {
+    position: relative;
+}
+
+.image-container img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.button-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 56px;
+    text-decoration: none;
+    color: #000;
+    background-color: rgba(35,68,101,.5);
+    z-index: 1035;
+}

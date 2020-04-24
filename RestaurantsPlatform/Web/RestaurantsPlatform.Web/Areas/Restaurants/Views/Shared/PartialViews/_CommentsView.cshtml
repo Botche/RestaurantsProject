@@ -24,10 +24,10 @@
 <div class="commentDiv">
     @foreach (var comment in Model.Comments.OrderByDescending(comment => comment.VotesSum).ThenByDescending(comment => comment.CreatedOn))
     {
-        <div class="m-3 border rounded">
-            <div class="media position-relative">
-                <img class="pl-2 mr-3 profile-picture rounded" src="@DefaultProfilePicture" alt="Profile picture">
-                <div class="media-body">
+        <div class="m-3 border rounded position-relative">
+            <div class="media">
+                <img class="pl-2 mr-3 profile-picture rounded d-none d-lg-block" src="@DefaultProfilePicture" alt="Profile picture">
+                <div class="media-body ml-3 ml-lg-0">
                     <h5 class="mt-3 comment-heading">
                         @comment.AuthorUserName
                         <small class="text-muted"><time datetime="@comment.CreatedOn.ToString("O")"></time></small>
@@ -36,10 +36,11 @@
                             <small class="float-right text-muted d-block"><i class="fas fa-pencil-alt"></i> Edited</small>
                         }
                     </h5>
+                    <hr class="d-block d-lg-none" />
                     <span class="comment-id d-none">@comment.Id</span>
-                    <span class="comment-content">
+                    <div class="comment-content">
                         @comment.Content
-                    </span>
+                    </div>
                 </div>
                 @if (this.User.Identity.IsAuthenticated)
                 {
@@ -48,7 +49,7 @@
                             <input asp-for="@comment.Id" hidden />
                         </form>
                         @if (!comment.Votes.Any(vote => vote.UserId == (this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
-              || (int)(comment.Votes.FirstOrDefault(vote => vote.UserId == (this.User.FindFirstValue(ClaimTypes.NameIdentifier))).Type) == 0)
+            || (int)(comment.Votes.FirstOrDefault(vote => vote.UserId == (this.User.FindFirstValue(ClaimTypes.NameIdentifier))).Type) == 0)
                         {
                             <div>
                                 <a class="nav-link upvote text-primary upvote">
@@ -119,29 +120,27 @@
                         </div>
                     </div>
                 }
+            </div>
 
+            <div class="manipulate-comment position-absolute">
                 @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == comment.AuthorId)
                 {
-                    <div class="position-absolute manipulateComment text-muted text-decoration-none">
-                        <a asp-route="restaurantComment" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl"
-                           asp-route-commentId="@comment.Id" asp-route-action="update" class="update-comment">
-                            <i class="fas fa-pencil-alt"></i> Edit
-                        </a>
-                        &nbsp;
-                        <a asp-route="restaurantComment" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl"
-                           asp-route-commentId="@comment.Id" asp-route-action="delete" class="delete-comment">
-                            Delete <i class="fas fa-backspace"></i>
-                        </a>
-                    </div>
+                    <a asp-route="restaurantComment" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl"
+                       asp-route-commentId="@comment.Id" asp-route-action="update" class="update-comment">
+                        <i class="fas fa-pencil-alt"></i> Edit
+                    </a>
+                    @Html.Raw("&nbsp;")
+                    <a asp-route="restaurantComment" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl"
+                       asp-route-commentId="@comment.Id" asp-route-action="delete" class="delete-comment">
+                        Delete <i class="fas fa-backspace"></i>
+                    </a>
                 }
                 else if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == this.Model.UserId)
                 {
-                    <div class="position-absolute manipulateComment text-muted text-decoration-none">
-                        <a asp-route="restaurantComment" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl"
-                           asp-route-commentId="@comment.Id" asp-route-action="delete" class="delete-comment">
-                            Delete <i class="fas fa-backspace"></i>
-                        </a>
-                    </div>
+                    <a asp-route="restaurantComment" asp-route-id="@Model.Id" asp-route-name="@Model.RestaurantUrl"
+                       asp-route-commentId="@comment.Id" asp-route-action="delete" class="delete-comment">
+                        Delete <i class="fas fa-backspace"></i>
+                    </a>
                 }
             </div>
         </div>

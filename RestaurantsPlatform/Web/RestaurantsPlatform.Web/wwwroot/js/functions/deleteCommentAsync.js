@@ -10,7 +10,7 @@
                 .then(response => {
                     if (response.ok) {
                         toastr.success('Successfully deleted comment!');
-                        const elementToRemove = this.parentNode.parentNode.parentNode;
+                        const elementToRemove = this.parentNode.parentNode;
                         elementToRemove.parentNode.removeChild(elementToRemove);
                     } else {
                         toastr.error('Something went wrong!');

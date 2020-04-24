@@ -65,10 +65,10 @@
                 <td>
                     @if (user.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                     {
-                        <a class="btn btn-primary disabled mt-1">
+                        <a class="btn btn-primary disabled mt-1 mt-lg-0">
                             Promote
                         </a>
-                        <a class="btn btn-secondary disabled mt-1">
+                        <a class="btn btn-secondary disabled mt-1 mt-lg-0">
                             Demote
                         </a>
                         <a class="btn btn-danger disabled mt-1">
@@ -79,10 +79,10 @@
                     {
                         @if (user.IsDeleted)
                         {
-                            <a class="btn btn-primary disabled mt-1">
+                            <a class="btn btn-primary disabled mt-1 mt-lg-0">
                                 Promote
                             </a>
-                            <a class="btn btn-secondary disabled mt-1">
+                            <a class="btn btn-secondary disabled mt-1 mt-lg-0">
                                 Demote
                             </a>
                             <a class="btn btn-success  mt-1" asp-area="Administration" asp-controller="Dashboard" asp-action="UnBan" asp-route-id="@user.Id">
@@ -93,28 +93,28 @@
                         {
                             @if (user.RoleName == UserRoleName)
                             {
-                                <a class="btn btn-primary mt-1" asp-area="Administration" asp-controller="Dashboard" asp-action="Promote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
+                                <a class="btn btn-primary mt-1 mt-lg-0" asp-area="Administration" asp-controller="Dashboard" asp-action="Promote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
                                     Promote
                                 </a>
-                                <a class="btn btn-secondary disabled mt-1">
+                                <a class="btn btn-secondary disabled mt-1 mt-lg-0">
                                     Demote
                                 </a>
                             }
                             else if (user.RoleName == AdministratorRoleName)
                             {
-                                <a class="btn btn-primary disabled mt-1">
+                                <a class="btn btn-primary disabled mt-1 mt-lg-0">
                                     Promote
                                 </a>
-                                <a class="btn btn-secondary" asp-area="Administration" asp-controller="Dashboard" asp-action="Demote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
+                                <a class="btn btn-secondary mt-1 mt-lg-0" asp-area="Administration" asp-controller="Dashboard" asp-action="Demote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
                                     Demote
                                 </a>
                             }
                             else
                             {
-                                <a class="btn btn-primary mt-1" asp-area="Administration" asp-controller="Dashboard" asp-action="Promote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
+                                <a class="btn btn-primary mt-1 mt-lg-0" asp-area="Administration" asp-controller="Dashboard" asp-action="Promote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
                                     Promote
                                 </a>
-                                <a class="btn btn-secondary mt-1" asp-area="Administration" asp-controller="Dashboard" asp-action="Demote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
+                                <a class="btn btn-secondary mt-1 mt-lg-0" asp-area="Administration" asp-controller="Dashboard" asp-action="Demote" asp-route-id="@user.Id" asp-route-roleName="@user.RoleName">
                                     Demote
                                 </a>
                             }

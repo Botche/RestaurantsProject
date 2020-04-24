@@ -1,0 +1,13 @@
+﻿.contact-image{
+    height: 22rem;
+}
+
+.contact-fieldset {
+    border-width: 2px !important;
+    border-style: solid;
+    border-color: #28a745 !important;
+}
+
+.contact-fieldset legend {
+    width: 8.7rem;
+}

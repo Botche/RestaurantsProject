@@ -1,0 +1,38 @@
+﻿.required:after {
+    content: " *";
+    color: red;
+}
+
+dl {
+    overflow-wrap: break-word;
+}
+
+@media only screen and (max-width: 426px) {
+    .create-restaurant-form {
+        width: 100% !important;
+    }
+
+    .update-restaurant-form {
+        width: 100% !important;
+    }
+
+    .delete-restaurant-form {
+        width: 100% !important;
+    }
+
+    .delete-restaurant-form div {
+        height: 2rem !important;
+    }
+
+    .create-category-form {
+        width: 100% !important;
+    }
+
+    .update-category-form {
+        width: 100% !important;
+    }
+
+    .delete-category-form {
+        width: 100% !important;
+    }
+}
