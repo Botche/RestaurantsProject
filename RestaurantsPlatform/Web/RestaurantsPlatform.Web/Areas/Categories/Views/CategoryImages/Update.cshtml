@@ -1,4 +1,5 @@
-﻿@model RestaurantsPlatform.Web.ViewModels.CategoryImages.UpdateCategoryImageViewModel
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@model RestaurantsPlatform.Web.ViewModels.CategoryImages.UpdateCategoryImageViewModel
 @{
     ViewData["Title"] = "Update Image";
 }
@@ -19,7 +20,19 @@
         <input asp-for="ImageUrl" class="form-control" />
         <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
+    <input type="hidden" id="RecaptchaValue" name="RecaptchaValue" />
     <div class="form-group">
         <input class="btn btn-outline-success" value="Update picture" type="submit" />
     </div>
 </form>
+
+@section scripts{
+    <script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptcha:SiteKey"]"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@this.Configuration["GoogleReCaptcha:SiteKey"]', { action: 'update' }).then(function (token) {
+                document.getElementById("RecaptchaValue").value = token;
+            });
+        });
+    </script>
+}

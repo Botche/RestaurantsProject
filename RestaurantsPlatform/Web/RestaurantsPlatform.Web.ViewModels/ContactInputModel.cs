@@ -3,6 +3,8 @@
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
+    using RestaurantsPlatform.Web.Infrastructure;
+
     public class ContactInputModel
     {
         [Required]
@@ -19,5 +21,8 @@
         [Required]
         [DisplayName("Message")]
         public string Content { get; set; }
+
+        [GoogleReCaptchaValidation]
+        public string RecaptchaValue { get; set; }
     }
 }

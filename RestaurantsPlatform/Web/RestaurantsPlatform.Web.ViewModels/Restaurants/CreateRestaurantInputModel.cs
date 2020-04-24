@@ -5,7 +5,7 @@
 
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
-
+    using RestaurantsPlatform.Web.Infrastructure;
     using static RestaurantsPlatform.Data.Common.Constants.Models.Restraurant;
 
     public class CreateRestaurantInputModel : IMapTo<Restaurant>
@@ -40,5 +40,8 @@
         [Required]
         [MaxLength(ContactInfoMaxLength)]
         public string ContactInfo { get; set; }
+
+        [GoogleReCaptchaValidation]
+        public string RecaptchaValue { get; set; }
     }
 }

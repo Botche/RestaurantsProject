@@ -2,6 +2,8 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using RestaurantsPlatform.Web.Infrastructure;
+
     using static RestaurantsPlatform.Data.Common.Constants.Models.Category;
 
     public class UpdateCategoryInputModel
@@ -19,5 +21,8 @@
         [Required]
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; }
+
+        [GoogleReCaptchaValidation]
+        public string RecaptchaValue { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿@model RestaurantsPlatform.Web.ViewModels.Restaurants.UpdateRestaurantViewModel
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@model RestaurantsPlatform.Web.ViewModels.Restaurants.UpdateRestaurantViewModel
 
 @{
     ViewData["Title"] = Model.RestaurantName;
@@ -51,6 +52,7 @@
                 </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
+            <input type="hidden" id="RecaptchaValue" name="RecaptchaValue" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
                 <a class="btn btn-secondary float-right" asp-route="restaurant" asp-route-id="@Model.Id" asp-route-name="@Model.Url">
@@ -63,4 +65,12 @@
 
 @section scripts {
     <script type="text/javascript" src="~/js/functions/requiredStar.js" asp-append-version="true"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptcha:SiteKey"]"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@this.Configuration["GoogleReCaptcha:SiteKey"]', { action: 'contact' }).then(function (token) {
+                document.getElementById("RecaptchaValue").value = token;
+            });
+        });
+    </script>
 }

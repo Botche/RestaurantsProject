@@ -17,7 +17,7 @@
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Services.Messaging;
-
+    using RestaurantsPlatform.Web.Infrastructure;
     using static RestaurantsPlatform.Common.GlobalConstants;
 
     [AllowAnonymous]
@@ -137,6 +137,9 @@
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [GoogleReCaptchaValidation]
+            public string RecaptchaValue { get; set; }
         }
     }
 }

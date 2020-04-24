@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\RestaurantsPlatform.Data.Models\RestaurantsPlatform.Data.Models.csproj" />
     <ProjectReference Include="..\..\Services\RestaurantsPlatform.Services.Mapping\RestaurantsPlatform.Services.Mapping.csproj" />
+    <ProjectReference Include="..\RestaurantsPlatform.Web.Infrastructure\RestaurantsPlatform.Web.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

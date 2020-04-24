@@ -15,6 +15,7 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
     using RestaurantsPlatform.Data.Models;
+    using RestaurantsPlatform.Web.Infrastructure;
 
     [AllowAnonymous]
     public class LoginModel : PageModel
@@ -71,6 +72,7 @@
         {
             returnUrl = returnUrl ?? this.Url.Content("~/");
 
+            this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (this.ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -80,7 +82,6 @@
                 if (username == null)
                 {
                     this.ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
                     return this.Page();
                 }
 
@@ -104,7 +105,6 @@
                 else
                 {
                     this.ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
                     return this.Page();
                 }
             }
@@ -126,6 +126,9 @@
 
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
+
+            [GoogleReCaptchaValidation]
+            public string RecaptchaValue { get; set; }
         }
     }
 }

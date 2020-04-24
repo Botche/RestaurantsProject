@@ -1,4 +1,5 @@
-﻿@model RestaurantsPlatform.Web.ViewModels.Categories.CreateCategoryInputModel
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@model RestaurantsPlatform.Web.ViewModels.Categories.CreateCategoryInputModel
 
 @{
     ViewData["Title"] = "Create Category";
@@ -31,6 +32,7 @@
                 <input asp-for="ImageUrl" class="form-control" />
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
+            <input type="hidden" id="RecaptchaValue" name="RecaptchaValue" />
             <div class="form-group text-center">
                 <input type="submit" value="Create" class="btn btn-outline-primary" />
                 <a class="btn btn-outline-secondary" asp-route="default" asp-route-controller="categories" asp-route-action="all">Back to All</a>
@@ -41,4 +43,12 @@
 
 @section scripts {
     <script type="text/javascript" src="~/js/functions/requiredStar.js" asp-append-version="true"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptcha:SiteKey"]"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@this.Configuration["GoogleReCaptcha:SiteKey"]', { action: 'create' }).then(function (token) {
+                document.getElementById("RecaptchaValue").value = token;
+            });
+        });
+    </script>
 }

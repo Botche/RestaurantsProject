@@ -5,7 +5,7 @@
 
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
-
+    using RestaurantsPlatform.Web.Infrastructure;
     using static RestaurantsPlatform.Data.Common.Constants.Models.Restraurant;
 
     public class UpdateRestaurantViewModel : IMapFrom<Restaurant>
@@ -42,6 +42,9 @@
         [DisplayName("Category")]
         [Required]
         public int CategoryId { get; set; }
+
+        [GoogleReCaptchaValidation]
+        public string RecaptchaValue { get; set; }
 
         public string UserId { get; set; }
 

@@ -5,6 +5,7 @@
 
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
+    using RestaurantsPlatform.Web.Infrastructure;
     using RestaurantsPlatform.Web.ViewModels.Comments;
     using RestaurantsPlatform.Web.ViewModels.Favourites;
     using RestaurantsPlatform.Web.ViewModels.RestaurantsImages;
@@ -37,6 +38,9 @@
 
         [Required]
         public string CommentContent { get; set; }
+
+        [GoogleReCaptchaValidation]
+        public string RecaptchaValue { get; set; }
 
         public bool IsFavourite { get; set; }
 

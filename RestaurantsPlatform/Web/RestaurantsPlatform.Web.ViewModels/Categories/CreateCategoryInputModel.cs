@@ -2,7 +2,7 @@
 {
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-
+    using RestaurantsPlatform.Web.Infrastructure;
     using static RestaurantsPlatform.Data.Common.Constants.Models.Category;
 
     public class CreateCategoryInputModel
@@ -23,5 +23,8 @@
         [Required]
         [Url]
         public string ImageUrl { get; set; }
+
+        [GoogleReCaptchaValidation]
+        public string RecaptchaValue { get; set; }
     }
 }

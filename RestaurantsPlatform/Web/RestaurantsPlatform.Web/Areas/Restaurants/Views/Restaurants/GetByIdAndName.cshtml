@@ -1,4 +1,5 @@
 ﻿@using System.Security.Claims;
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 @model RestaurantsPlatform.Web.ViewModels.Restaurants.DetailsRestaurantViewModel
 
 @{
@@ -98,6 +99,14 @@
     <script type="text/javascript" src="~/js/functions/scrollsToTopFunction.js" asp-append-version="true"></script>
     @if (this.User.Identity.IsAuthenticated)
     {
+        <script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptcha:SiteKey"]"></script>
+        <script>
+            grecaptcha.ready(function () {
+                grecaptcha.execute('@this.Configuration["GoogleReCaptcha:SiteKey"]', { action: 'create' }).then(function (token) {
+                    document.getElementById("RecaptchaValue").value = token;
+                });
+            });
+        </script>
         <script type="text/javascript" src="~/js/functions/favouriteButtonInRestaurantView.js" asp-append-version="true"></script>
         <script type="text/javascript" src="~/js/functions/votesAsync.js" asp-append-version="true"></script>
     }
