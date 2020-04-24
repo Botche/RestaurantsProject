@@ -15,6 +15,7 @@
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
     using RestaurantsPlatform.Data.Models;
+    using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Services.Messaging;
 
     using static RestaurantsPlatform.Common.GlobalConstants;
@@ -25,17 +26,20 @@
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<RegisterModel> logger;
+        private readonly IUserImageSercice imageSercice;
         private readonly IEmailSender emailSender;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
+            IUserImageSercice imageSercice,
             IEmailSender emailSender)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
+            this.imageSercice = imageSercice;
             this.emailSender = emailSender;
         }
 
@@ -65,10 +69,12 @@
             this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = this.Input.Username, Email = this.Input.Email };
+                var user = new ApplicationUser { UserName = this.Input.Username, Email = this.Input.Email, ImageUrl = DefaultProfilePicture };
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {
+                    await this.imageSercice.AddDefaultImageToUserAsync(user);
+
                     this.logger.LogInformation("User created a new account with password.");
                     await this.userManager.AddToRoleAsync(user, UserRoleName);
 

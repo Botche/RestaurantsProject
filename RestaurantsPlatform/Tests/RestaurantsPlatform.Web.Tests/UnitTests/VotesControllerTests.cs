@@ -40,8 +40,8 @@
             this.votesRepository = new EfRepository<Vote>(this.dbContext);
             this.commentsRepository = new EfDeletableEntityRepository<Comment>(this.dbContext);
 
-            this.commentsService = new CommentService(this.commentsRepository);
             this.votesService = new VoteService(this.votesRepository);
+            this.commentsService = new CommentService(this.commentsRepository, this.votesService);
 
             this.controller = new VotesController(this.votesService);
         }

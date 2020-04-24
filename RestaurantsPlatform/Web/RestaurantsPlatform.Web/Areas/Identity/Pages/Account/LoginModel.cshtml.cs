@@ -75,7 +75,15 @@
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var username = (await this.userManager.FindByEmailAsync(this.Input.Email)).UserName;
+                var username = (await this.userManager.FindByEmailAsync(this.Input.Email))?.UserName;
+
+                if (username == null)
+                {
+                    this.ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+                    return this.Page();
+                }
+
                 var result = await this.signInManager.PasswordSignInAsync(username, this.Input.Password, this.Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {

@@ -57,7 +57,7 @@ namespace RestaurantsPlatform.Seed
             var seeders = new List<ISeeder>
                           {
                               new RolesSeeder(),
-                              new UsersSeeder(),
+                              new UsersSeeder(this.imageService),
                               new CategoryImagesSeeder(this.imageService),
                               new CategoriesSeeder(),
                               new RestaurantsSeeder(),

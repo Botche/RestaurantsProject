@@ -16,6 +16,20 @@
             this.votesRepository = votesRepository;
         }
 
+        public async Task DeleteAllVotesAppenedToCommentAsync(int commentId)
+        {
+            var votes = this.votesRepository.All()
+                .Where(vote => vote.CommentId == commentId)
+                .ToList();
+
+            foreach (var vote in votes)
+            {
+                this.votesRepository.Delete(vote);
+            }
+
+            await this.votesRepository.SaveChangesAsync();
+        }
+
         public int GetVotes(int commentId)
         {
             var votes = this.votesRepository.All()

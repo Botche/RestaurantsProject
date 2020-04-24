@@ -1,9 +1,7 @@
 ﻿namespace RestaurantsPlatform.Data.Models.Restaurants
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Text;
 
     using RestaurantsPlatform.Data.Common.Models;
 

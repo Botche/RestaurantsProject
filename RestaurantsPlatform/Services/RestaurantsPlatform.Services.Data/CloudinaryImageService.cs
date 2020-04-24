@@ -42,6 +42,13 @@
             return await this.UploadImageToClodinary(imageUrl, path);
         }
 
+        public async Task<ImageBindingModel> UploadUserImageToCloudinaryAsync(string imageUrl)
+        {
+            string path = "restaurant/users";
+
+            return await this.UploadImageToClodinary(imageUrl, path);
+        }
+
         private async Task<ImageBindingModel> UploadImageToClodinary(string imageUrl, string path)
         {
             var uploadParams = new ImageUploadParams()

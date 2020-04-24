@@ -37,12 +37,17 @@
         private readonly IDeletableEntityRepository<Category> categoryRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IRepository<FavouriteRestaurant> favouriteRepository;
+        private readonly IRepository<Vote> voteRepository;
         private readonly IDeletableEntityRepository<RestaurantImage> restaurantImagesRepository;
         private readonly IDeletableEntityRepository<CategoryImage> categoryImageRepository;
 
         private readonly IRestaurantImageService restaurantImagesService;
+        private readonly IDeletableEntityRepository<Comment> commentRepository;
         private readonly ICloudinaryImageService cloudinaryService;
+        private readonly IVoteService voteService;
+        private readonly ICommentService commentService;
         private readonly IRestaurantService restaurantService;
+        private readonly IUserImageSercice userImageService;
         private readonly ICategoryImageService categoryImageService;
         private readonly ICategoryService categoryService;
         private readonly IUserService userService;
@@ -65,14 +70,19 @@
             this.categoryRepository = new EfDeletableEntityRepository<Category>(this.dbContext);
             this.userRepository = new EfDeletableEntityRepository<ApplicationUser>(this.dbContext);
             this.favouriteRepository = new EfRepository<FavouriteRestaurant>(this.dbContext);
+            this.voteRepository = new EfRepository<Vote>(this.dbContext);
+            this.commentRepository = new EfDeletableEntityRepository<Comment>(this.dbContext);
 
             this.cloudinaryService = new CloudinaryImageService(this.configuration);
+            this.voteService = new VoteService(this.voteRepository);
+            this.commentService = new CommentService(this.commentRepository, this.voteService);
             this.restaurantImagesService = new RestaurantImageService(this.restaurantImagesRepository, this.cloudinaryService);
-            this.restaurantService = new RestaurantService(this.restaurantRepository, this.restaurantImagesService);
+            this.restaurantService = new RestaurantService(this.restaurantRepository, this.restaurantImagesService, this.commentService);
+            this.userImageService = new UserImageSercice(this.userRepository, this.cloudinaryService);
 
             this.categoryImageService = new CategoryImageService(this.categoryImageRepository, this.cloudinaryService);
             this.categoryService = new CategoryService(this.categoryRepository, this.categoryImageService, this.restaurantService);
-            this.userService = new UserService(this.restaurantService, this.userRepository);
+            this.userService = new UserService(this.restaurantService, this.userImageService, this.userRepository);
             this.favouriteService = new FavouriteService(this.favouriteRepository);
 
             var httpContext = new DefaultHttpContext();

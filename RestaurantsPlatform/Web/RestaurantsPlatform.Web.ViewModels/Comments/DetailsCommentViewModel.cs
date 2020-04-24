@@ -18,9 +18,9 @@
 
         public string AuthorUserName { get; set; }
 
-        public string AuthorId { get; set; }
-
         public string AuthorImageUrl { get; set; }
+
+        public string AuthorId { get; set; }
 
         public DateTime ModifiedOn { get; set; }
 

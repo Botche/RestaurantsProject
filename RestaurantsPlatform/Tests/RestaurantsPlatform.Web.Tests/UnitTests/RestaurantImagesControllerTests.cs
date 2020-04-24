@@ -33,9 +33,14 @@
 
         private readonly IDeletableEntityRepository<Restaurant> restaurantRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
+        private readonly IRepository<Vote> voteRepository;
+        private readonly IDeletableEntityRepository<Comment> commentRepository;
+        private readonly IVoteService voteService;
+        private readonly ICommentService commentService;
         private readonly IDeletableEntityRepository<RestaurantImage> restaurantImagesRepository;
 
         private readonly IRestaurantImageService restaurantImagesService;
+        private readonly IUserImageSercice userImageService;
         private readonly ICloudinaryImageService cloudinaryService;
         private readonly IRestaurantService restaurantService;
         private readonly IUserService userService;
@@ -54,11 +59,16 @@
             this.restaurantImagesRepository = new EfDeletableEntityRepository<RestaurantImage>(this.dbContext);
             this.restaurantRepository = new EfDeletableEntityRepository<Restaurant>(this.dbContext);
             this.userRepository = new EfDeletableEntityRepository<ApplicationUser>(this.dbContext);
+            this.voteRepository = new EfRepository<Vote>(this.dbContext);
+            this.commentRepository = new EfDeletableEntityRepository<Comment>(this.dbContext);
 
+            this.voteService = new VoteService(this.voteRepository);
+            this.commentService = new CommentService(this.commentRepository, this.voteService);
+            this.userImageService = new UserImageSercice(this.userRepository, this.cloudinaryService);
             this.cloudinaryService = new CloudinaryImageService(this.configuration);
             this.restaurantImagesService = new RestaurantImageService(this.restaurantImagesRepository, this.cloudinaryService);
-            this.restaurantService = new RestaurantService(this.restaurantRepository, this.restaurantImagesService);
-            this.userService = new UserService(this.restaurantService, this.userRepository);
+            this.restaurantService = new RestaurantService(this.restaurantRepository, this.restaurantImagesService, this.commentService);
+            this.userService = new UserService(this.restaurantService, this.userImageService, this.userRepository);
 
             var httpContext = new DefaultHttpContext();
             var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());

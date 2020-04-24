@@ -19,8 +19,6 @@
             this.userService = userService;
         }
 
-        public string ImageUrl => DefaultProfilePicture;
-
         public DetailsUserViewModel CurrentUser { get; set; }
 
         public void OnGet(string userName)

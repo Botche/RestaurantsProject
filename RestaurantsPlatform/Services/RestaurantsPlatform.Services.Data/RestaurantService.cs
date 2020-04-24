@@ -15,13 +15,16 @@
     {
         private readonly IDeletableEntityRepository<Restaurant> restaurantRespository;
         private readonly IRestaurantImageService imageService;
+        private readonly ICommentService commentService;
 
         public RestaurantService(
             IDeletableEntityRepository<Restaurant> restaurantRespository,
-            IRestaurantImageService imageService)
+            IRestaurantImageService imageService,
+            ICommentService commentService)
         {
             this.restaurantRespository = restaurantRespository;
             this.imageService = imageService;
+            this.commentService = commentService;
         }
 
         public async Task<int> CreateRestaurantAsync(string userId, string address, int categoryId, string contactInfo, string description, string ownerName, string restaurantName, string workingTime)
@@ -59,6 +62,7 @@
             await this.restaurantRespository.SaveChangesAsync();
 
             await this.imageService.DeleteAllImagesAppenedToRestaurantAsync(restaurant.Id);
+            await this.commentService.DeleteAllCommentsAppendedToRestaurantAsync(restaurant.Id);
 
             return restaurant.Id;
         }

@@ -1,0 +1,25 @@
+﻿@using RestaurantsPlatform.Web.ViewModels.UserImage
+@model UserImageInputModel
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="text-center mx-auto">
+    <h1 class="text-center m-4">Update</h1>
+    <img class="mx-auto d-block img-fluid" src="@Model.ImageUrl" alt="Category Image" />
+</div>
+
+<form class="text-center w-75 mx-auto" method="POST" asp-area="Identity" asp-controller="Account" asp-action="UpdateImage">
+    <div class="form-group">
+        <input asp-for="Username" class="form-control" hidden />
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageUrl" class="control-label"></label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input class="btn btn-outline-success" value="Update picture" type="submit" />
+        <a class="btn btn-outline-secondary" asp-area="identity" asp-page="/account">Go back</a>
+    </div>
+</form>

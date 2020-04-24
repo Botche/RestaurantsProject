@@ -14,5 +14,7 @@
         IEnumerable<T> GetLatestComments<T>(int restaurantId);
 
         IEnumerable<T> GetMostPopularComments<T>(int restaurantId);
+
+        Task DeleteAllCommentsAppendedToRestaurantAsync(int id);
     }
 }

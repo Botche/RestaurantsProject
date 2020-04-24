@@ -10,8 +10,20 @@
 
 <div class="container-fluid mt-4 rounded">
     <div class="row">
-        <div class="col-12 col-md-4 ml-0 my-auto">
-            <img src="@Model.ImageUrl" class="img-fluid">
+        <div class="col-12 col-md-4 ml-0 my-auto imageContainer">
+            <img src="@Model.CurrentUser.ImageUrl" class="img-fluid" alt="Profile Picture">
+            @if (Model.CurrentUser.UserName == this.User.Identity.Name)
+            {
+                <div class="text-center position-absolute pictureBtn">
+                    <a class="btn btn-info rounded-pill text-white" asp-area="identity" asp-controller="account" asp-action="updateImage"
+                       asp-route-userName="@Model.CurrentUser.UserName">
+                        Update
+                    </a>
+                    <a class="btn btn-danger rounded-pill delete text-white">
+                        Delete
+                    </a>
+                </div>
+            }
         </div>
 
         <div class="col-12 col-md-6 mt-3 table-responsive">
@@ -70,3 +82,31 @@
         }
     </div>
 </div>
+
+@section scripts{
+    <script type="text/javascript" src="~/js/functions/imagesButtonsFunction.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        (() => {
+            const deleteBtn = document.getElementsByClassName('delete')[0];
+
+            deleteBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                toastr.info('Deleting picture...');
+                fetch('account/deleteImage?userName=' + '@Model.CurrentUser.UserName')
+                    .then(response => {
+                        if (response.status === 200) {
+                            toastr.success('Successfully deleted profile picture!');
+
+                            return response.text();
+                        } else {
+                            toastr.error('Something went wrong!');
+                            console.clear();
+                            console.log(response);
+                        }
+                    })
+                    .then(text => this.parentNode.parentNode.getElementsByTagName('img')[0].src = text);
+            });
+        })();
+    </script>
+}

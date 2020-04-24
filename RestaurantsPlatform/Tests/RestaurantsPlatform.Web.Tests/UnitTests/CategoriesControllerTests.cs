@@ -31,6 +31,10 @@
         private readonly IDeletableEntityRepository<Restaurant> restaurantRepository;
         private readonly IDeletableEntityRepository<Category> categoryRepository;
         private readonly IRepository<FavouriteRestaurant> favouriteRepository;
+        private readonly IRepository<Vote> voteRepository;
+        private readonly IDeletableEntityRepository<Comment> commentRepository;
+        private readonly IVoteService voteService;
+        private readonly ICommentService commentService;
         private readonly IDeletableEntityRepository<RestaurantImage> restaurantImagesRepository;
         private readonly IDeletableEntityRepository<CategoryImage> categoryImageRepository;
 
@@ -57,10 +61,14 @@
             this.restaurantRepository = new EfDeletableEntityRepository<Restaurant>(this.dbContext);
             this.categoryRepository = new EfDeletableEntityRepository<Category>(this.dbContext);
             this.favouriteRepository = new EfRepository<FavouriteRestaurant>(this.dbContext);
+            this.voteRepository = new EfRepository<Vote>(this.dbContext);
+            this.commentRepository = new EfDeletableEntityRepository<Comment>(this.dbContext);
 
+            this.voteService = new VoteService(this.voteRepository);
+            this.commentService = new CommentService(this.commentRepository, this.voteService);
             this.cloudinaryService = new CloudinaryImageService(this.configuration);
             this.restaurantImagesService = new RestaurantImageService(this.restaurantImagesRepository, this.cloudinaryService);
-            this.restaurantService = new RestaurantService(this.restaurantRepository, this.restaurantImagesService);
+            this.restaurantService = new RestaurantService(this.restaurantRepository, this.restaurantImagesService, this.commentService);
 
             this.categoryImageService = new CategoryImageService(this.categoryImageRepository, this.cloudinaryService);
             this.categoryService = new CategoryService(this.categoryRepository, this.categoryImageService, this.restaurantService);

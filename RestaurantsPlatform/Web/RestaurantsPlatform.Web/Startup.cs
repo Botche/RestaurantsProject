@@ -99,6 +99,7 @@
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IVoteService, VoteService>();
             services.AddTransient<IFavouriteService, FavouriteService>();
+            services.AddTransient<IUserImageSercice, UserImageSercice>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

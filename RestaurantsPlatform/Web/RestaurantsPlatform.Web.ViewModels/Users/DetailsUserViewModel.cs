@@ -20,6 +20,8 @@
 
         public string RoleName { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public int VotesCount { get; set; }

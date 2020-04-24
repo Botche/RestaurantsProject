@@ -33,6 +33,10 @@ namespace RestaurantsPlatform.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
+        public string ImageUrl { get; set; }
+
+        public string PublicId { get; set; }
+
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }

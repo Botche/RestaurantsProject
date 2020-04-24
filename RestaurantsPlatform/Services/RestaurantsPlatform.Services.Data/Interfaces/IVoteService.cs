@@ -7,5 +7,7 @@
         Task VoteAsync(int commentId, string userId, bool isUpVote);
 
         int GetVotes(int commentId);
+
+        Task DeleteAllVotesAppenedToCommentAsync(int commentId);
     }
 }

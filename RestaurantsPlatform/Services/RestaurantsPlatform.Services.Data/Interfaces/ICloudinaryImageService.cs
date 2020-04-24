@@ -10,6 +10,8 @@
 
         Task<ImageBindingModel> UploadRestaurantImageToCloudinaryAsync(string imageUrl, string restaurantName = null);
 
+        Task<ImageBindingModel> UploadUserImageToCloudinaryAsync(string imageUrl);
+
         Task DeleteImageAsync(string publicId);
     }
 }

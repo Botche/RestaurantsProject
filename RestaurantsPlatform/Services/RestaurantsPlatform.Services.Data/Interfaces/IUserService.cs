@@ -1,6 +1,9 @@
 ﻿namespace RestaurantsPlatform.Services.Data.Interfaces
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using RestaurantsPlatform.Web.ViewModels.CategoryImages;
+    using RestaurantsPlatform.Web.ViewModels.UserImage;
 
     public interface IUserService
     {
@@ -11,5 +14,11 @@
         IEnumerable<T> GetAllUsersWithDeleted<T>();
 
         T GetUserInfoByUsername<T>(string username);
+
+        Task<string> DeleteProfilePictureByUsernameAsync(string userName);
+
+        Task<string> UpdateProfilePictureByAsync(string userName, string imageUrl);
+
+        UserImageInputModel GetUserImage(string userName);
     }
 }

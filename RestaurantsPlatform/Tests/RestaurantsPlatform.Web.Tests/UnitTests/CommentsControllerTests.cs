@@ -30,8 +30,11 @@
 
         private readonly IDeletableEntityRepository<Restaurant> restaurantRepository;
         private readonly IDeletableEntityRepository<Comment> commentsRepository;
+        private readonly IRepository<Vote> voteRepository;
 
+        private readonly IVoteService voteService;
         private readonly ICommentService commentsService;
+
         private readonly CommentsController controller;
 
         public CommentsControllerTests()
@@ -40,8 +43,10 @@
 
             this.restaurantRepository = new EfDeletableEntityRepository<Restaurant>(this.dbContext);
             this.commentsRepository = new EfDeletableEntityRepository<Comment>(this.dbContext);
+            this.voteRepository = new EfRepository<Vote>(this.dbContext);
 
-            this.commentsService = new CommentService(this.commentsRepository);
+            this.voteService = new VoteService(this.voteRepository);
+            this.commentsService = new CommentService(this.commentsRepository, this.voteService);
 
             var httpContext = new DefaultHttpContext();
             var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
