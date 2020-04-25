@@ -18,6 +18,7 @@
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Services.Messaging;
     using RestaurantsPlatform.Web.Infrastructure;
+
     using static RestaurantsPlatform.Common.GlobalConstants;
 
     [AllowAnonymous]

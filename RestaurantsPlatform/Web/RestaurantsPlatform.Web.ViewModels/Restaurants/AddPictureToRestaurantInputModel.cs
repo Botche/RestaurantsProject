@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using RestaurantsPlatform.Web.Infrastructure;
-
-namespace RestaurantsPlatform.Web.ViewModels.Restaurants
+﻿namespace RestaurantsPlatform.Web.ViewModels.Restaurants
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using RestaurantsPlatform.Web.Infrastructure;
+
     public class AddPictureToRestaurantInputModel
     {
         [Required]

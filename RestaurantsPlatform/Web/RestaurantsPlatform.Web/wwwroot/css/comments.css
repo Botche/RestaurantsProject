@@ -30,7 +30,6 @@
     overflow-y: auto;
     height: 4rem;
     overflow-wrap: break-word;
-    width: auto;
 }
 
 .comment-content {
@@ -56,7 +55,7 @@
     background-color: #347deb;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 992px) {
     .manipulate-comment {
         margin-top: 1rem !important;
         padding-right: 0.5rem !important;
