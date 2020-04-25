@@ -9,7 +9,8 @@
         fullDescription.title = 'Hide full description';
 
         if (shortDescription.innerText.endsWith('...')) {
-            shortDescription.innerHTML += '&nbsp;<a class="text-primary">Read More</a>';
+            shortDescription.innerHTML += '&nbsp;<a class="text-primary">Read more</a>';
+            fullDescription.innerHTML += '&nbsp;<a class="text-primary">Show less</a>';
 
             shortDescription.style.cursor = 'pointer';
             fullDescription.style.cursor = 'pointer';
