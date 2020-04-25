@@ -53,12 +53,30 @@ namespace RestaurantsPlatform.Seed.Seeding
                 = new List<(string RestaurantName, string Description, string Address, string OwnerName, string WorkingTime, string ContactInfo, int CategoryId, string UserId)>
             {
                 (FurnaName, FurnaDescription, FurnaAddress, FurnaOwnerName, FurnaWorkingTime, FurnaContactInfo, cafeteriaId, restaurantOwnerId),
+                (RosicheName, RosicheDescription, RosicheAddress, RosicheOwnerName, RosicheWorkingTime, RosicheContactInfo, cafeteriaId, administratorId),
+                (RainbowName, RainbowDescription, RainbowAddress, RainbowOwnerName, RainbowWorkingTime, RainbowContactInfo, cafeteriaId, secondRestaurantOwnerId),
+                (MementoName, MementoDescription, MementoAddress, MementoOwnerName, MementoWorkingTime, MementoContactInfo, cafeteriaId, administratorId),
+
                 (MomaName, MomaDescription, MomaAddress, MomaOwnerName, MomaWorkingTime, MomaContactInfo, casualDiningId, restaurantOwnerId),
+
                 (IndianName, IndianDescription, IndianAddress, IndianOwnerName, IndianWorkingTime, IndianContactInfo, ethnicId, administratorId),
+                (GurkhaName, GurkhaDescription, GurkhaAddress, GurkhaOwnerName, GurkhaWorkingTime, GurkhaContactInfo, ethnicId, restaurantOwnerId),
+
                 (AladinName, AladinDescription, AladinAddress, AladinOwnerName, AladinWorkingTime, AladinContactInfo, fastFoodId, secondRestaurantOwnerId),
                 (Aladin2Name, Aladin2Description, Aladin2Address, Aladin2OwnerName, Aladin2WorkingTime, Aladin2ContactInfo, fastFoodId, secondRestaurantOwnerId),
                 (SkaptoName, SkaptoDescription, SkaptoAddress, SkaptoOwnerName, SkaptoWorkingTime, SkaptoContactInfo, fastFoodId, administratorId),
                 (WokName, WokDescription, WokAddress, WokOwnerName, WokWorkingTime, WokContactInfo, fastFoodId, administratorId),
+
+                (TenebrisName, TenebrisDescription, TenebrisAddress, TenebrisOwnerName, TenebrisWorkingTime, TenebrisContactInfo, fineDiningId, administratorId),
+                (CosmosName, CosmosDescription, CosmosAddress, CosmosOwnerName, CosmosWorkingTime, CosmosContactInfo, fineDiningId, restaurantOwnerId),
+
+                (BottegaName, BottegaDescription, BottegaAddress, BottegaOwnerName, BottegaWorkingTime, BottegaContactInfo, premiumCasualId, restaurantOwnerId),
+
+                (SputnikName, SputnikDescription, SputnikAddress, SputnikOwnerName, SputnikWorkingTime, SputnikContactInfo, pubId, administratorId),
+                (CocktailName, CocktailDescription, CocktailAddress, CocktailOwnerName, CocktailWorkingTime, CocktailContactInfo, pubId, restaurantOwnerId),
+                (GastroName, GastroDescription, GastroAddress, GastroOwnerName, GastroWorkingTime, GastroContactInfo, pubId, administratorId),
+                (RoadName, RoadDescription, RoadAddress, RoadOwnerName, RoadWorkingTime, RoadContactInfo, pubId, secondRestaurantOwnerId),
+                (OscarName, OscarDescription, OscarAddress, OscarOwnerName, OscarWorkingTime, OscarContactInfo, pubId, secondRestaurantOwnerId),
             };
 
             foreach (var restaurant in restaurants)

@@ -10,7 +10,7 @@
 <div class="row">
     <div class="col-md-4">
         <section>
-            <form id="account" method="post">
+            <form id="account" method="post" name="login">
                 <h4>Use a local account to log in.</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
@@ -32,7 +32,7 @@
                         </label>
                     </div>
                 </div>
-                <input type="hidden" id="RecaptchaValue" name="RecaptchaValue" />
+                <input type="hidden" id="RecaptchaValue" asp-for="Input.RecaptchaValue" />
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Log in</button>
                 </div>

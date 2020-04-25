@@ -16,7 +16,7 @@
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
     using RestaurantsPlatform.Data.Models;
-
+    using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Services.Messaging;
 
     using static RestaurantsPlatform.Common.GlobalConstants;
@@ -26,17 +26,20 @@
     {
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IUserImageSercice imageSercice;
         private readonly IEmailSender emailSender;
         private readonly ILogger<ExternalLoginModel> logger;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
+            IUserImageSercice imageSercice,
             ILogger<ExternalLoginModel> logger,
             IEmailSender emailSender)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.imageSercice = imageSercice;
             this.logger = logger;
             this.emailSender = emailSender;
         }
@@ -124,6 +127,7 @@
             {
                 var user = new ApplicationUser { UserName = this.Input.Username, Email = this.Input.Email };
                 var result = await this.userManager.CreateAsync(user);
+                await this.imageSercice.AddDefaultImageToUserAsync(user);
                 if (result.Succeeded)
                 {
                     result = await this.userManager.AddLoginAsync(user, info);

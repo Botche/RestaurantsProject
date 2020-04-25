@@ -95,6 +95,114 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == WokName);
 
+            // Gurkha
+            var gurkha = dbContext.Restaurants
+                .Select(restaurant => new
+                {
+                    restaurant.Id,
+                    restaurant.RestaurantName,
+                })
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == GurkhaName);
+
+            // Memento
+            var memento = dbContext.Restaurants
+                .Select(restaurant => new
+                {
+                    restaurant.Id,
+                    restaurant.RestaurantName,
+                })
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == MementoName);
+
+            // Rainbow
+            var rainbow = dbContext.Restaurants
+                .Select(restaurant => new
+                {
+                    restaurant.Id,
+                    restaurant.RestaurantName,
+                })
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == RainbowName);
+
+            // Rosiche
+            var rosiche = dbContext.Restaurants
+                .Select(restaurant => new
+                {
+                    restaurant.Id,
+                    restaurant.RestaurantName,
+                })
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == RosicheName);
+
+            // Tenebris
+            var tenebris = dbContext.Restaurants
+                .Select(restaurant => new
+                {
+                    restaurant.Id,
+                    restaurant.RestaurantName,
+                })
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == TenebrisName);
+
+            // Cosmos
+            var cosmos = dbContext.Restaurants
+                .Select(restaurant => new
+                {
+                    restaurant.Id,
+                    restaurant.RestaurantName,
+                })
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == CosmosName);
+
+            // Bottega
+            var bottega = dbContext.Restaurants
+                .Select(restaurant => new
+                {
+                    restaurant.Id,
+                    restaurant.RestaurantName,
+                })
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == BottegaName);
+
+            // Sputnik
+            var sputnik = dbContext.Restaurants
+                .Select(restaurant => new
+                {
+                    restaurant.Id,
+                    restaurant.RestaurantName,
+                })
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == SputnikName);
+
+            // Cocktail
+            var cocktail = dbContext.Restaurants
+                .Select(restaurant => new
+                {
+                    restaurant.Id,
+                    restaurant.RestaurantName,
+                })
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == CocktailName);
+
+            // Gastro
+            var gastro = dbContext.Restaurants
+                .Select(restaurant => new
+                {
+                    restaurant.Id,
+                    restaurant.RestaurantName,
+                })
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == GastroName);
+
+            // Road
+            var road = dbContext.Restaurants
+                .Select(restaurant => new
+                {
+                    restaurant.Id,
+                    restaurant.RestaurantName,
+                })
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == RoadName);
+
+            // Oscar
+            var oscar = dbContext.Restaurants
+                .Select(restaurant => new
+                {
+                    restaurant.Id,
+                    restaurant.RestaurantName,
+                })
+                .FirstOrDefault(restaurant => restaurant.RestaurantName == OscarName);
+
             var admin = dbContext.Users.FirstOrDefault(user => user.Email == AdministratorEmail).Id;
             var user = dbContext.Users.FirstOrDefault(user => user.Email == UserEmail).Id;
             var owner = dbContext.Users.FirstOrDefault(user => user.Email == RestaurantEmail).Id;
@@ -107,6 +215,9 @@ namespace RestaurantsPlatform.Seed.Seeding
             {
                 (furna.Id, admin, FurnaCommentContent),
                 (furna.Id, owner, FurnaCommentContentTwo),
+                (furna.Id, realUserTwo, FurnaCommentContentThree),
+                (furna.Id, realUser, FurnaCommentContentFour),
+                (furna.Id, user, FurnaCommentContentFive),
 
                 (indian.Id, admin, IndianCommentContent),
                 (indian.Id, realUser, IndianCommentContentTwo),
@@ -119,6 +230,29 @@ namespace RestaurantsPlatform.Seed.Seeding
 
                 (wok.Id, user, WokCommentContent),
                 (wok.Id, owner, WokCommentContentTwo),
+
+                (gurkha.Id, user, GurkhaCommentContent),
+                (gurkha.Id, secodOwner, GurkhaCommentContentTwo),
+                (gurkha.Id, owner, GurkhaCommentContentThree),
+
+                (memento.Id, user, MementoCommentContent),
+                (memento.Id, secodOwner, MementoCommentContentTwo),
+                (memento.Id, owner, MementoCommentContentThree),
+                (memento.Id, realUserTwo, MementoCommentContentFour),
+
+                (rainbow.Id, user, RainbowCommentContent),
+                (rainbow.Id, realUser, RainbowCommentContentTwo),
+                (rainbow.Id, realUserTwo, RainbowCommentContentThree),
+
+                (rosiche.Id, realUser, RosicheCommentContent),
+                (rosiche.Id, realUserTwo, RosicheCommentContentTwo),
+
+                (tenebris.Id, owner, TenebrisCommentContent),
+                (tenebris.Id, secodOwner, TenebrisCommentContentTwo),
+
+                (cosmos.Id, admin, CosmosCommentContent),
+                (cosmos.Id, secodOwner, CosmosCommentContentTwo),
+                (cosmos.Id, realUser, CosmosCommentContentBad),
             };
 
             foreach (var comment in comments)

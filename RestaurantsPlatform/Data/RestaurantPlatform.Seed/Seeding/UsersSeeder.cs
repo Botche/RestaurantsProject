@@ -16,6 +16,7 @@ namespace RestaurantsPlatform.Seed.Seeding
     using RestaurantsPlatform.Data;
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Services.Data.Interfaces;
+
     using static RestaurantsPlatform.Common.GlobalConstants;
 
     /// <summary>
@@ -45,15 +46,68 @@ namespace RestaurantsPlatform.Seed.Seeding
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var usersFromDb = dbContext.Users.IgnoreQueryFilters().ToList();
 
-            await SeedUserAsync(usersFromDb, userManager, UserEmail, UserUsername, UserPassword, UserRoleName, this.imageService);
-            await SeedUserAsync(usersFromDb, userManager, AdministratorEmail, AdministratorUsername, AdministratorPassword, AdministratorRoleName, this.imageService);
-            await SeedUserAsync(usersFromDb, userManager, RestaurantEmail, RestaurantUsername, RestaurantPassword, RestaurantRoleName, this.imageService);
-            await SeedUserAsync(usersFromDb, userManager, SecondRestaurantEmail, SecondRestaurantUsername, SecondRestaurantPassword, RestaurantRoleName, this.imageService);
-            await SeedUserAsync(usersFromDb, userManager, RealUserEmailOne, RealUserUsernameOne, RealUserPasswordOne, UserRoleName, this.imageService);
-            await SeedUserAsync(usersFromDb, userManager, RealUserEmailTwo, RealUserUsernameTwo, RealUserPasswordTwo, UserRoleName, this.imageService);
+            await SeedUserAsync(
+                usersFromDb,
+                userManager,
+                UserEmail,
+                UserUsername,
+                UserPassword,
+                UserRoleName,
+                "https://res.cloudinary.com/djlskbceh/image/upload/v1587766798/restaurant/seedInfo/users/24_Hearts_DP_Profile_Pictures_collection_2019_-facebookdp_17_jev8jr.jpg",
+                this.imageService);
+
+            await SeedUserAsync(
+                usersFromDb,
+                userManager,
+                AdministratorEmail,
+                AdministratorUsername,
+                AdministratorPassword,
+                AdministratorRoleName,
+                "https://res.cloudinary.com/djlskbceh/image/upload/v1587766796/restaurant/seedInfo/users/photo-1529665253569-6d01c0eaf7b6_amvvzp.jpg",
+                this.imageService);
+
+            await SeedUserAsync(
+                usersFromDb,
+                userManager,
+                RestaurantEmail,
+                RestaurantUsername,
+                RestaurantPassword,
+                RestaurantRoleName,
+                "https://res.cloudinary.com/djlskbceh/image/upload/v1587766796/restaurant/seedInfo/users/Screenshot_20190912-000604_Multi_Parallel-min_fopwmz.jpg",
+                this.imageService);
+
+            await SeedUserAsync(
+                usersFromDb,
+                userManager,
+                SecondRestaurantEmail,
+                SecondRestaurantUsername,
+                SecondRestaurantPassword,
+                RestaurantRoleName,
+                DefaultProfilePicture,
+                this.imageService);
+
+            await SeedUserAsync(
+                usersFromDb,
+                userManager,
+                RealUserEmailOne,
+                RealUserUsernameOne,
+                RealUserPasswordOne,
+                UserRoleName,
+                "https://res.cloudinary.com/djlskbceh/image/upload/v1587766793/restaurant/seedInfo/users/%D0%B8%D0%B7%D1%82%D0%B5%D0%B3%D0%BB%D0%B5%D0%BD_%D1%84%D0%B0%D0%B9%D0%BB_jms7b7.jpg",
+                this.imageService);
+
+            await SeedUserAsync(
+                usersFromDb,
+                userManager,
+                RealUserEmailTwo,
+                RealUserUsernameTwo,
+                RealUserPasswordTwo,
+                UserRoleName,
+                "https://res.cloudinary.com/djlskbceh/image/upload/v1587766793/restaurant/seedInfo/users/%D0%B8%D0%B7%D1%82%D0%B5%D0%B3%D0%BB%D0%B5%D0%BD_%D1%84%D0%B0%D0%B9%D0%BB_1_dn3f7f.jpg",
+                this.imageService);
         }
 
-        private static async Task SeedUserAsync(List<ApplicationUser> usersFromDb, UserManager<ApplicationUser> userManager, string email, string username, string password, string role, ICloudinaryImageService imageService)
+        private static async Task SeedUserAsync(List<ApplicationUser> usersFromDb, UserManager<ApplicationUser> userManager, string email, string username, string password, string role, string imageUrl, ICloudinaryImageService imageService)
         {
             var user = usersFromDb.FirstOrDefault(user => user.Email == email || user.UserName == username);
             if (user == null)
@@ -65,7 +119,7 @@ namespace RestaurantsPlatform.Seed.Seeding
                     EmailConfirmed = true,
                 };
 
-                var image = await imageService.UploadUserImageToCloudinaryAsync(DefaultProfilePicture);
+                var image = await imageService.UploadUserImageToCloudinaryAsync(imageUrl);
                 userToSignIn.PublicId = image.PublicId;
                 userToSignIn.ImageUrl = image.ImageUrl;
 

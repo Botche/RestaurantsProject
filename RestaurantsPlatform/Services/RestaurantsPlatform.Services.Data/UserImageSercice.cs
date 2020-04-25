@@ -27,7 +27,15 @@
 
         public async Task<string> AddDefaultImageToUserAsync(ApplicationUser user)
         {
-            return await this.AddImageToUserAsync(user.UserName, DefaultProfilePicture);
+            var image = await this.imageService.UploadUserImageToCloudinaryAsync(DefaultProfilePicture);
+
+            user.ImageUrl = image.ImageUrl;
+            user.PublicId = image.PublicId;
+
+            this.usersRepository.Update(user);
+            await this.usersRepository.SaveChangesAsync();
+
+            return image.ImageUrl;
         }
 
         public async Task<string> AddImageToUserAsync(string username, string imageUrl)
