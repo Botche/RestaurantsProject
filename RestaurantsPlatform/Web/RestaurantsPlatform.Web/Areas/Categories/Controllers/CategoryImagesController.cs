@@ -9,7 +9,7 @@
     using RestaurantsPlatform.Web.ViewModels.CategoryImages;
 
     using static RestaurantsPlatform.Common.GlobalConstants;
-    using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants;
+    using static RestaurantsPlatform.Web.Common.NotificationsMessagesContants;
 
     [Area("Categories")]
     [Authorize(Roles = AdministratorRoleName)]

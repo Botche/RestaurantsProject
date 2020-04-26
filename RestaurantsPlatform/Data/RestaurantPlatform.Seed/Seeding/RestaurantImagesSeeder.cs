@@ -9,6 +9,8 @@ namespace RestaurantsPlatform.Seed.Seeding
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
+
     using RestaurantsPlatform.Data;
     using RestaurantsPlatform.Data.Common.Seeding.RestaurantImages;
     using RestaurantsPlatform.Data.Models.Restaurants;
@@ -48,7 +50,7 @@ namespace RestaurantsPlatform.Seed.Seeding
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            if (dbContext.RestaurantImages.Any())
+            if (await dbContext.RestaurantImages.AnyAsync())
             {
                 return;
             }

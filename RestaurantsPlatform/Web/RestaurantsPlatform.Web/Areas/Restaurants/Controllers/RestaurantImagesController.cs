@@ -14,8 +14,8 @@
 
     using static RestaurantsPlatform.Common.GlobalConstants;
     using static RestaurantsPlatform.Common.StringExtensions;
-    using static RestaurantsPlatform.Web.Infrastructure.ErrorConstants;
-    using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants;
+    using static RestaurantsPlatform.Web.Common.ErrorConstants;
+    using static RestaurantsPlatform.Web.Common.NotificationsMessagesContants;
 
     [Area("Restaurants")]
     public class RestaurantImagesController : BaseController

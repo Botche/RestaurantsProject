@@ -5,14 +5,13 @@
 namespace RestaurantsPlatform.Seed.Seeding
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
+
     using RestaurantsPlatform.Data;
     using RestaurantsPlatform.Data.Models.Restaurants;
-
-    using static RestaurantsPlatform.Common.GlobalConstants;
 
     /// <summary>
     /// Seeder for votes.
@@ -27,7 +26,7 @@ namespace RestaurantsPlatform.Seed.Seeding
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            if (dbContext.Votes.Any())
+            if (await dbContext.Votes.AnyAsync())
             {
                 return;
             }

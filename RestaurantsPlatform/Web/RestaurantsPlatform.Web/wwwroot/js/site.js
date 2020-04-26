@@ -14,12 +14,6 @@
 $(function () {
     let current = location.pathname;
 
-    if (current.includes('/Identity')) {
-        $('.account').addClass('active');
-
-        return;
-    }
-
     let isActive = false;
     $('nav div .collapse li a').each(function () {
         let $this = $(this);
@@ -30,6 +24,12 @@ $(function () {
             isActive = true;
         }
     })
+
+    if (current.includes('/Identity')) {
+        $('.account').addClass('active');
+
+        return;
+    }
 
     if (current != '/' && !isActive) {
         $('.categories').addClass('active');

@@ -43,6 +43,7 @@
     <ProjectReference Include="..\..\Data\RestaurantPlatform.Seed\RestaurantsPlatform.Seed.csproj" />
     <ProjectReference Include="..\..\Data\RestaurantsPlatform.Data.Models\RestaurantsPlatform.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\RestaurantsPlatform.Data\RestaurantsPlatform.Data.csproj" />
+    <ProjectReference Include="..\..\RestaurantsPlatform.Web.Common\RestaurantsPlatform.Web.Common.csproj" />
     <ProjectReference Include="..\..\Services\RestaurantsPlatform.Services.Data\RestaurantsPlatform.Services.Data.csproj" />
     <ProjectReference Include="..\..\Services\RestaurantsPlatform.Services.Mapping\RestaurantsPlatform.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\Services\RestaurantsPlatform.Services.Messaging\RestaurantsPlatform.Services.Messaging.csproj" />

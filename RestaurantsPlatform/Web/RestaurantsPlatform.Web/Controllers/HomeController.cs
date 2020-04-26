@@ -12,7 +12,7 @@
     using RestaurantsPlatform.Web.ViewModels;
 
     using static RestaurantsPlatform.Common.GlobalConstants;
-    using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants;
+    using static RestaurantsPlatform.Web.Common.NotificationsMessagesContants;
 
     public class HomeController : BaseController
     {

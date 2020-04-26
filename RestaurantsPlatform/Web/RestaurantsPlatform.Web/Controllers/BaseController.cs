@@ -9,7 +9,7 @@
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Web.ViewModels;
 
-    using static RestaurantsPlatform.Web.Infrastructure.ErrorConstants;
+    using static RestaurantsPlatform.Web.Common.ErrorConstants;
 
     public class BaseController : Controller
     {
