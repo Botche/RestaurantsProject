@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantsPlatform.Data.Models;
+    using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Services.Messaging;
     using RestaurantsPlatform.Web.ViewModels;
 
@@ -17,18 +18,23 @@
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IEmailSender emailSender;
+        private readonly IRestaurantImageService imageService;
 
         public HomeController(
             UserManager<ApplicationUser> userManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IRestaurantImageService imageService)
         {
             this.userManager = userManager;
             this.emailSender = emailSender;
+            this.imageService = imageService;
         }
 
         public IActionResult Index()
         {
-            return this.View();
+            var images = this.imageService.GetRandomImagesForIndexPage(6);
+
+            return this.View(images);
         }
 
         public IActionResult Privacy()

@@ -1,11 +1,15 @@
 ﻿namespace RestaurantsPlatform.Services.Data
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
+    using RestaurantsPlatform.Services.Mapping;
+    using RestaurantsPlatform.Web.ViewModels.RestaurantsImages;
 
     public class RestaurantImageService : IRestaurantImageService
     {
@@ -81,6 +85,34 @@
 
             await this.DeleteImageAsync(image);
             return await this.AddImageToRestaurantAsync(imageUrl, restaurantName, id);
+        }
+
+        public IList<DisplayImageOnFrontPageViewModel> GetRandomImagesForIndexPage(int count)
+        {
+            var images = new List<DisplayImageOnFrontPageViewModel>();
+
+            for (int index = 0; index < count; index++)
+            {
+                DisplayImageOnFrontPageViewModel randomImage = null;
+                do
+                {
+                    var random = new Random();
+
+                    var randomRestaurantImageId = random.Next(
+                        this.imageRepository.All().OrderBy(image => image.Id).First().Id,
+                        this.imageRepository.All().OrderByDescending(image => image.Id).First().Id);
+
+                    randomImage = this.imageRepository.All()
+                        .Where(image => image.Id == randomRestaurantImageId)
+                        .To<DisplayImageOnFrontPageViewModel>()
+                        .FirstOrDefault();
+                }
+                while (randomImage == null || images.Any(image => image.Id == randomImage.Id));
+
+                images.Add(randomImage);
+            }
+
+            return images;
         }
 
         private IQueryable<RestaurantImage> GetImageById(int id)

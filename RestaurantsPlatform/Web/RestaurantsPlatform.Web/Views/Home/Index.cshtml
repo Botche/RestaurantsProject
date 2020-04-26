@@ -1,4 +1,6 @@
-﻿@using RestaurantsPlatform.Common
+﻿@model IList<DisplayImageOnFrontPageViewModel>
+@using RestaurantsPlatform.Common
+@using RestaurantsPlatform.Web.ViewModels.RestaurantsImages
 @{
     this.ViewData["Title"] = "Home Page";
 }
@@ -13,4 +15,18 @@
     {
         <p><a asp-route="default" asp-route-controller="categories" asp-route-action="all">Browse</a> all variations of restaurants.</p>
     }
+</div>
+
+<div class="gallery-container">
+    <div class="gallery">
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            var index = i + 1;
+            <figure class="gallery__item gallery__item--@index">
+                <a title="@Model[i].RestaurantRestaurantName" asp-route="restaurant" asp-route-id="@Model[i].RestaurantId" asp-route-name="@Model[i].RestaurantRestaurantName.ToLower().Replace(" ","-") ">
+                    <img src="@Model[i].ImageUrl" class="gallery__img" alt="@Model[i].RestaurantRestaurantName Image">
+                </a>
+            </figure>
+        }
+    </div>
 </div>

@@ -1,8 +1,10 @@
 ﻿namespace RestaurantsPlatform.Services.Data.Interfaces
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using RestaurantsPlatform.Data.Models.Restaurants;
+    using RestaurantsPlatform.Web.ViewModels.RestaurantsImages;
 
     public interface IRestaurantImageService
     {
@@ -13,5 +15,7 @@
         Task<int?> DeleteImageAsync(RestaurantImage image);
 
         Task<int?> UpdateRestaurantImageAsync(int id, string restaurantName, string imageUrl, string oldImageUrl);
+
+        IList<DisplayImageOnFrontPageViewModel> GetRandomImagesForIndexPage(int count);
     }
 }
