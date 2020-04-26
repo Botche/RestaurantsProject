@@ -145,7 +145,7 @@
             });
             await this.restaurantRepository.SaveChangesAsync();
 
-            var result = this.controller.Gallery(1);
+            var result = await this.controller.Gallery(1);
 
             var model = Assert.IsAssignableFrom<ViewResult>(
                 result);
@@ -182,7 +182,7 @@
             });
             await this.restaurantImagesRepository.SaveChangesAsync();
 
-            var result = this.controller.Gallery(1);
+            var result = await this.controller.Gallery(1);
 
             var model = Assert.IsAssignableFrom<ViewResult>(
                 result);
@@ -194,11 +194,11 @@
         }
 
         [Fact]
-        public void RestaurantImagesController_Gallery_WrongId()
+        public async Task RestaurantImagesController_Gallery_WrongId()
         {
             AutoMapperConfig.RegisterMappings(typeof(AllImagesFromRestaurantViewModel).Assembly);
 
-            var result = this.controller.Gallery(1);
+            var result = await this.controller.Gallery(1);
 
             var model = Assert.IsAssignableFrom<ViewResult>(
                 result);
@@ -242,7 +242,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = this.controller.Update(1, "https://www.capital.bg/shimg/zx620_3323939.jpg");
+            var result = await this.controller.UpdateAsync(1, "https://www.capital.bg/shimg/zx620_3323939.jpg");
 
             var model = Assert.IsAssignableFrom<ViewResult>(
                 result);
@@ -286,7 +286,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = this.controller.Update(1, "https://www.capital.bg/shimg/zx620_3323939.jpg");
+            var result = await this.controller.UpdateAsync(1, "https://www.capital.bg/shimg/zx620_3323939.jpg");
 
             var model = Assert.IsAssignableFrom<ViewResult>(
                 result);
@@ -329,7 +329,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = this.controller.Update(2, "https://www.capital.bg/shimg/zx620_3323939.jpg");
+            var result = await this.controller.UpdateAsync(2, "https://www.capital.bg/shimg/zx620_3323939.jpg");
 
             var model = Assert.IsAssignableFrom<ViewResult>(
                 result);

@@ -42,9 +42,9 @@
             this.favouriteService = favouriteService;
         }
 
-        public IActionResult GetByIdAndName(int id, string name)
+        public async Task<IActionResult> GetByIdAndName(int id, string name)
         {
-            var restaurant = this.restaurantService.GetByIdAndName<DetailsRestaurantViewModel>(id, name);
+            var restaurant = await this.restaurantService.GetByIdAndNameAsync<DetailsRestaurantViewModel>(id, name);
 
             if (restaurant == null)
             {
@@ -115,9 +115,9 @@
         }
 
         [Authorize(Roles = AdministratorOrRestaurantOwner)]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var restaurant = this.restaurantService.GetById<UpdateRestaurantViewModel>(id);
+            var restaurant = await this.restaurantService.GetByIdAsync<UpdateRestaurantViewModel>(id);
 
             if (restaurant == null)
             {
@@ -129,7 +129,7 @@
                 });
             }
 
-            var result = this.AuthorizeIfRestaurantCreatorIsCurentUser(id);
+            var result = await this.AuthorizeIfRestaurantCreatorIsCurentUserAsync(id);
             if (result != null)
             {
                 return result;
@@ -152,7 +152,7 @@
                 return this.View(input);
             }
 
-            var result = this.AuthorizeIfRestaurantCreatorIsCurentUser(input.Id);
+            var result = await this.AuthorizeIfRestaurantCreatorIsCurentUserAsync(input.Id);
             if (result != null)
             {
                 return result;
@@ -177,9 +177,9 @@
         }
 
         [Authorize(Roles = AdministratorOrRestaurantOwner)]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var restaurant = this.restaurantService.GetById<DeleteRestaurantViewModel>(id);
+            var restaurant = await this.restaurantService.GetByIdAsync<DeleteRestaurantViewModel>(id);
 
             if (restaurant == null)
             {
@@ -191,7 +191,7 @@
                 });
             }
 
-            var result = this.AuthorizeIfRestaurantCreatorIsCurentUser(id);
+            var result = await this.AuthorizeIfRestaurantCreatorIsCurentUserAsync(id);
             if (result != null)
             {
                 return result;
@@ -210,7 +210,7 @@
                 return this.View(input);
             }
 
-            var result = this.AuthorizeIfRestaurantCreatorIsCurentUser(input.Id);
+            var result = await this.AuthorizeIfRestaurantCreatorIsCurentUserAsync(input.Id);
             if (result != null)
             {
                 return result;

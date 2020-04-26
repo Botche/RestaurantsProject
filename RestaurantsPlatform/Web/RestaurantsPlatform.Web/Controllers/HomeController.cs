@@ -30,9 +30,9 @@
             this.imageService = imageService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var images = this.imageService.GetRandomImagesForIndexPage(6);
+            var images = await this.imageService.GetRandomImagesForIndexPageAsync(6);
 
             return this.View(images);
         }

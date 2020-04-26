@@ -16,6 +16,6 @@
 
         Task<int?> UpdateRestaurantImageAsync(int id, string restaurantName, string imageUrl, string oldImageUrl);
 
-        IList<DisplayImageOnFrontPageViewModel> GetRandomImagesForIndexPage(int count);
+        Task<IList<DisplayImageOnFrontPageViewModel>> GetRandomImagesForIndexPageAsync(int count);
     }
 }

@@ -11,9 +11,9 @@
 
         Task<int> CreateRestaurantAsync(string userId, string address, int categoryId, string contactInfo, string description, string ownerName, string restaurantName, string workingTime);
 
-        T GetByIdAndName<T>(int id, string name);
+        Task<T> GetByIdAndNameAsync<T>(int id, string name);
 
-        T GetById<T>(int id);
+        Task<T> GetByIdAsync<T>(int id);
 
         Task<int?> UpdateRestaurantAsync(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description, int categoryId);
 
@@ -23,6 +23,6 @@
 
         Task<int?> DeleteImageByRestaurantIdAsync(int id, string imageUrl);
 
-        T GetRestaurantByIdWithImage<T>(int id, string imageUrl);
+        Task<T> GetRestaurantByIdWithImageAsync<T>(int id, string imageUrl);
     }
 }

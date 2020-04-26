@@ -65,14 +65,14 @@
             return this.View(allCategoriesViewModel);
         }
 
-        public IActionResult GetByIdAndName(int id, string name, int page = 1)
+        public async Task<IActionResult> GetByIdAndName(int id, string name, int page = 1)
         {
             if (page < 1)
             {
                 page = 1;
             }
 
-            var category = this.categoryService.GetByIdAndName<DetailsCategoryViewModel>(id, name);
+            var category = await this.categoryService.GetByIdAndNameAsync<DetailsCategoryViewModel>(id, name);
 
             if (category == null)
             {
@@ -128,9 +128,9 @@
         }
 
         [Authorize(Roles = AdministratorRoleName)]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var category = this.categoryService.GetById<UpdateCategoryViewModel>(id);
+            var category = await this.categoryService.GetByIdAsync<UpdateCategoryViewModel>(id);
 
             return this.View(category);
         }
@@ -153,9 +153,9 @@
         }
 
         [Authorize(Roles = AdministratorRoleName)]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var category = this.categoryService.GetById<DeleteCategoryViewModel>(id);
+            var category = await this.categoryService.GetByIdAsync<DeleteCategoryViewModel>(id);
 
             return this.View(category);
         }

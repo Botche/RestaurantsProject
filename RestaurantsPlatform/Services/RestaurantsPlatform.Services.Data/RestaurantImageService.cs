@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
@@ -39,8 +40,8 @@
 
         public async Task<int?> DeleteAllImagesAppenedToRestaurantAsync(int restaurantId)
         {
-            var images = this.GetImagesByRestaurantId(restaurantId)
-                .ToList();
+            var images = await this.GetImagesByRestaurantId(restaurantId)
+                .ToListAsync();
 
             foreach (var image in images)
             {
@@ -74,9 +75,9 @@
 
         public async Task<int?> UpdateRestaurantImageAsync(int id, string restaurantName, string imageUrl, string oldImageUrl)
         {
-            var image = this.GetImagesByRestaurantId(id)
+            var image = await this.GetImagesByRestaurantId(id)
                 .Where(image => image.ImageUrl == oldImageUrl)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (image == null)
             {
@@ -87,7 +88,7 @@
             return await this.AddImageToRestaurantAsync(imageUrl, restaurantName, id);
         }
 
-        public IList<DisplayImageOnFrontPageViewModel> GetRandomImagesForIndexPage(int count)
+        public async Task<IList<DisplayImageOnFrontPageViewModel>> GetRandomImagesForIndexPageAsync(int count)
         {
             var images = new List<DisplayImageOnFrontPageViewModel>();
 
@@ -102,10 +103,10 @@
                         this.imageRepository.All().OrderBy(image => image.Id).First().Id,
                         this.imageRepository.All().OrderByDescending(image => image.Id).First().Id);
 
-                    randomImage = this.imageRepository.All()
+                    randomImage = await this.imageRepository.All()
                         .Where(image => image.Id == randomRestaurantImageId)
                         .To<DisplayImageOnFrontPageViewModel>()
-                        .FirstOrDefault();
+                        .FirstOrDefaultAsync();
                 }
                 while (randomImage == null || images.Any(image => image.Id == randomImage.Id));
 
@@ -113,12 +114,6 @@
             }
 
             return images;
-        }
-
-        private IQueryable<RestaurantImage> GetImageById(int id)
-        {
-            return this.imageRepository.All()
-                .Where(resturant => resturant.Id == id);
         }
 
         private IQueryable<RestaurantImage> GetImagesByRestaurantId(int restaurantId)

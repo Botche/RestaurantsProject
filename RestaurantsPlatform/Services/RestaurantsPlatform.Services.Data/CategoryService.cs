@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
@@ -45,8 +46,8 @@
 
         public async Task<int> DeleteCategoryAsync(int id)
         {
-            var categoryToDelete = this.GetCategoryById(id)
-                .FirstOrDefault();
+            var categoryToDelete = await this.GetCategoryById(id)
+                .FirstOrDefaultAsync();
 
             await this.restaurantService.DeleteAllRestaurantsAppenedToCategoryAsync(categoryToDelete.Id);
 
@@ -80,21 +81,21 @@
             return categories.To<T>().ToList();
         }
 
-        public T GetById<T>(int id)
+        public Task<T> GetByIdAsync<T>(int id)
         {
             return this.GetCategoryById(id)
                 .To<T>()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
-        public T GetByIdAndName<T>(int id, string name)
+        public Task<T> GetByIdAndNameAsync<T>(int id, string name)
         {
             string nameWithoutDashes = name.Replace('-', ' ');
 
             return this.GetCategoryById(id)
                 .Where(category => category.Name.ToLower() == nameWithoutDashes.ToLower())
                 .To<T>()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
         public int GetCountOfAllCategories()
@@ -104,8 +105,8 @@
 
         public async Task<int> UpdateCategoryAsync(int id, string description, string name, string title)
         {
-            var oldEntity = this.GetCategoryById(id)
-                .FirstOrDefault();
+            var oldEntity = await this.GetCategoryById(id)
+                .FirstOrDefaultAsync();
 
             oldEntity.Description = description;
             oldEntity.Name = name;
@@ -119,7 +120,7 @@
 
         public async Task<int> UpdateCategoryImageAsync(int categoryId, string imageUrl)
         {
-            var imageInfo = this.GetById<PublicIdCategoryImageBindinModel>(categoryId);
+            var imageInfo = await this.GetByIdAsync<PublicIdCategoryImageBindinModel>(categoryId);
 
             await this.imageService.DeleteImageAsync(imageInfo.ImageId);
             var imageId = await this.imageService.AddImageToCategoryAsync(imageUrl, imageInfo.Name);

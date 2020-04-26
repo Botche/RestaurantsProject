@@ -47,7 +47,7 @@
 
             string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (this.userService.CheckIfCurrentUserIsNotAuthorByGivenId(input.Id, currentUserId))
+            if (await this.userService.CheckIfCurrentUserIsNotAuthorByGivenIdAsync(input.Id, currentUserId))
             {
                 return this.View(ErrorViewName, new ErrorViewModel
                 {
@@ -73,9 +73,9 @@
             return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.RestaurantName.ToSlug() });
         }
 
-        public IActionResult Gallery(int id)
+        public async Task<IActionResult> Gallery(int id)
         {
-            var restaurantImages = this.restaurantService.GetById<AllImagesFromRestaurantViewModel>(id);
+            var restaurantImages = await this.restaurantService.GetByIdAsync<AllImagesFromRestaurantViewModel>(id);
 
             if (restaurantImages == null)
             {
@@ -90,15 +90,15 @@
             return this.View(restaurantImages);
         }
 
-        public IActionResult Update(int id, string imageUrl)
+        public async Task<IActionResult> UpdateAsync(int id, string imageUrl)
         {
-            var result = this.AuthorizeIfRestaurantCreatorIsCurentUser(id);
+            var result = await this.AuthorizeIfRestaurantCreatorIsCurentUserAsync(id);
             if (result != null)
             {
                 return result;
             }
 
-            var restaurant = this.restaurantService.GetRestaurantByIdWithImage<UpdateRestaurantImageViewModel>(id, imageUrl);
+            var restaurant = await this.restaurantService.GetRestaurantByIdWithImageAsync<UpdateRestaurantImageViewModel>(id, imageUrl);
 
             if (restaurant == null)
             {
@@ -125,7 +125,7 @@
             }
 
             string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (this.userService.CheckIfCurrentUserIsNotAuthorByGivenId(input.Id, currentUserId))
+            if (await this.userService.CheckIfCurrentUserIsNotAuthorByGivenIdAsync(input.Id, currentUserId))
             {
                 return this.View(ErrorViewName, new ErrorViewModel
                 {
@@ -155,7 +155,7 @@
         public async Task<IActionResult> Delete(int id, string imageUrl)
         {
             string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (this.userService.CheckIfCurrentUserIsNotAuthorByGivenId(id, currentUserId))
+            if (await this.userService.CheckIfCurrentUserIsNotAuthorByGivenIdAsync(id, currentUserId))
             {
                 return this.View(ErrorViewName, new ErrorViewModel
                 {

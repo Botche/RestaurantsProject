@@ -37,14 +37,14 @@
             return this.Ok(imageUrl);
         }
 
-        public IActionResult UpdateImage(string userName)
+        public async Task<IActionResult> UpdateImage(string userName)
         {
             if (userName != this.User.Identity.Name)
             {
                 return this.Unauthorized();
             }
 
-            var imageUrl = this.userService.GetUserImage(userName);
+            var imageUrl = await this.userService.GetUserImageAsync(userName);
 
             if (imageUrl == null)
             {

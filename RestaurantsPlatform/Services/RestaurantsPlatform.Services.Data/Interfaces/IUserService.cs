@@ -10,16 +10,16 @@
     {
         bool CheckIfCurrentUserIsAuthor(string authorId, string currentUserId);
 
-        bool CheckIfCurrentUserIsNotAuthorByGivenId(int restaurantId, string currentUserId);
+        Task<bool> CheckIfCurrentUserIsNotAuthorByGivenIdAsync(int restaurantId, string currentUserId);
 
         IEnumerable<T> GetAllUsersWithDeleted<T>();
 
-        T GetUserInfoByUsername<T>(string username);
+        Task<T> GetUserInfoByUsernameAsync<T>(string username);
 
         Task<string> DeleteProfilePictureByUsernameAsync(string userName);
 
         Task<string> UpdateProfilePictureByAsync(string userName, string imageUrl);
 
-        UserImageInputModel GetUserImage(string userName);
+        Task<UserImageInputModel> GetUserImageAsync(string userName);
     }
 }

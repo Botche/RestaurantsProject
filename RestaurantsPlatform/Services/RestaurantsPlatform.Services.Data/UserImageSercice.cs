@@ -1,10 +1,8 @@
 ﻿namespace RestaurantsPlatform.Services.Data
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
 
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models;
@@ -40,8 +38,8 @@
 
         public async Task<string> AddImageToUserAsync(string username, string imageUrl)
         {
-            var user = this.usersRepository.All()
-                .FirstOrDefault(user => user.UserName == username);
+            var user = await this.usersRepository.All()
+                .FirstOrDefaultAsync(user => user.UserName == username);
 
             await this.imageService.DeleteImageAsync(user.PublicId);
             var image = await this.imageService.UploadUserImageToCloudinaryAsync(imageUrl);
@@ -57,8 +55,8 @@
 
         public async Task<string> DeleteImageFromUserAsync(string username)
         {
-            var user = this.usersRepository.All()
-                .FirstOrDefault(user => user.UserName == username);
+            var user = await this.usersRepository.All()
+                .FirstOrDefaultAsync(user => user.UserName == username);
 
             await this.imageService.DeleteImageAsync(user.PublicId);
             return await this.AddDefaultImageToUserAsync(user);

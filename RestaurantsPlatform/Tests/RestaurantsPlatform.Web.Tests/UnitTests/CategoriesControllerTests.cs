@@ -228,7 +228,7 @@
 
             AutoMapperConfig.RegisterMappings(typeof(DetailsCategoryViewModel).Assembly);
 
-            var result = this.controller.GetByIdAndName(expectedId, expectedName);
+            var result = await this.controller.GetByIdAndName(expectedId, expectedName);
 
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<DetailsCategoryViewModel>(
@@ -280,7 +280,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = this.controller.GetByIdAndName(expectedId, expectedName);
+            var result = await this.controller.GetByIdAndName(expectedId, expectedName);
 
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<DetailsCategoryViewModel>(
@@ -309,7 +309,7 @@
 
             AutoMapperConfig.RegisterMappings(typeof(DetailsCategoryViewModel).Assembly);
 
-            var result = this.controller.GetByIdAndName(expectedId, expectedName, -2);
+            var result = await this.controller.GetByIdAndName(expectedId, expectedName, -2);
 
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<DetailsCategoryViewModel>(
@@ -323,9 +323,9 @@
         }
 
         [Fact]
-        public void CategoriesController_GetByIdAndName_WithWrongCategory()
+        public async Task CategoriesController_GetByIdAndName_WithWrongCategory()
         {
-            var result = this.controller.GetByIdAndName(1, "Category");
+            var result = await this.controller.GetByIdAndName(1, "Category");
 
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<ErrorViewModel>(
@@ -390,9 +390,9 @@
         }
 
         [Fact]
-        public void CategoriesController_Update_Get()
+        public async Task CategoriesController_Update_Get()
         {
-            var result = this.controller.Update(1);
+            var result = await this.controller.Update(1);
 
             Assert.IsType<ViewResult>(result);
         }
@@ -462,9 +462,9 @@
         }
 
         [Fact]
-        public void CategoriesController_Delete_Get()
+        public async Task CategoriesController_Delete_Get()
         {
-            var result = this.controller.Delete(1);
+            var result = await this.controller.Delete(1);
 
             Assert.IsType<ViewResult>(result);
         }

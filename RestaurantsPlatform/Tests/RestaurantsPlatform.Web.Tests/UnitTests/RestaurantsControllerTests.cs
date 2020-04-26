@@ -139,7 +139,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = this.controller.GetByIdAndName(1, "Restaurant");
+            var result = await this.controller.GetByIdAndName(1, "Restaurant");
 
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<DetailsRestaurantViewModel>(
@@ -197,7 +197,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = this.controller.GetByIdAndName(1, "Restaurant");
+            var result = await this.controller.GetByIdAndName(1, "Restaurant");
 
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<DetailsRestaurantViewModel>(
@@ -211,7 +211,7 @@
         }
 
         [Fact]
-        public void RestaurantsController_GetByIdAndName_WrongId()
+        public async Task RestaurantsController_GetByIdAndName_WrongId()
         {
             var user = new ClaimsPrincipal(new ClaimsIdentity(
                 new Claim[]
@@ -226,7 +226,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = this.controller.GetByIdAndName(2, "Restaurant");
+            var result = await this.controller.GetByIdAndName(2, "Restaurant");
 
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<ErrorViewModel>(
@@ -236,7 +236,7 @@
         }
 
         [Fact]
-        public void RestaurantsController_GetByIdAndName_WrongName()
+        public async Task RestaurantsController_GetByIdAndName_WrongName()
         {
             var user = new ClaimsPrincipal(new ClaimsIdentity(
                 new Claim[]
@@ -251,7 +251,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = this.controller.GetByIdAndName(1, "Restaurant123");
+            var result = await this.controller.GetByIdAndName(1, "Restaurant123");
 
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<ErrorViewModel>(
@@ -406,7 +406,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = this.controller.Update(1);
+            var result = await this.controller.Update(1);
 
             var viewResult = Assert.IsAssignableFrom<ViewResult>(result);
             var model = Assert.IsType<UpdateRestaurantViewModel>(viewResult.Model);
@@ -460,7 +460,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = this.controller.Update(1);
+            var result = await this.controller.Update(1);
 
             var viewResult = Assert.IsAssignableFrom<ViewResult>(result);
             var model = Assert.IsType<ErrorViewModel>(viewResult.Model);
@@ -470,7 +470,7 @@
         }
 
         [Fact]
-        public void RestaurantsController_Update_Get_WrongId()
+        public async Task RestaurantsController_Update_Get_WrongId()
         {
             var user = new ClaimsPrincipal(new ClaimsIdentity(
                 new Claim[]
@@ -485,7 +485,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = this.controller.Update(1);
+            var result = await this.controller.Update(1);
 
             var viewResult = Assert.IsAssignableFrom<ViewResult>(result);
             var model = Assert.IsType<ErrorViewModel>(viewResult.Model);
@@ -712,7 +712,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = this.controller.Delete(1);
+            var result = await this.controller.Delete(1);
 
             var viewResult = Assert.IsAssignableFrom<ViewResult>(result);
             var model = Assert.IsType<DeleteRestaurantViewModel>(viewResult.Model);
@@ -763,7 +763,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = this.controller.Delete(1);
+            var result = await this.controller.Delete(1);
 
             var viewResult = Assert.IsAssignableFrom<ViewResult>(result);
             var model = Assert.IsType<ErrorViewModel>(viewResult.Model);
@@ -773,7 +773,7 @@
         }
 
         [Fact]
-        public void RestaurantsController_Delete_Get_WrongId()
+        public async Task RestaurantsController_Delete_Get_WrongId()
         {
             var user = new ClaimsPrincipal(new ClaimsIdentity(
                 new Claim[]
@@ -788,7 +788,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = this.controller.Delete(1);
+            var result = await this.controller.Delete(1);
 
             var viewResult = Assert.IsAssignableFrom<ViewResult>(result);
             var model = Assert.IsType<ErrorViewModel>(viewResult.Model);

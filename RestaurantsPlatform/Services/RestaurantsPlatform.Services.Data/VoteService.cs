@@ -3,6 +3,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
@@ -18,8 +19,8 @@
 
         public async Task DeleteAllVotesAppenedToCommentAsync(int commentId)
         {
-            var votes = this.GetVoteByCommentId(commentId)
-                .ToList();
+            var votes = await this.GetVoteByCommentId(commentId)
+                .ToListAsync();
 
             foreach (var vote in votes)
             {
@@ -39,8 +40,8 @@
 
         public async Task VoteAsync(int commentId, string userId, bool isUpVote)
         {
-            var vote = this.votesRepository.All()
-                .FirstOrDefault(x => x.CommentId == commentId && x.UserId == userId);
+            var vote = await this.votesRepository.All()
+                .FirstOrDefaultAsync(x => x.CommentId == commentId && x.UserId == userId);
             if (vote != null)
             {
                 if (vote.Type == VoteType.UpVote)

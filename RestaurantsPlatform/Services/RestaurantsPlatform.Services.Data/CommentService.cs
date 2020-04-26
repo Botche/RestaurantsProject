@@ -1,9 +1,10 @@
 ﻿namespace RestaurantsPlatform.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
 
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models.Restaurants;
@@ -40,10 +41,10 @@
 
         public async Task DeleteAllCommentsAppendedToRestaurantAsync(int id)
         {
-            var commentsToDelete = this.commentRepostitory.All()
+            var commentsToDelete = await this.commentRepostitory.All()
                 .Where(comment => comment.RestaurantId == id)
                 .Select(comment => comment.Id)
-                .ToList();
+                .ToListAsync();
 
             foreach (var commentToDelete in commentsToDelete)
             {
@@ -53,9 +54,9 @@
 
         public async Task<int?> DeleteCommentFromRestaurantAsync(int commentId, int restaurantId)
         {
-            var comment = this.commentRepostitory.All()
+            var comment = await this.commentRepostitory.All()
                 .Where(comment => comment.Id == commentId && comment.RestaurantId == restaurantId)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (comment == null)
             {
@@ -87,16 +88,16 @@
                 .ToList();
         }
 
-        public Task<int> UpdateCommentAsync(int commentId, string content)
+        public async Task<int> UpdateCommentAsync(int commentId, string content)
         {
-            var commentToUpdate = this.commentRepostitory.All()
+            var commentToUpdate = await this.commentRepostitory.All()
                 .Where(comment => comment.Id == commentId)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             commentToUpdate.Content = content;
 
             this.commentRepostitory.Update(commentToUpdate);
-            return this.commentRepostitory.SaveChangesAsync();
+            return await this.commentRepostitory.SaveChangesAsync();
         }
     }
 }

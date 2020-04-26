@@ -49,9 +49,9 @@
 
         public async Task<int?> DeleteRestaurantByIdAsync(int id)
         {
-            var restaurant = this.restaurantRespository.All()
+            var restaurant = await this.restaurantRespository.All()
                 .Where(restaurant => restaurant.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (restaurant == null)
             {
@@ -69,9 +69,9 @@
 
         public async Task<int> DeleteAllRestaurantsAppenedToCategoryAsync(int categoryId)
         {
-            var restaurants = this.restaurantRespository.All()
+            var restaurants = await this.restaurantRespository.All()
                 .Where(restaurant => restaurant.CategoryId == categoryId)
-                .ToList();
+                .ToListAsync();
 
             foreach (var restaurant in restaurants)
             {
@@ -83,8 +83,8 @@
 
         public async Task<int?> UpdateRestaurantAsync(int id, string ownerName, string restaurantName, string workingTime, string address, string contactInfo, string description, int categoryId)
         {
-            Restaurant oldEntity = this.GetRestaurantById(id)
-                .FirstOrDefault();
+            Restaurant oldEntity = await this.GetRestaurantById(id)
+                .FirstOrDefaultAsync();
 
             if (oldEntity == null)
             {
@@ -120,23 +120,23 @@
             return restaurants.To<T>().ToList();
         }
 
-        public T GetById<T>(int id)
+        public async Task<T> GetByIdAsync<T>(int id)
         {
-            var restaurant = this.GetRestaurantById(id)
+            var restaurant = await this.GetRestaurantById(id)
                 .To<T>()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return restaurant;
         }
 
-        public T GetByIdAndName<T>(int id, string name)
+        public async Task<T> GetByIdAndNameAsync<T>(int id, string name)
         {
             string nameWithoutDashes = name.Replace('-', ' ');
 
-            return this.GetRestaurantById(id)
+            return await this.GetRestaurantById(id)
                 .Where(restaurant => restaurant.RestaurantName.ToLower().Replace("-", " ") == nameWithoutDashes.ToLower())
                 .To<T>()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
         public int GetCountByCategoryId(int id)
@@ -148,9 +148,9 @@
 
         public async Task<int?> DeleteImageByRestaurantIdAsync(int id, string imageUrl)
         {
-            var image = this.GetRestaurantById(id)
+            var image = await this.GetRestaurantById(id)
                 .Select(restaurant => restaurant.Images.FirstOrDefault(image => image.ImageUrl == imageUrl))
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (image == null)
             {
@@ -160,11 +160,11 @@
             return await this.imageService.DeleteImageAsync(image);
         }
 
-        public T GetRestaurantByIdWithImage<T>(int id, string imageUrl)
+        public async Task<T> GetRestaurantByIdWithImageAsync<T>(int id, string imageUrl)
         {
-            var restaurant = this.GetRestaurantById(id)
+            var restaurant = await this.GetRestaurantById(id)
                 .Include(t => t.Images)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (restaurant == null)
             {
@@ -177,9 +177,9 @@
                 return default;
             }
 
-            var restaurantToReturn = this.GetRestaurantById(id)
+            var restaurantToReturn = await this.GetRestaurantById(id)
                 .To<T>()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return restaurantToReturn;
         }

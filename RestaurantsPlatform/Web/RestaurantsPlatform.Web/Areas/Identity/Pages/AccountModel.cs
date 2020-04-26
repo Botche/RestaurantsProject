@@ -1,13 +1,12 @@
 ﻿namespace RestaurantsPlatform.Web.Areas.Identity.Pages
 {
-    using System.Security.Claims;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc.RazorPages;
+
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Web.ViewModels.Users;
-
-    using static RestaurantsPlatform.Common.GlobalConstants;
 
     [AllowAnonymous]
     public class AccountModel : PageModel
@@ -21,9 +20,9 @@
 
         public DetailsUserViewModel CurrentUser { get; set; }
 
-        public void OnGet(string userName)
+        public async Task OnGet(string userName)
         {
-            this.CurrentUser = this.userService.GetUserInfoByUsername<DetailsUserViewModel>(userName ?? this.User.Identity.Name);
+            this.CurrentUser = await this.userService.GetUserInfoByUsernameAsync<DetailsUserViewModel>(userName ?? this.User.Identity.Name);
         }
     }
 }

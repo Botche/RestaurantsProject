@@ -3,6 +3,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
+
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
@@ -50,9 +52,9 @@
 
         private async Task<string> DeleteFavouriteAsync(int restaurantId, string userId)
         {
-            var favourite = this.favoriteRepository.All()
+            var favourite = await this.favoriteRepository.All()
                                 .Where(favourite => favourite.UserId == userId && favourite.RestaurantId == restaurantId)
-                                .FirstOrDefault();
+                                .FirstOrDefaultAsync();
 
             if (favourite == null)
             {

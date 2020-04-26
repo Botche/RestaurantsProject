@@ -2,6 +2,7 @@
 {
     using System.Diagnostics;
     using System.Security.Claims;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
 
@@ -24,10 +25,10 @@
             this.userService = userService;
         }
 
-        protected IActionResult AuthorizeIfRestaurantCreatorIsCurentUser(int restaurantId)
+        protected async Task<IActionResult> AuthorizeIfRestaurantCreatorIsCurentUserAsync(int restaurantId)
         {
             string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (this.userService.CheckIfCurrentUserIsNotAuthorByGivenId(restaurantId, currentUserId))
+            if (await this.userService.CheckIfCurrentUserIsNotAuthorByGivenIdAsync(restaurantId, currentUserId))
             {
                 return this.View(ErrorViewName, new ErrorViewModel
                 {

@@ -4,11 +4,12 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
+
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Services.Mapping;
-    using RestaurantsPlatform.Web.ViewModels.CategoryImages;
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
     using RestaurantsPlatform.Web.ViewModels.UserImage;
 
@@ -33,9 +34,15 @@
             return authorId != currentUserId;
         }
 
-        public bool CheckIfCurrentUserIsNotAuthorByGivenId(int restaurantId, string currentUserId)
+        public async Task<bool> CheckIfCurrentUserIsNotAuthorByGivenIdAsync(int restaurantId, string currentUserId)
         {
-            string authorId = this.restaurantService.GetById<AuthorIdFromRestaurantBindingModel>(restaurantId)?.UserId;
+            var author = await this.restaurantService.GetByIdAsync<AuthorIdFromRestaurantBindingModel>(restaurantId);
+
+            string authorId = null;
+            if (author != null)
+            {
+                authorId = author.UserId;
+            }
 
             return authorId != currentUserId;
         }
@@ -62,12 +69,12 @@
 
         public async Task<string> UpdateProfilePictureByAsync(string userName, string imageUrl)
         {
-            var user = this.usersRepository.All()
+            var user = await this.usersRepository.All()
                 .Select(user => new
                 {
                     user.UserName,
                 })
-                .FirstOrDefault(user => user.UserName == userName);
+                .FirstOrDefaultAsync(user => user.UserName == userName);
 
             if (user == null)
             {
@@ -83,20 +90,20 @@
             return this.usersRepository.AllWithDeleted().To<T>().ToList();
         }
 
-        public T GetUserInfoByUsername<T>(string username)
+        public Task<T> GetUserInfoByUsernameAsync<T>(string username)
         {
             return this.usersRepository.All()
                 .Where(user => user.UserName == username)
                 .To<T>()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
-        public UserImageInputModel GetUserImage(string userName)
+        public async Task<UserImageInputModel> GetUserImageAsync(string userName)
         {
-            var image = this.usersRepository.All()
+            var image = await this.usersRepository.All()
                 .Where(user => user.UserName == userName)
                 .To<UserImageInputModel>()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return image;
         }

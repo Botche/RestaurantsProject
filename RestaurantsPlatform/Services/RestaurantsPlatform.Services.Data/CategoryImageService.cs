@@ -3,6 +3,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using RestaurantsPlatform.Data.Common.Repositories;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
@@ -22,8 +23,8 @@
 
         public async Task DeleteImageAsync(int imageId)
         {
-            var image = this.GetImageById(imageId)
-                .FirstOrDefault();
+            var image = await this.GetImageById(imageId)
+                .FirstOrDefaultAsync();
 
             await this.cloudinaryImageService.DeleteImageAsync(image.PublicId);
 
