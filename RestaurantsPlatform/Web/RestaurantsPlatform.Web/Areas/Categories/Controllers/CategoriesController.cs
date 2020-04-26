@@ -18,7 +18,7 @@
     using static RestaurantsPlatform.Web.Infrastructure.ErrorConstants;
     using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants;
 
-[Area("Categories")]
+    [Area("Categories")]
     public class CategoriesController : BaseController
     {
         private const int RestaurantsPerPage = 2;
