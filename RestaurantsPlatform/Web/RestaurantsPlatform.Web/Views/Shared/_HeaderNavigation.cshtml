@@ -4,14 +4,19 @@
     <nav class="navbar navbar-expand-xl navbar-dark bg-dark border-bottom box-shadow mb-3">
         <div class="container">
             <a class="navbar-brand" asp-route="default" asp-route-controller="home" asp-route-action="index">@SystemName</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+
+            <div class="navbar-toggler border-0 p-0 pr-3 pl-3 non-selected" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <div class="nav-icon">
+                    <div>
+                    </div>
+                </div>
+            </div>
+
             <div class="navbar-collapse collapse">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link" asp-route="categoryArea" asp-route-controller="categories" asp-route-action="all">
+                        <a class="nav-link categories" asp-route="categoryArea" asp-route-controller="categories" asp-route-action="all">
                             Restaurants Categories
                         </a>
                     </li>

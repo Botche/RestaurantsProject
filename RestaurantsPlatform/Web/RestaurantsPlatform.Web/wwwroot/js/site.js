@@ -10,3 +10,28 @@
         $(e).attr("title", $(e).attr("datetime"));
     });
 });
+
+$(function () {
+    let current = location.pathname;
+
+    if (current.includes('/Identity')) {
+        $('.account').addClass('active');
+
+        return;
+    }
+
+    let isActive = false;
+    $('nav div .collapse li a').each(function () {
+        let $this = $(this);
+        // if the current path is like this link, make it active
+        if ($this.attr('href').indexOf(current) !== -1 && current != '/') {
+            $this.addClass('active');
+
+            isActive = true;
+        }
+    })
+
+    if (current != '/' && !isActive) {
+        $('.categories').addClass('active');
+    }
+})

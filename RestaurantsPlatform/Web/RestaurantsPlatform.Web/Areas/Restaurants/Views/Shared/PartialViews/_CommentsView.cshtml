@@ -22,8 +22,10 @@
     </nav>*@
 
 <div class="commentDiv">
+    @{ int i = 0; }
     @foreach (var comment in Model.Comments.OrderByDescending(comment => comment.VotesSum).ThenByDescending(comment => comment.CreatedOn))
     {
+        i += 1;
         <div class="m-3 border rounded position-relative">
             <div class="media">
                 <a class="d-none d-lg-block" asp-area="Identity" asp-page="/Account" asp-route-userName="@comment.AuthorUserName">
@@ -48,10 +50,10 @@
                 {
                     <div class="float-right text-center">
                         <form class="votesForm" method="post">
-                            <input asp-for="@comment.Id" hidden />
+                            <input asp-for="@comment.Id" id="comment-@i" hidden />
                         </form>
                         @if (!comment.Votes.Any(vote => vote.UserId == (this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
-            || (int)(comment.Votes.FirstOrDefault(vote => vote.UserId == (this.User.FindFirstValue(ClaimTypes.NameIdentifier))).Type) == 0)
+         || (int)(comment.Votes.FirstOrDefault(vote => vote.UserId == (this.User.FindFirstValue(ClaimTypes.NameIdentifier))).Type) == 0)
                         {
                             <div>
                                 <a class="nav-link upvote text-primary upvote">

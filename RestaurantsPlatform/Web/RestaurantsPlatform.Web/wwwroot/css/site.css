@@ -1,10 +1,11 @@
 ﻿@import "comments.css";
-@import "contactForm.css";
+@import "contact-form.css";
 @import "forms.css";
-@import "restaurantGetByIdName.css";
-@import "usersTable.css";
-@import "followButton.css";
-@import "indexPageGallery.css";
+@import "restaurant-get-by-id-name.css";
+@import "users-table.css";
+@import "follow-button.css";
+@import "index-page-gallery.css";
+@import "nav-icon.css";
 
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */

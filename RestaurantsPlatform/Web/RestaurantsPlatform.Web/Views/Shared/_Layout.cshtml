@@ -25,13 +25,13 @@
 </head>
 <body>
     <partial name="_HeaderNavigation" />
+
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @this.RenderBody()
         </main>
     </div>
-
     <partial name="_FooterPartialView" />
 
     <environment names="Development">
@@ -73,6 +73,7 @@
             }
         };
     </script>
+    <script type="text/javascript" src="~/js/functions/navigationIcon.js" asp-append-version="true"></script>
     @this.RenderSection("Scripts", required: false)
 </body>
 </html>
