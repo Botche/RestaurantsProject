@@ -14,10 +14,11 @@
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
 
     using static RestaurantsPlatform.Common.GlobalConstants;
+    using static RestaurantsPlatform.Common.StringExtensions;
     using static RestaurantsPlatform.Web.Infrastructure.ErrorConstants;
     using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants;
 
-    [Area("Categories")]
+[Area("Categories")]
     public class CategoriesController : BaseController
     {
         private const int RestaurantsPerPage = 2;
@@ -123,7 +124,7 @@
 
             this.TempData[SuccessNotification] = string.Format(SuccessfullyCreatedCategory, input.Name);
 
-            return this.RedirectToRoute("category", new { id, name = input.Name.ToLower().Replace(' ', '-') });
+            return this.RedirectToRoute("category", new { id, name = input.Name.ToSlug() });
         }
 
         [Authorize(Roles = AdministratorRoleName)]
@@ -148,7 +149,7 @@
 
             this.TempData[SuccessNotification] = string.Format(SuccessfullyUpdatedCategory, input.Name);
 
-            return this.RedirectToRoute("category", new { id, name = input.Name.ToLower().Replace(' ', '-') });
+            return this.RedirectToRoute("category", new { id, name = input.Name.ToSlug() });
         }
 
         [Authorize(Roles = AdministratorRoleName)]

@@ -13,6 +13,7 @@
     using RestaurantsPlatform.Web.ViewModels.RestaurantsImages;
 
     using static RestaurantsPlatform.Common.GlobalConstants;
+    using static RestaurantsPlatform.Common.StringExtensions;
     using static RestaurantsPlatform.Web.Infrastructure.ErrorConstants;
     using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants;
 
@@ -41,7 +42,7 @@
             if (!this.ModelState.IsValid)
             {
                 this.TempData[ErrorNotification] = WrontInput;
-                return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.RestaurantName.ToLower().Replace(' ', '-') });
+                return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.RestaurantName.ToSlug() });
             }
 
             string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -69,7 +70,7 @@
             }
 
             this.TempData[SuccessNotification] = string.Format(SuccessfullyAddedImageToRestaurant, input.RestaurantName);
-            return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.RestaurantName.ToLower().Replace(' ', '-') });
+            return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.RestaurantName.ToSlug() });
         }
 
         public IActionResult Gallery(int id)

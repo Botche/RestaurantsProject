@@ -57,10 +57,10 @@
 
             services.Configure<CookiePolicyOptions>(
                 options =>
-                    {
-                        options.CheckConsentNeeded = context => true;
-                        options.MinimumSameSitePolicy = SameSiteMode.None;
-                    });
+                {
+                    options.CheckConsentNeeded = context => true;
+                    options.MinimumSameSitePolicy = SameSiteMode.None;
+                });
 
             services.AddControllersWithViews(options =>
             {
@@ -87,19 +87,7 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender>(options =>
-                new SendGridEmailSender(this.configuration.GetSection("SendGrid")["ApiKey"]));
-            services.AddTransient<ICategoryService, CategoryService>();
-            services.AddTransient<IRestaurantService, RestaurantService>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<ICloudinaryImageService, CloudinaryImageService>();
-            services.AddTransient<IRestaurantImageService, RestaurantImageService>();
-            services.AddTransient<ICategoryImageService, CategoryImageService>();
-            services.AddTransient<IAdministrationService, AdministrationService>();
-            services.AddTransient<ICommentService, CommentService>();
-            services.AddTransient<IVoteService, VoteService>();
-            services.AddTransient<IFavouriteService, FavouriteService>();
-            services.AddTransient<IUserImageSercice, UserImageSercice>();
+            this.RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -206,6 +194,23 @@
                         pattern: "{controller=Home}/{action=Index}/{id?}");
                     endpoints.MapRazorPages();
                 });
+        }
+
+        private void RegisterServices(IServiceCollection services)
+        {
+            services.AddTransient<IEmailSender>(options =>
+                            new SendGridEmailSender(this.configuration.GetSection("SendGrid")["ApiKey"]));
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IRestaurantService, RestaurantService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICloudinaryImageService, CloudinaryImageService>();
+            services.AddTransient<IRestaurantImageService, RestaurantImageService>();
+            services.AddTransient<ICategoryImageService, CategoryImageService>();
+            services.AddTransient<IAdministrationService, AdministrationService>();
+            services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IVoteService, VoteService>();
+            services.AddTransient<IFavouriteService, FavouriteService>();
+            services.AddTransient<IUserImageSercice, UserImageSercice>();
         }
     }
 }

@@ -93,12 +93,3 @@ svg {
   opacity: 1;
   transform: rotateX(45deg) scale(.95);
 }
-
-
-small {
-  font: .8rem/1 sans-serif;
-  padding-top: 4rem;
-  color: #777;
-}
-small a { color: #222; text-decoration: none; border-bottom: thin solid #ccc; }
-small a:hover { border-bottom-color: #222; }

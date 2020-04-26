@@ -44,13 +44,13 @@
 
         public IActionResult Contact()
         {
-            var model = new ContactInputModel()
+            var contactModel = new ContactInputModel()
             {
                 EmailTo = OwnersEmail,
                 Name = this.User.Identity.Name ?? "Unknown",
             };
 
-            return this.View(model);
+            return this.View(contactModel);
         }
 
         [HttpPost]

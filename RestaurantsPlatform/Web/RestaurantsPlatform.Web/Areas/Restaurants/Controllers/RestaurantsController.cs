@@ -14,6 +14,7 @@
     using RestaurantsPlatform.Web.ViewModels.Restaurants;
 
     using static RestaurantsPlatform.Common.GlobalConstants;
+    using static RestaurantsPlatform.Common.StringExtensions;
     using static RestaurantsPlatform.Web.Infrastructure.ErrorConstants;
     using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants;
 
@@ -109,7 +110,7 @@
             return this.RedirectToAction("GetByIdAndName", new
             {
                 id = restaurantId,
-                name = input.RestaurantName.ToLower().Replace(' ', '-'),
+                name = input.RestaurantName.ToSlug(),
             });
         }
 
@@ -172,7 +173,7 @@
             this.TempData[SuccessNotification] = string.Format(SuccessfullyUpdatedRestaurant, input.RestaurantName);
             return this.RedirectToRoute(
                 "restaurant",
-                new { id = modelId, name = input.RestaurantName.ToLower().Replace(' ', '-') });
+                new { id = modelId, name = input.RestaurantName.ToSlug() });
         }
 
         [Authorize(Roles = AdministratorOrRestaurantOwner)]

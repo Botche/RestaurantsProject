@@ -18,8 +18,7 @@
 
         public async Task DeleteAllVotesAppenedToCommentAsync(int commentId)
         {
-            var votes = this.votesRepository.All()
-                .Where(vote => vote.CommentId == commentId)
+            var votes = this.GetVoteByCommentId(commentId)
                 .ToList();
 
             foreach (var vote in votes)
@@ -32,8 +31,8 @@
 
         public int GetVotes(int commentId)
         {
-            var votes = this.votesRepository.All()
-                .Where(x => x.CommentId == commentId).Sum(x => (int)x.Type);
+            var votes = this.GetVoteByCommentId(commentId)
+                .Sum(x => (int)x.Type);
 
             return votes;
         }
@@ -70,6 +69,12 @@
             }
 
             await this.votesRepository.SaveChangesAsync();
+        }
+
+        private IQueryable<Vote> GetVoteByCommentId(int id)
+        {
+            return this.votesRepository.All()
+                .Where(vote => vote.CommentId == id);
         }
     }
 }

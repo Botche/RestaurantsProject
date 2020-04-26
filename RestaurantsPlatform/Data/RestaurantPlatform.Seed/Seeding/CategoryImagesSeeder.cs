@@ -14,6 +14,7 @@ namespace RestaurantsPlatform.Seed.Seeding
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Web.ViewModels.CategoryImages;
 
+    using static RestaurantsPlatform.Common.StringExtensions;
     using static RestaurantsPlatform.Data.Common.Seeding.Categories.SeedInfo;
     using static RestaurantsPlatform.Data.Common.Seeding.CategoryImages.SeedInfo;
 
@@ -46,14 +47,14 @@ namespace RestaurantsPlatform.Seed.Seeding
                 return;
             }
 
-            var cafeteriaImage = await this.UploadImagesToCloudinaryAsync(Cafeteria, CafeteriaName.ToLower().Replace(" ", "-"));
-            var casualImage = await this.UploadImagesToCloudinaryAsync(CasualDining, CasualDiningName.ToLower().Replace(" ", "-"));
-            var ethnicImage = await this.UploadImagesToCloudinaryAsync(Ethnic, EthnicName.ToLower().Replace(" ", "-"));
-            var familyImage = await this.UploadImagesToCloudinaryAsync(FamilyStyle, FamilyStyleName.ToLower().Replace(" ", "-"));
-            var fastFoodImage = await this.UploadImagesToCloudinaryAsync(FastFood, FastFoodName.ToLower().Replace(" ", "-"));
-            var fineImage = await this.UploadImagesToCloudinaryAsync(FineDining, FineDiningName.ToLower().Replace(" ", "-"));
-            var premiumImage = await this.UploadImagesToCloudinaryAsync(PremiumCasual, PremiumCasualName.ToLower().Replace(" ", "-"));
-            var pubImage = await this.UploadImagesToCloudinaryAsync(Pub, PubName.ToLower().Replace(" ", "-"));
+            var cafeteriaImage = await this.UploadImagesToCloudinaryAsync(Cafeteria, CafeteriaName.ToSlug());
+            var casualImage = await this.UploadImagesToCloudinaryAsync(CasualDining, CasualDiningName.ToSlug());
+            var ethnicImage = await this.UploadImagesToCloudinaryAsync(Ethnic, EthnicName.ToSlug());
+            var familyImage = await this.UploadImagesToCloudinaryAsync(FamilyStyle, FamilyStyleName.ToSlug());
+            var fastFoodImage = await this.UploadImagesToCloudinaryAsync(FastFood, FastFoodName.ToSlug());
+            var fineImage = await this.UploadImagesToCloudinaryAsync(FineDining, FineDiningName.ToSlug());
+            var premiumImage = await this.UploadImagesToCloudinaryAsync(PremiumCasual, PremiumCasualName.ToSlug());
+            var pubImage = await this.UploadImagesToCloudinaryAsync(Pub, PubName.ToSlug());
 
             List<(string ImageUrl, string PublicId)> categoryImages
                 = new List<(string ImageUrl, string PublicId)>

@@ -15,6 +15,7 @@ namespace RestaurantsPlatform.Seed.Seeding
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Web.ViewModels.CategoryImages;
 
+    using static RestaurantsPlatform.Common.StringExtensions;
     using static RestaurantsPlatform.Data.Common.Seeding.RestaurantImages.AladinFoodsSeedInfo;
     using static RestaurantsPlatform.Data.Common.Seeding.RestaurantImages.FurnaSeedInfo;
     using static RestaurantsPlatform.Data.Common.Seeding.RestaurantImages.IndianKohinoorSeedInfo;
@@ -61,11 +62,11 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == AladinName);
             var aladinFoodImageLogo =
-                await this.UploadImagesToCloudinaryAsync(AladinFoodsLogo, aladinFoods.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(AladinFoodsLogo, aladinFoods.RestaurantName.ToSlug());
             var aladinFoodImageFries =
-                await this.UploadImagesToCloudinaryAsync(AladinFoodsFries, aladinFoods.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(AladinFoodsFries, aladinFoods.RestaurantName.ToSlug());
             var aladinFoodImageDouner =
-                await this.UploadImagesToCloudinaryAsync(AladinFoodsDouner, aladinFoods.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(AladinFoodsDouner, aladinFoods.RestaurantName.ToSlug());
 
             var aladinFoods2 = dbContext.Restaurants
                 .Select(restaurant => new
@@ -77,11 +78,11 @@ namespace RestaurantsPlatform.Seed.Seeding
                 .ToList()[1];
 
             var aladinFoodImageLogo2 =
-                await this.UploadImagesToCloudinaryAsync(AladinFoodsLogo2, aladinFoods2.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(AladinFoodsLogo2, aladinFoods2.RestaurantName.ToSlug());
             var aladinFoodImageFriesWithRice =
-                await this.UploadImagesToCloudinaryAsync(AladinFoodsFriesWithRice, aladinFoods2.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(AladinFoodsFriesWithRice, aladinFoods2.RestaurantName.ToSlug());
             var aladinFoodImagePizza =
-                await this.UploadImagesToCloudinaryAsync(AladinFoodsPizza, aladinFoods2.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(AladinFoodsPizza, aladinFoods2.RestaurantName.ToSlug());
 
             // Furna
             var furna = dbContext.Restaurants
@@ -93,15 +94,15 @@ namespace RestaurantsPlatform.Seed.Seeding
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == FurnaName);
 
             var furnaFirst =
-                await this.UploadImagesToCloudinaryAsync(FurnaFirstPic, furna.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(FurnaFirstPic, furna.RestaurantName.ToSlug());
             var furnaSecond =
-                await this.UploadImagesToCloudinaryAsync(FurnaSecondPic, furna.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(FurnaSecondPic, furna.RestaurantName.ToSlug());
             var furnaThird =
-                await this.UploadImagesToCloudinaryAsync(FurnaThirdPic, furna.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(FurnaThirdPic, furna.RestaurantName.ToSlug());
             var furnaFourth =
-                await this.UploadImagesToCloudinaryAsync(FurnaFourthPic, furna.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(FurnaFourthPic, furna.RestaurantName.ToSlug());
             var furnaFifth =
-                await this.UploadImagesToCloudinaryAsync(FurnaFifthPic, furna.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(FurnaFifthPic, furna.RestaurantName.ToSlug());
 
             // Indian restaurant kohinoor
             var indian = dbContext.Restaurants
@@ -113,11 +114,11 @@ namespace RestaurantsPlatform.Seed.Seeding
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == IndianName);
 
             var indianFirst =
-                await this.UploadImagesToCloudinaryAsync(IndianFirstPic, indian.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(IndianFirstPic, indian.RestaurantName.ToSlug());
             var indiandSecond =
-                await this.UploadImagesToCloudinaryAsync(IndianSecondPic, indian.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(IndianSecondPic, indian.RestaurantName.ToSlug());
             var indianThird =
-                await this.UploadImagesToCloudinaryAsync(IndianThirdPic, indian.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(IndianThirdPic, indian.RestaurantName.ToSlug());
 
             // Moma
             var moma = dbContext.Restaurants
@@ -128,9 +129,9 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == MomaName);
 
-            var momaFirst = await this.UploadImagesToCloudinaryAsync(MomaFirstPic, moma.RestaurantName.ToLower().Replace(" ", "-"));
-            var momaSecond = await this.UploadImagesToCloudinaryAsync(MomaSecondPic, moma.RestaurantName.ToLower().Replace(" ", "-"));
-            var momaThird = await this.UploadImagesToCloudinaryAsync(MomaThirdPic, moma.RestaurantName.ToLower().Replace(" ", "-"));
+            var momaFirst = await this.UploadImagesToCloudinaryAsync(MomaFirstPic, moma.RestaurantName.ToSlug());
+            var momaSecond = await this.UploadImagesToCloudinaryAsync(MomaSecondPic, moma.RestaurantName.ToSlug());
+            var momaThird = await this.UploadImagesToCloudinaryAsync(MomaThirdPic, moma.RestaurantName.ToSlug());
 
             // Skapto
             var skapto = dbContext.Restaurants
@@ -142,13 +143,13 @@ namespace RestaurantsPlatform.Seed.Seeding
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == SkaptoName);
 
             var skaptoFirst =
-                await this.UploadImagesToCloudinaryAsync(SkaptoFirstPic, skapto.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(SkaptoFirstPic, skapto.RestaurantName.ToSlug());
             var skaptoSecond =
-                await this.UploadImagesToCloudinaryAsync(SkaptoSecondPic, skapto.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(SkaptoSecondPic, skapto.RestaurantName.ToSlug());
             var skaptoThird =
-                await this.UploadImagesToCloudinaryAsync(SkaptoThirdPic, skapto.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(SkaptoThirdPic, skapto.RestaurantName.ToSlug());
             var skaptoFourth =
-                await this.UploadImagesToCloudinaryAsync(SkaptoFourthPic, skapto.RestaurantName.ToLower().Replace(" ", "-"));
+                await this.UploadImagesToCloudinaryAsync(SkaptoFourthPic, skapto.RestaurantName.ToSlug());
 
             // Wok
             var wok = dbContext.Restaurants
@@ -159,9 +160,9 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == WokName);
 
-            var wokFirst = await this.UploadImagesToCloudinaryAsync(WokFirstPic, wok.RestaurantName.ToLower().Replace(" ", "-"));
-            var wokSecond = await this.UploadImagesToCloudinaryAsync(WokSecondPic, wok.RestaurantName.ToLower().Replace(" ", "-"));
-            var wokThird = await this.UploadImagesToCloudinaryAsync(WokThirdPic, wok.RestaurantName.ToLower().Replace(" ", "-"));
+            var wokFirst = await this.UploadImagesToCloudinaryAsync(WokFirstPic, wok.RestaurantName.ToSlug());
+            var wokSecond = await this.UploadImagesToCloudinaryAsync(WokSecondPic, wok.RestaurantName.ToSlug());
+            var wokThird = await this.UploadImagesToCloudinaryAsync(WokThirdPic, wok.RestaurantName.ToSlug());
 
             // Gurkha
             var gurkha = dbContext.Restaurants
@@ -172,8 +173,8 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == GurkhaName);
 
-            var gurkhaFirst = await this.UploadImagesToCloudinaryAsync(GurkhaSeedInfo.FirstImage, gurkha.RestaurantName.ToLower().Replace(" ", "-"));
-            var gurkhaSecond = await this.UploadImagesToCloudinaryAsync(GurkhaSeedInfo.SecondImage, gurkha.RestaurantName.ToLower().Replace(" ", "-"));
+            var gurkhaFirst = await this.UploadImagesToCloudinaryAsync(GurkhaSeedInfo.FirstImage, gurkha.RestaurantName.ToSlug());
+            var gurkhaSecond = await this.UploadImagesToCloudinaryAsync(GurkhaSeedInfo.SecondImage, gurkha.RestaurantName.ToSlug());
 
             // Memento
             var memento = dbContext.Restaurants
@@ -184,13 +185,13 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == MementoName);
 
-            var mementoFirst = await this.UploadImagesToCloudinaryAsync(MementoSeedInfo.FirstImage, memento.RestaurantName.ToLower().Replace(" ", "-"));
-            var mementoSecond = await this.UploadImagesToCloudinaryAsync(MementoSeedInfo.SecondImage, memento.RestaurantName.ToLower().Replace(" ", "-"));
-            var mementoThird = await this.UploadImagesToCloudinaryAsync(MementoSeedInfo.ThirdImage, memento.RestaurantName.ToLower().Replace(" ", "-"));
-            var mementoFourth = await this.UploadImagesToCloudinaryAsync(MementoSeedInfo.FourthImage, memento.RestaurantName.ToLower().Replace(" ", "-"));
-            var mementoFifth = await this.UploadImagesToCloudinaryAsync(MementoSeedInfo.FifthImage, memento.RestaurantName.ToLower().Replace(" ", "-"));
-            var mementoSixth = await this.UploadImagesToCloudinaryAsync(MementoSeedInfo.SixthImage, memento.RestaurantName.ToLower().Replace(" ", "-"));
-            var mementoSeventh = await this.UploadImagesToCloudinaryAsync(MementoSeedInfo.SeventhImage, memento.RestaurantName.ToLower().Replace(" ", "-"));
+            var mementoFirst = await this.UploadImagesToCloudinaryAsync(MementoSeedInfo.FirstImage, memento.RestaurantName.ToSlug());
+            var mementoSecond = await this.UploadImagesToCloudinaryAsync(MementoSeedInfo.SecondImage, memento.RestaurantName.ToSlug());
+            var mementoThird = await this.UploadImagesToCloudinaryAsync(MementoSeedInfo.ThirdImage, memento.RestaurantName.ToSlug());
+            var mementoFourth = await this.UploadImagesToCloudinaryAsync(MementoSeedInfo.FourthImage, memento.RestaurantName.ToSlug());
+            var mementoFifth = await this.UploadImagesToCloudinaryAsync(MementoSeedInfo.FifthImage, memento.RestaurantName.ToSlug());
+            var mementoSixth = await this.UploadImagesToCloudinaryAsync(MementoSeedInfo.SixthImage, memento.RestaurantName.ToSlug());
+            var mementoSeventh = await this.UploadImagesToCloudinaryAsync(MementoSeedInfo.SeventhImage, memento.RestaurantName.ToSlug());
 
             // Rainbow
             var rainbow = dbContext.Restaurants
@@ -201,12 +202,12 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == RainbowName);
 
-            var rainbowFirst = await this.UploadImagesToCloudinaryAsync(RainbowSeedInfo.FirstImage, rainbow.RestaurantName.ToLower().Replace(" ", "-"));
-            var rainbowSecond = await this.UploadImagesToCloudinaryAsync(RainbowSeedInfo.SecondImage, rainbow.RestaurantName.ToLower().Replace(" ", "-"));
-            var rainbowThird = await this.UploadImagesToCloudinaryAsync(RainbowSeedInfo.ThirdImage, rainbow.RestaurantName.ToLower().Replace(" ", "-"));
-            var rainbowFourth = await this.UploadImagesToCloudinaryAsync(RainbowSeedInfo.FourthImage, rainbow.RestaurantName.ToLower().Replace(" ", "-"));
-            var rainbowFifth = await this.UploadImagesToCloudinaryAsync(RainbowSeedInfo.FifthImage, rainbow.RestaurantName.ToLower().Replace(" ", "-"));
-            var rainbowSixth = await this.UploadImagesToCloudinaryAsync(RainbowSeedInfo.SixthImage, rainbow.RestaurantName.ToLower().Replace(" ", "-"));
+            var rainbowFirst = await this.UploadImagesToCloudinaryAsync(RainbowSeedInfo.FirstImage, rainbow.RestaurantName.ToSlug());
+            var rainbowSecond = await this.UploadImagesToCloudinaryAsync(RainbowSeedInfo.SecondImage, rainbow.RestaurantName.ToSlug());
+            var rainbowThird = await this.UploadImagesToCloudinaryAsync(RainbowSeedInfo.ThirdImage, rainbow.RestaurantName.ToSlug());
+            var rainbowFourth = await this.UploadImagesToCloudinaryAsync(RainbowSeedInfo.FourthImage, rainbow.RestaurantName.ToSlug());
+            var rainbowFifth = await this.UploadImagesToCloudinaryAsync(RainbowSeedInfo.FifthImage, rainbow.RestaurantName.ToSlug());
+            var rainbowSixth = await this.UploadImagesToCloudinaryAsync(RainbowSeedInfo.SixthImage, rainbow.RestaurantName.ToSlug());
 
             // Rosiche
             var rosiche = dbContext.Restaurants
@@ -217,10 +218,10 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == RosicheName);
 
-            var rosicheFirst = await this.UploadImagesToCloudinaryAsync(RosicheSeedInfo.FirstImage, rosiche.RestaurantName.ToLower().Replace(" ", "-"));
-            var rosicheSecond = await this.UploadImagesToCloudinaryAsync(RosicheSeedInfo.SecondImage, rosiche.RestaurantName.ToLower().Replace(" ", "-"));
-            var rosicheThird = await this.UploadImagesToCloudinaryAsync(RosicheSeedInfo.ThirdImage, rosiche.RestaurantName.ToLower().Replace(" ", "-"));
-            var rosicheFourth = await this.UploadImagesToCloudinaryAsync(RosicheSeedInfo.FourthImage, rosiche.RestaurantName.ToLower().Replace(" ", "-"));
+            var rosicheFirst = await this.UploadImagesToCloudinaryAsync(RosicheSeedInfo.FirstImage, rosiche.RestaurantName.ToSlug());
+            var rosicheSecond = await this.UploadImagesToCloudinaryAsync(RosicheSeedInfo.SecondImage, rosiche.RestaurantName.ToSlug());
+            var rosicheThird = await this.UploadImagesToCloudinaryAsync(RosicheSeedInfo.ThirdImage, rosiche.RestaurantName.ToSlug());
+            var rosicheFourth = await this.UploadImagesToCloudinaryAsync(RosicheSeedInfo.FourthImage, rosiche.RestaurantName.ToSlug());
 
             // Tenebris
             var tenebris = dbContext.Restaurants
@@ -231,11 +232,11 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == TenebrisName);
 
-            var tenebrisFirst = await this.UploadImagesToCloudinaryAsync(TenebrisSeedInfo.FirstImage, tenebris.RestaurantName.ToLower().Replace(" ", "-"));
-            var tenebrisSecond = await this.UploadImagesToCloudinaryAsync(TenebrisSeedInfo.SecondImage, tenebris.RestaurantName.ToLower().Replace(" ", "-"));
-            var tenebrisThird = await this.UploadImagesToCloudinaryAsync(TenebrisSeedInfo.ThirdImage, tenebris.RestaurantName.ToLower().Replace(" ", "-"));
-            var tenebrisFourth = await this.UploadImagesToCloudinaryAsync(TenebrisSeedInfo.FourthImage, tenebris.RestaurantName.ToLower().Replace(" ", "-"));
-            var tenebrisFifth = await this.UploadImagesToCloudinaryAsync(TenebrisSeedInfo.FifthImage, tenebris.RestaurantName.ToLower().Replace(" ", "-"));
+            var tenebrisFirst = await this.UploadImagesToCloudinaryAsync(TenebrisSeedInfo.FirstImage, tenebris.RestaurantName.ToSlug());
+            var tenebrisSecond = await this.UploadImagesToCloudinaryAsync(TenebrisSeedInfo.SecondImage, tenebris.RestaurantName.ToSlug());
+            var tenebrisThird = await this.UploadImagesToCloudinaryAsync(TenebrisSeedInfo.ThirdImage, tenebris.RestaurantName.ToSlug());
+            var tenebrisFourth = await this.UploadImagesToCloudinaryAsync(TenebrisSeedInfo.FourthImage, tenebris.RestaurantName.ToSlug());
+            var tenebrisFifth = await this.UploadImagesToCloudinaryAsync(TenebrisSeedInfo.FifthImage, tenebris.RestaurantName.ToSlug());
 
             // Cosmos
             var cosmos = dbContext.Restaurants
@@ -246,10 +247,10 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == CosmosName);
 
-            var cosmosFirst = await this.UploadImagesToCloudinaryAsync(CosmosSeedInfo.FirstImage, cosmos.RestaurantName.ToLower().Replace(" ", "-"));
-            var cosmosSecond = await this.UploadImagesToCloudinaryAsync(CosmosSeedInfo.SecondImage, cosmos.RestaurantName.ToLower().Replace(" ", "-"));
-            var cosmosThird = await this.UploadImagesToCloudinaryAsync(CosmosSeedInfo.ThirdImage, cosmos.RestaurantName.ToLower().Replace(" ", "-"));
-            var cosmosFourth = await this.UploadImagesToCloudinaryAsync(CosmosSeedInfo.FourthImage, cosmos.RestaurantName.ToLower().Replace(" ", "-"));
+            var cosmosFirst = await this.UploadImagesToCloudinaryAsync(CosmosSeedInfo.FirstImage, cosmos.RestaurantName.ToSlug());
+            var cosmosSecond = await this.UploadImagesToCloudinaryAsync(CosmosSeedInfo.SecondImage, cosmos.RestaurantName.ToSlug());
+            var cosmosThird = await this.UploadImagesToCloudinaryAsync(CosmosSeedInfo.ThirdImage, cosmos.RestaurantName.ToSlug());
+            var cosmosFourth = await this.UploadImagesToCloudinaryAsync(CosmosSeedInfo.FourthImage, cosmos.RestaurantName.ToSlug());
 
             // Bottega
             var bottega = dbContext.Restaurants
@@ -260,8 +261,8 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == BottegaName);
 
-            var bottegaFirst = await this.UploadImagesToCloudinaryAsync(BottegaSeedInfo.FirstImage, bottega.RestaurantName.ToLower().Replace(" ", "-"));
-            var bottegaSecond = await this.UploadImagesToCloudinaryAsync(BottegaSeedInfo.SecondImage, bottega.RestaurantName.ToLower().Replace(" ", "-"));
+            var bottegaFirst = await this.UploadImagesToCloudinaryAsync(BottegaSeedInfo.FirstImage, bottega.RestaurantName.ToSlug());
+            var bottegaSecond = await this.UploadImagesToCloudinaryAsync(BottegaSeedInfo.SecondImage, bottega.RestaurantName.ToSlug());
 
             // Sputnik
             var sputnik = dbContext.Restaurants
@@ -272,9 +273,9 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == SputnikName);
 
-            var sputnikFirst = await this.UploadImagesToCloudinaryAsync(SputnikSeedInfo.FirstImage, sputnik.RestaurantName.ToLower().Replace(" ", "-"));
-            var sputnikSecond = await this.UploadImagesToCloudinaryAsync(SputnikSeedInfo.SecondImage, sputnik.RestaurantName.ToLower().Replace(" ", "-"));
-            var sputnikThird = await this.UploadImagesToCloudinaryAsync(SputnikSeedInfo.ThirdImage, sputnik.RestaurantName.ToLower().Replace(" ", "-"));
+            var sputnikFirst = await this.UploadImagesToCloudinaryAsync(SputnikSeedInfo.FirstImage, sputnik.RestaurantName.ToSlug());
+            var sputnikSecond = await this.UploadImagesToCloudinaryAsync(SputnikSeedInfo.SecondImage, sputnik.RestaurantName.ToSlug());
+            var sputnikThird = await this.UploadImagesToCloudinaryAsync(SputnikSeedInfo.ThirdImage, sputnik.RestaurantName.ToSlug());
 
             // Cocktail
             var cocktail = dbContext.Restaurants
@@ -285,9 +286,9 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == CocktailName);
 
-            var cocktailFirst = await this.UploadImagesToCloudinaryAsync(CocktailSeedInfo.FirstImage, cocktail.RestaurantName.ToLower().Replace(" ", "-"));
-            var cocktailSecond = await this.UploadImagesToCloudinaryAsync(CocktailSeedInfo.SecondImage, cocktail.RestaurantName.ToLower().Replace(" ", "-"));
-            var cocktailThird = await this.UploadImagesToCloudinaryAsync(CocktailSeedInfo.ThirdImage, cocktail.RestaurantName.ToLower().Replace(" ", "-"));
+            var cocktailFirst = await this.UploadImagesToCloudinaryAsync(CocktailSeedInfo.FirstImage, cocktail.RestaurantName.ToSlug());
+            var cocktailSecond = await this.UploadImagesToCloudinaryAsync(CocktailSeedInfo.SecondImage, cocktail.RestaurantName.ToSlug());
+            var cocktailThird = await this.UploadImagesToCloudinaryAsync(CocktailSeedInfo.ThirdImage, cocktail.RestaurantName.ToSlug());
 
             // Gastro
             var gastro = dbContext.Restaurants
@@ -298,8 +299,8 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == GastroName);
 
-            var gastroFirst = await this.UploadImagesToCloudinaryAsync(GastroSeedInfo.FirstImage, gastro.RestaurantName.ToLower().Replace(" ", "-"));
-            var gastroSecond = await this.UploadImagesToCloudinaryAsync(GastroSeedInfo.SecondImage, gastro.RestaurantName.ToLower().Replace(" ", "-"));
+            var gastroFirst = await this.UploadImagesToCloudinaryAsync(GastroSeedInfo.FirstImage, gastro.RestaurantName.ToSlug());
+            var gastroSecond = await this.UploadImagesToCloudinaryAsync(GastroSeedInfo.SecondImage, gastro.RestaurantName.ToSlug());
 
             // Road
             var road = dbContext.Restaurants
@@ -310,9 +311,9 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == RoadName);
 
-            var roadFirst = await this.UploadImagesToCloudinaryAsync(RoadSeedInfo.FirstImage, road.RestaurantName.ToLower().Replace(" ", "-"));
-            var roadSecond = await this.UploadImagesToCloudinaryAsync(RoadSeedInfo.SecondImage, road.RestaurantName.ToLower().Replace(" ", "-"));
-            var roadThird = await this.UploadImagesToCloudinaryAsync(RoadSeedInfo.ThirdImage, road.RestaurantName.ToLower().Replace(" ", "-"));
+            var roadFirst = await this.UploadImagesToCloudinaryAsync(RoadSeedInfo.FirstImage, road.RestaurantName.ToSlug());
+            var roadSecond = await this.UploadImagesToCloudinaryAsync(RoadSeedInfo.SecondImage, road.RestaurantName.ToSlug());
+            var roadThird = await this.UploadImagesToCloudinaryAsync(RoadSeedInfo.ThirdImage, road.RestaurantName.ToSlug());
 
             // Oscar
             var oscar = dbContext.Restaurants
@@ -323,10 +324,10 @@ namespace RestaurantsPlatform.Seed.Seeding
                 })
                 .FirstOrDefault(restaurant => restaurant.RestaurantName == OscarName);
 
-            var oscarFirst = await this.UploadImagesToCloudinaryAsync(OscarSeedInfo.FirstImage, oscar.RestaurantName.ToLower().Replace(" ", "-"));
-            var oscarSecond = await this.UploadImagesToCloudinaryAsync(OscarSeedInfo.SecondImage, oscar.RestaurantName.ToLower().Replace(" ", "-"));
-            var oscarThird = await this.UploadImagesToCloudinaryAsync(OscarSeedInfo.ThirdImage, oscar.RestaurantName.ToLower().Replace(" ", "-"));
-            var oscarFourth = await this.UploadImagesToCloudinaryAsync(OscarSeedInfo.FourhtImage, oscar.RestaurantName.ToLower().Replace(" ", "-"));
+            var oscarFirst = await this.UploadImagesToCloudinaryAsync(OscarSeedInfo.FirstImage, oscar.RestaurantName.ToSlug());
+            var oscarSecond = await this.UploadImagesToCloudinaryAsync(OscarSeedInfo.SecondImage, oscar.RestaurantName.ToSlug());
+            var oscarThird = await this.UploadImagesToCloudinaryAsync(OscarSeedInfo.ThirdImage, oscar.RestaurantName.ToSlug());
+            var oscarFourth = await this.UploadImagesToCloudinaryAsync(OscarSeedInfo.FourhtImage, oscar.RestaurantName.ToSlug());
 
             List<(string ImageUrl, string PublicId, int RestaurantId)> categoryImages
                 = new List<(string ImageUrl, string PublicId, int RestaurantId)>

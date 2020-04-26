@@ -7,13 +7,12 @@
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Web.Controllers;
-    using RestaurantsPlatform.Web.Infrastructure;
     using RestaurantsPlatform.Web.ViewModels;
     using RestaurantsPlatform.Web.ViewModels.Comments;
 
+    using static RestaurantsPlatform.Common.StringExtensions;
     using static RestaurantsPlatform.Web.Infrastructure.ErrorConstants;
     using static RestaurantsPlatform.Web.Infrastructure.NotificationsMessagesContants;
 
@@ -33,7 +32,7 @@
             if (!this.ModelState.IsValid)
             {
                 this.TempData[ErrorNotification] = WrontInput;
-                return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.RestaurantName.ToLower().Replace(' ', '-') });
+                return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.RestaurantName.ToSlug() });
             }
 
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -49,7 +48,7 @@
             }
 
             this.TempData[SuccessNotification] = string.Format(SuccessfullyCommentRestaurant, input.RestaurantName);
-            return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.RestaurantName.ToLower().Replace(" ", "-") });
+            return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.RestaurantName.ToSlug() });
         }
 
         public async Task<IActionResult> Delete(DeleteCommentInputModel input)

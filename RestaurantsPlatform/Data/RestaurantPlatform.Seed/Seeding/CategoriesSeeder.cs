@@ -12,6 +12,7 @@ namespace RestaurantsPlatform.Seed.Seeding
     using RestaurantsPlatform.Data;
     using RestaurantsPlatform.Data.Models.Restaurants;
 
+    using static RestaurantsPlatform.Common.StringExtensions;
     using static RestaurantsPlatform.Data.Common.Seeding.Categories.SeedInfo;
 
     /// <summary>
@@ -33,28 +34,28 @@ namespace RestaurantsPlatform.Seed.Seeding
             }
 
             int cafeteriaId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl.Contains(CafeteriaName.ToLower().Replace(" ", "-")))
+                .FirstOrDefault(image => image.ImageUrl.Contains(CafeteriaName.ToSlug()))
                 .Id;
             int casualDiningId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl.Contains(CasualDiningName.ToLower().Replace(" ", "-")))
+                .FirstOrDefault(image => image.ImageUrl.Contains(CasualDiningName.ToSlug()))
                 .Id;
             int ethnicId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl.Contains(EthnicName.ToLower().Replace(" ", "-")))
+                .FirstOrDefault(image => image.ImageUrl.Contains(EthnicName.ToSlug()))
                 .Id;
             int familyStyleId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl.Contains(FamilyStyleName.ToLower().Replace(" ", "-")))
+                .FirstOrDefault(image => image.ImageUrl.Contains(FamilyStyleName.ToSlug()))
                 .Id;
             int fastFoodId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl.Contains(FastFoodName.ToLower().Replace(" ", "-")))
+                .FirstOrDefault(image => image.ImageUrl.Contains(FastFoodName.ToSlug()))
                 .Id;
             int fineDiningId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl.Contains(FineDiningName.ToLower().Replace(" ", "-")))
+                .FirstOrDefault(image => image.ImageUrl.Contains(FineDiningName.ToSlug()))
                 .Id;
             int premiumCasualId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl.Contains(PremiumCasualName.ToLower().Replace(" ", "-")))
+                .FirstOrDefault(image => image.ImageUrl.Contains(PremiumCasualName.ToSlug()))
                 .Id;
             int pubId = dbContext.CategoryImages
-                .FirstOrDefault(image => image.ImageUrl.Contains(PubName.ToLower().Replace(" ", "-")))
+                .FirstOrDefault(image => image.ImageUrl.Contains(PubName.ToSlug()))
                 .Id;
 
             List<(string Name, int ImageId, string Description)> categories
