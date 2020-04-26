@@ -1,11 +1,11 @@
-﻿section, section div {
+﻿.github-section, .github-section div {
   /* See it in slo-mo, you can change this */
   transition-duration: .6s;
 }
 
-section, .button { transition-timing-function: ease; }
+.github-section, .button { transition-timing-function: ease; }
 
-section {
+.github-section {
   display: inline-block;
   position: relative;
   padding: .375rem .375rem 0;
@@ -46,7 +46,7 @@ svg {
 }
 
 .innie {
-  background-color: #eff3f6;
+  background-image: linear-gradient(180deg, #eff3f6, #28a745 90%);
   text-shadow: 0 -2px 4px rgba(0,0,0,.2);
 }
 
@@ -73,23 +73,23 @@ svg {
 }
 
 .outie {
-  background-image: linear-gradient(180deg, #d9dadb, #28a745 70%);
+  background-image: linear-gradient(180deg, #eff3f6, #28a745 90%);
   transform: translateZ(.25rem);
   text-shadow: 0 2px 4px rgba(0,0,0,.2);
 }
 
-section:hover { background: #EBEFF2; }
-section:hover .button { opacity: 1; }
+.github-section:hover { background: #EBEFF2; }
+.github-section:hover .button { opacity: 1; }
 
-section:hover .cover, section:hover .innie, section:hover .spine, section:hover .outie, section:hover .spine { transition-timing-function: cubic-bezier(.2,.7,.1,1.1); }
+.github-section:hover .cover, .github-section:hover .innie, .github-section:hover .spine, .github-section:hover .outie, .github-section:hover .spine { transition-timing-function: cubic-bezier(.2,.7,.1,1.1); }
 
-section:hover .cover { transform: rotateX(-120deg);  }
+.github-section:hover .cover { transform: rotateX(-120deg);  }
 
-section:hover .innie { background-color: #3ADAFC; }
-section:hover .spine { background-color: #eff3f6; }
-section:hover .outie { background-color: #2174A0; color: rgba(255,255,255,0); }
+.github-section:hover .innie { background-color: #3ADAFC; }
+.github-section:hover .spine { background-color: #eff3f6; }
+.github-section:hover .outie { background-color: #2174A0; color: rgba(255,255,255,0); }
 
-section:hover .shadow { 
+.github-section:hover .shadow { 
   opacity: 1;
   transform: rotateX(45deg) scale(.95);
 }
