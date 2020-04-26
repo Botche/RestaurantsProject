@@ -3,6 +3,7 @@
 @import "forms.css";
 @import "restaurantGetByIdName.css";
 @import "usersTable.css";
+@import "followButton.css";
 
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
@@ -85,4 +86,10 @@ body {
 
 textarea {
     resize: none;
+}
+
+.github-icon {
+    bottom: 1rem;
+    position: relative;
+    right: 5px;
 }
