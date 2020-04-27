@@ -9,6 +9,7 @@
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Mapping;
+    using RestaurantsPlatform.Web.ViewModels.Restaurants;
 
     public class DetailsUserViewModel : IMapFrom<ApplicationUser>, IHaveCustomMappings
     {
@@ -32,6 +33,8 @@
 
         public int FavouriteRestaurantsCount { get; set; }
 
+        public IEnumerable<AllRestaurantsViewModel> FavouriteRestaurants { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<ApplicationUser, DetailsUserViewModel>()
@@ -42,7 +45,11 @@
                 .ForMember(
                     dest => dest.RoleName,
                     ori => ori.MapFrom(from => from.UserRoles.FirstOrDefault()
-                                                                .Role.Name));
+                                                                .Role.Name))
+                .ForMember(
+                    dest => dest.FavouriteRestaurants,
+                    ori => ori.MapFrom(from => from.FavouriteRestaurants.
+                                                    Select(favourite => favourite.Restaurant)));
         }
     }
 }

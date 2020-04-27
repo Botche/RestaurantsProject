@@ -83,7 +83,15 @@
     </div>
 </div>
 
+<div class="row d-flex justify-content-around">
+    @foreach (var favourite in Model.CurrentUser.FavouriteRestaurants)
+    {
+        <partial name="../../Categories/Views/Shared/PartialViews/_RestaurantDetailsInCategoryDetails" model="favourite" />
+    }
+</div>
+
 @section scripts{
     <script type="text/javascript" src="~/js/functions/imagesButtonsFunction.js" asp-append-version="true"></script>
     <script type="text/javascript" src="~/js/functions/deleteAccountImageAsync.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/functions/favouriteButtonInCategoryView.js" asp-append-version="true"></script>
 }
