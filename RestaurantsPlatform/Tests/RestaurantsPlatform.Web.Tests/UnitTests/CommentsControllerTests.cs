@@ -22,7 +22,7 @@
     using RestaurantsPlatform.Web.ViewModels.Comments;
     using Xunit;
 
-    using static RestaurantsPlatform.Web.Infrastructure.ErrorConstants;
+    using static RestaurantsPlatform.Web.Common.ErrorConstants;
 
     public class CommentsControllerTests
     {
