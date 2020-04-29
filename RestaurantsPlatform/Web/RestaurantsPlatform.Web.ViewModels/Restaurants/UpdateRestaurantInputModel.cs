@@ -9,6 +9,7 @@
 
     public class UpdateRestaurantInputModel : IMapFrom<Restaurant>
     {
+        [Required]
         public int Id { get; set; }
 
         [Required]
