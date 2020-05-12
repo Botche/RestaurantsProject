@@ -78,7 +78,7 @@
             this.commentService = new CommentService(this.commentRepository, this.voteService);
             this.restaurantImagesService = new RestaurantImageService(this.restaurantImagesRepository, this.cloudinaryService);
             this.restaurantService = new RestaurantService(this.restaurantRepository, this.restaurantImagesService, this.commentService);
-            this.userImageService = new UserImageSercice(this.userRepository, this.cloudinaryService);
+            this.userImageService = new UserImageService(this.userRepository, this.cloudinaryService);
 
             this.categoryImageService = new CategoryImageService(this.categoryImageRepository, this.cloudinaryService);
             this.categoryService = new CategoryService(this.categoryRepository, this.categoryImageService, this.restaurantService);

@@ -8,6 +8,7 @@
 
     public class UpdateCategoryInputModel
     {
+        [Required]
         public int Id { get; set; }
 
         [Required]

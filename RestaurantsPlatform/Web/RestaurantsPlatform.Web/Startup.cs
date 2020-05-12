@@ -210,7 +210,7 @@
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IVoteService, VoteService>();
             services.AddTransient<IFavouriteService, FavouriteService>();
-            services.AddTransient<IUserImageSercice, UserImageSercice>();
+            services.AddTransient<IUserImageSercice, UserImageService>();
         }
     }
 }

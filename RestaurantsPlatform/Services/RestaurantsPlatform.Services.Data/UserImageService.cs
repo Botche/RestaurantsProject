@@ -10,12 +10,12 @@
 
     using static RestaurantsPlatform.Common.GlobalConstants;
 
-    public class UserImageSercice : IUserImageSercice
+    public class UserImageService : IUserImageSercice
     {
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
         private readonly ICloudinaryImageService imageService;
 
-        public UserImageSercice(
+        public UserImageService(
             IDeletableEntityRepository<ApplicationUser> usersRepository,
             ICloudinaryImageService imageService)
         {

@@ -16,16 +16,13 @@
 
     public class HomeController : BaseController
     {
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IEmailSender emailSender;
         private readonly IRestaurantImageService imageService;
 
         public HomeController(
-            UserManager<ApplicationUser> userManager,
             IEmailSender emailSender,
             IRestaurantImageService imageService)
         {
-            this.userManager = userManager;
             this.emailSender = emailSender;
             this.imageService = imageService;
         }

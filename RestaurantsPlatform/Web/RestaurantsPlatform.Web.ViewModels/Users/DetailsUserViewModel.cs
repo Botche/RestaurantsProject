@@ -41,7 +41,19 @@
                 .ForMember(
                     dest => dest.VotesCount,
                     ori => ori.MapFrom(from => from.Votes
-                        .Count(vote => vote.Type != VoteType.Neutral)))
+                        .Count(vote => vote.Type != VoteType.Neutral && !vote.Comment.IsDeleted)))
+                .ForMember(
+                    dest => dest.CommentsCount,
+                    ori => ori.MapFrom(from => from.Comments
+                        .Count(comment => !comment.IsDeleted)))
+                .ForMember(
+                    dest => dest.RestaurantsCount,
+                    ori => ori.MapFrom(from => from.Restaurants
+                        .Count(restaurant => !restaurant.IsDeleted)))
+                .ForMember(
+                    dest => dest.FavouriteRestaurantsCount,
+                    ori => ori.MapFrom(from => from.FavouriteRestaurants
+                        .Count(favourite => !favourite.Restaurant.IsDeleted)))
                 .ForMember(
                     dest => dest.RoleName,
                     ori => ori.MapFrom(from => from.UserRoles.FirstOrDefault()
@@ -49,7 +61,8 @@
                 .ForMember(
                     dest => dest.FavouriteRestaurants,
                     ori => ori.MapFrom(from => from.FavouriteRestaurants.
-                                                    Select(favourite => favourite.Restaurant)));
+                                                    Select(favourite => favourite.Restaurant)
+                                                    .Where(favourite => !favourite.IsDeleted)));
         }
     }
 }
