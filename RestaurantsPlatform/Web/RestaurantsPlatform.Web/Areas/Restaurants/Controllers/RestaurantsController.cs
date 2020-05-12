@@ -46,14 +46,10 @@
         {
             var restaurant = await this.restaurantService.GetByIdAndNameAsync<DetailsRestaurantViewModel>(id, name);
 
-            if (restaurant == null)
+            var result = this.CheckIfValueIsNull(restaurant, PageNotFound, 404);
+            if (result != null)
             {
-                return this.View(ErrorViewName, new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
-                    Message = PageNotFound,
-                    StatusCode = 404,
-                });
+                return result;
             }
 
             restaurant.IsFavourite =
@@ -97,13 +93,10 @@
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             int restaurantId = await this.restaurantService.CreateRestaurantAsync(userId, input.Address, input.CategoryId, input.ContactInfo, input.Description, input.OwnerName, input.RestaurantName, input.WorkingTime);
 
-            // Untestable
-            if (restaurantId == 0)
+            var result = this.CheckIfIdIsZero(restaurantId);
+            if (result != null)
             {
-                return this.View(ErrorViewName, new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
-                });
+                return result;
             }
 
             this.TempData[SuccessNotification] = string.Format(SuccessfullyCreatedRestaurant, input.RestaurantName);
@@ -119,14 +112,10 @@
         {
             var restaurant = await this.restaurantService.GetByIdAsync<UpdateRestaurantViewModel>(id);
 
-            if (restaurant == null)
+            var resultForRestaurant = this.CheckIfValueIsNull(restaurant, PageNotFound, 404);
+            if (resultForRestaurant != null)
             {
-                return this.View(ErrorViewName, new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
-                    Message = PageNotFound,
-                    StatusCode = 404,
-                });
+                return resultForRestaurant;
             }
 
             var result = await this.AuthorizeIfRestaurantCreatorIsCurentUserAsync(id);
@@ -160,14 +149,10 @@
 
             int? modelId = await this.restaurantService.UpdateRestaurantAsync(input.Id, input.OwnerName, input.RestaurantName, input.WorkingTime, input.Address, input.ContactInfo, input.Description, input.CategoryId);
 
-            if (modelId == null)
+            var resultForModel = this.CheckIfValueIsNull(modelId, RestaurantNotFound, 404);
+            if (resultForModel != null)
             {
-                return this.View(ErrorViewName, new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
-                    Message = RestaurantNotFound,
-                    StatusCode = 404,
-                });
+                return resultForModel;
             }
 
             this.TempData[SuccessNotification] = string.Format(SuccessfullyUpdatedRestaurant, input.RestaurantName);
@@ -181,14 +166,10 @@
         {
             var restaurant = await this.restaurantService.GetByIdAsync<DeleteRestaurantViewModel>(id);
 
-            if (restaurant == null)
+            var resultForRestaurant = this.CheckIfValueIsNull(restaurant, PageNotFound, 404);
+            if (resultForRestaurant != null)
             {
-                return this.View(ErrorViewName, new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
-                    Message = PageNotFound,
-                    StatusCode = 404,
-                });
+                return resultForRestaurant;
             }
 
             var result = await this.AuthorizeIfRestaurantCreatorIsCurentUserAsync(id);
@@ -218,14 +199,10 @@
 
             var id = await this.restaurantService.DeleteRestaurantByIdAsync(input.Id);
 
-            if (id == null)
+            var resultForRestaurant = this.CheckIfValueIsNull(id, RestaurantNotFound, 404);
+            if (resultForRestaurant != null)
             {
-                return this.View(ErrorViewName, new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
-                    Message = RestaurantNotFound,
-                    StatusCode = 404,
-                });
+                return resultForRestaurant;
             }
 
             this.TempData[SuccessNotification] = SuccessfullyDeletedRestaurant;

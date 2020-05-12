@@ -40,5 +40,43 @@
 
             return null;
         }
+
+        protected int CheckIfGivenPageIsBelowOne(int page)
+        {
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+            return page;
+        }
+
+        protected IActionResult CheckIfValueIsNull(object obj, string message, int statusCode)
+        {
+            if (obj == null)
+            {
+                return this.View(ErrorViewName, new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? this.HttpContext?.TraceIdentifier,
+                    Message = message,
+                    StatusCode = statusCode,
+                });
+            }
+
+            return null;
+        }
+
+        protected IActionResult CheckIfIdIsZero(int? id)
+        {
+            if (id == 0)
+            {
+                return this.View(ErrorViewName, new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
+                });
+            }
+
+            return null;
+        }
     }
 }

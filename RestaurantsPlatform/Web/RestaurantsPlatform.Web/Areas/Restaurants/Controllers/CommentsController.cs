@@ -1,7 +1,6 @@
 ﻿namespace RestaurantsPlatform.Web.Areas.Restaurants.Controllers
 {
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -9,7 +8,6 @@
     using Microsoft.AspNetCore.Mvc;
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Web.Controllers;
-    using RestaurantsPlatform.Web.ViewModels;
     using RestaurantsPlatform.Web.ViewModels.Comments;
 
     using static RestaurantsPlatform.Common.StringExtensions;
@@ -38,13 +36,11 @@
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var id = await this.commentService.AddCommentToRestaurantAsync(input.Id, input.CommentContent, userId);
 
-            if (id == 0)
+            var result = this.CheckIfIdIsZero(id);
+            if (result != null)
             {
                 this.TempData[ErrorNotification] = CommentNotFound;
-                return this.View(ErrorViewName, new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
-                });
+                return result;
             }
 
             this.TempData[SuccessNotification] = string.Format(SuccessfullyCommentRestaurant, input.RestaurantName);
@@ -55,15 +51,11 @@
         {
             var id = await this.commentService.DeleteCommentFromRestaurantAsync(input.CommentId, input.Id);
 
-            if (id == null)
+            var result = this.CheckIfValueIsNull(id, CommentNotFound, 404);
+            if (result != null)
             {
                 this.TempData[ErrorNotification] = CommentNotFound;
-                return this.View(ErrorViewName, new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
-                    Message = CommentNotFound,
-                    StatusCode = 404,
-                });
+                return result;
             }
 
             this.TempData[SuccessNotification] = SuccessfullyDeletedCommentFromRestaurant;
@@ -88,18 +80,18 @@
             return this.Json(new { content = input.Content });
         }
 
-        // public IActionResult LatestComments(int id)
-        // {
-        //    var comments = this.commentService.GetLatestComments<DetailsCommentViewModel>(id);
+        public IActionResult LatestComments(int restaurantId)
+        {
+            var comments = this.commentService.GetLatestComments<DetailsCommentViewModel>(restaurantId);
 
-        // return this.Json(new { comments });
-        // }
+            return this.Json(new { comments });
+        }
 
-        // public ActionResult<IEnumerable<DetailsCommentViewModel>> MostPopularComments(int id)
-        // {
-        //    var comments = this.commentService.GetMostPopularComments<DetailsCommentViewModel>(id);
+        public IActionResult MostPopularComments(int restaurantId)
+        {
+            var comments = this.commentService.GetMostPopularComments<DetailsCommentViewModel>(restaurantId);
 
-        // return new List<DetailsCommentViewModel>(comments);
-        // }
+            return this.Json(new { comments });
+        }
     }
 }

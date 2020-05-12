@@ -1,25 +1,24 @@
-﻿@using System.Security.Claims;
-@using static RestaurantsPlatform.Common.GlobalConstants;
-@model RestaurantsPlatform.Web.ViewModels.Restaurants.DetailsRestaurantViewModel
-@*<nav class="d-flex flex-wrap justify-content-between bg-light">
-        <div class="mx-auto">
-            <div class="nav-item active">
-                <a class="nav-link text-primary" id="latest-comments">
-                    <i class="fa fa-comments"></i>
-                    New Comments
-                </a>
-            </div>
+﻿@model DetailsRestaurantViewModel
+
+<nav class="d-flex flex-wrap justify-content-between bg-light">
+    <div class="mx-auto">
+        <div class="nav-item active">
+            <a class="nav-link text-primary" id="latest-comments" asp-area="restaurants" asp-controller="Comments" asp-action="LatestComments" asp-route-restaurantId="@Model.Id">
+                <i class="fa fa-comments"></i>
+                New Comments
+            </a>
         </div>
-        <div class="vertical-row"></div>
-        <div class="mx-auto">
-            <div class="nav-item">
-                <a class="nav-link text-primary" id="most-popular">
-                    <i class="fa fa-star"></i>
-                    Popular Posts
-                </a>
-            </div>
+    </div>
+    <div class="vertical-row"></div>
+    <div class="mx-auto">
+        <div class="nav-item">
+            <a class="nav-link text-primary" id="most-popular" asp-area="restaurants" asp-controller="Comments" asp-action="MostPopularComments" asp-route-restaurantId="@Model.Id">
+                <i class="fa fa-star"></i>
+                Popular Posts
+            </a>
         </div>
-    </nav>*@
+    </div>
+</nav>
 
 <div class="commentDiv">
     @{ int i = 0; }
@@ -53,7 +52,7 @@
                             <input asp-for="@comment.Id" id="comment-@i" hidden />
                         </form>
                         @if (!comment.Votes.Any(vote => vote.UserId == (this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
-         || (int)(comment.Votes.FirstOrDefault(vote => vote.UserId == (this.User.FindFirstValue(ClaimTypes.NameIdentifier))).Type) == 0)
+        || (int)(comment.Votes.FirstOrDefault(vote => vote.UserId == (this.User.FindFirstValue(ClaimTypes.NameIdentifier))).Type) == 0)
                         {
                             <div>
                                 <a class="nav-link upvote text-primary upvote">

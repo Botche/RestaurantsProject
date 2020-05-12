@@ -21,8 +21,8 @@
     [Area("Categories")]
     public class CategoriesController : BaseController
     {
-        private const int RestaurantsPerPage = 2;
-        private const int CategoriesPerPage = 3;
+        private const int RestaurantsPerPage = 4;
+        private const int CategoriesPerPage = 6;
 
         private readonly ICategoryService categoryService;
         private readonly IRestaurantService restaurantService;
@@ -40,10 +40,7 @@
 
         public IActionResult All(int page = 1)
         {
-            if (page < 1)
-            {
-                page = 1;
-            }
+            page = this.CheckIfGivenPageIsBelowOne(page);
 
             var categories = this.categoryService.GetAllCategoriesWithPage<DetailsAllCategoriesViewModel>(
                     CategoriesPerPage,
@@ -67,21 +64,14 @@
 
         public async Task<IActionResult> GetByIdAndName(int id, string name, int page = 1)
         {
-            if (page < 1)
-            {
-                page = 1;
-            }
+            page = this.CheckIfGivenPageIsBelowOne(page);
 
             var category = await this.categoryService.GetByIdAndNameAsync<DetailsCategoryViewModel>(id, name);
 
-            if (category == null)
+            var result = this.CheckIfValueIsNull(category, PageNotFound, 404);
+            if (result != null)
             {
-                return this.View(ErrorViewName, new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext?.TraceIdentifier,
-                    Message = PageNotFound,
-                    StatusCode = 404,
-                });
+                return result;
             }
 
             category.Restaurants = this.restaurantService.GetRestaurantsByCategoryId<AllRestaurantsViewModel>(category.Id, RestaurantsPerPage, (page - 1) * RestaurantsPerPage);
@@ -95,11 +85,7 @@
             category.CurrentPage = page;
 
             var count = this.restaurantService.GetCountByCategoryId(category.Id);
-            category.PagesCount = (int)Math.Ceiling((double)count / RestaurantsPerPage);
-            if (category.PagesCount == 0)
-            {
-                category.PagesCount = 1;
-            }
+            this.CalculatePagesCount(category, count);
 
             return this.View(category);
         }
@@ -174,6 +160,15 @@
             this.TempData[SuccessNotification] = SuccessfullyDeletedCategory;
 
             return this.RedirectToAction("All");
+        }
+
+        private void CalculatePagesCount(DetailsCategoryViewModel category, int count)
+        {
+            category.PagesCount = (int)Math.Ceiling((double)count / RestaurantsPerPage);
+            if (category.PagesCount == 0)
+            {
+                category.PagesCount = 1;
+            }
         }
     }
 }

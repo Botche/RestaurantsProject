@@ -8,11 +8,11 @@
 
     using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Services.Data.Interfaces;
-    using RestaurantsPlatform.Services.Mapping;
     using RestaurantsPlatform.Services.Messaging;
     using RestaurantsPlatform.Web.ViewModels.Users;
 
     using static RestaurantsPlatform.Common.GlobalConstants;
+    using static RestaurantsPlatform.Web.Common.EmailSentInformationConstants;
 
     [Area("Administration")]
     public class DashboardController : AdministrationController
@@ -56,8 +56,8 @@
                 OwnersEmail,
                 OwnersName,
                 user.Email,
-                "Congrationations! You have been promoted!",
-                "<h1>Congrats you have been promoted in our web site - Restaurants Platform!</h1>");
+                PromotedEmailSubject,
+                PromotedEmailHtmlContent);
 
             return this.RedirectToRoute("areaRoute", new { area = "Administration", controller = "Dashboard", action = "Users" });
         }
@@ -71,8 +71,8 @@
                 OwnersEmail,
                 OwnersName,
                 user.Email,
-                "You have been demoted!",
-                "<h1>You have been demoted in our web site - Restaurants Platform!</h1>");
+                DemotedEmailSubject,
+                DemotedEmailHtmlContent);
 
             return this.RedirectToRoute("areaRoute", new { area = "Administration", controller = "Dashboard", action = "Users" });
         }
@@ -87,8 +87,8 @@
                 OwnersEmail,
                 OwnersName,
                 user.Email,
-                "We are sorry!",
-                @"<h1>You have been banned from our web site - Restaurants Platform...</h1><p>If you want your account back, contact us!</p>");
+                BannedEmailSubject,
+                BannedEmailHtmlContent);
 
             return this.RedirectToRoute("areaRoute", new { area = "Administration", controller = "Dashboard", action = "Users" });
         }
@@ -103,8 +103,8 @@
                 OwnersEmail,
                 OwnersName,
                 user.Email,
-                "We are happy to see you again!",
-                @"<h1>You have been unbanned from our web site - Restaurants Platform :)</h1>");
+                UnBannedEmailSubject,
+                UnBannedEmailHtmlContent);
 
             return this.RedirectToRoute("areaRoute", new { area = "Administration", controller = "Dashboard", action = "Users" });
         }

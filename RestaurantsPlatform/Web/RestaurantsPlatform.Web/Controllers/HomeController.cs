@@ -4,14 +4,13 @@
     using System.Threading.Tasks;
     using System.Web;
 
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using RestaurantsPlatform.Data.Models;
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Services.Messaging;
     using RestaurantsPlatform.Web.ViewModels;
 
     using static RestaurantsPlatform.Common.GlobalConstants;
+    using static RestaurantsPlatform.Web.Common.EmailSentInformationConstants;
     using static RestaurantsPlatform.Web.Common.NotificationsMessagesContants;
 
     public class HomeController : BaseController
@@ -44,7 +43,7 @@
             var contactModel = new ContactInputModel()
             {
                 EmailTo = OwnersEmail,
-                Name = this.User.Identity.Name ?? "Unknown",
+                Name = this.User.Identity.Name ?? DefaultSenderName,
             };
 
             return this.View(contactModel);

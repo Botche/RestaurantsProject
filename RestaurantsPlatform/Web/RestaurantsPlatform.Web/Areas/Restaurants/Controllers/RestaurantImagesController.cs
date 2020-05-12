@@ -59,14 +59,10 @@
 
             var id = await this.imageService.AddImageToRestaurantAsync(input.ImageUrl, input.RestaurantName, input.Id);
 
-            if (id == null)
+            var result = this.CheckIfValueIsNull(id, ImageNotFound, 404);
+            if (result != null)
             {
-                return this.View(ErrorViewName, new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
-                    Message = ImageNotFound,
-                    StatusCode = 404,
-                });
+                return result;
             }
 
             this.TempData[SuccessNotification] = string.Format(SuccessfullyAddedImageToRestaurant, input.RestaurantName);
@@ -77,14 +73,10 @@
         {
             var restaurantImages = await this.restaurantService.GetByIdAsync<AllImagesFromRestaurantViewModel>(id);
 
-            if (restaurantImages == null)
+            var result = this.CheckIfValueIsNull(restaurantImages, PageNotFound, 404);
+            if (result != null)
             {
-                return this.View(ErrorViewName, new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext?.TraceIdentifier,
-                    Message = PageNotFound,
-                    StatusCode = 404,
-                });
+                return result;
             }
 
             return this.View(restaurantImages);
@@ -100,14 +92,10 @@
 
             var restaurant = await this.restaurantService.GetRestaurantByIdWithImageAsync<UpdateRestaurantImageViewModel>(id, imageUrl);
 
-            if (restaurant == null)
+            var resultForRestaurant = this.CheckIfValueIsNull(restaurant, PageNotFound, 404);
+            if (resultForRestaurant != null)
             {
-                return this.View(ErrorViewName, new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext?.TraceIdentifier,
-                    Message = PageNotFound,
-                    StatusCode = 404,
-                });
+                return resultForRestaurant;
             }
 
             restaurant.ImageUrl = imageUrl;
@@ -138,14 +126,10 @@
             var updatedId = await this.imageService
                 .UpdateRestaurantImageAsync(input.Id, input.RestaurantName, input.ImageUrl, input.OldImageUrl);
 
-            if (updatedId == null)
+            var result = this.CheckIfValueIsNull(updatedId, PageNotFound, 404);
+            if (result != null)
             {
-                return this.View(ErrorViewName, new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
-                    Message = PageNotFound,
-                    StatusCode = 404,
-                });
+                return result;
             }
 
             this.TempData[SuccessNotification] = SuccessfullyUpdatedImage;
@@ -165,16 +149,12 @@
                 });
             }
 
-            var deletedImageCount = await this.restaurantService.DeleteImageByRestaurantIdAsync(id, imageUrl);
+            var deletedImageId = await this.restaurantService.DeleteImageByRestaurantIdAsync(id, imageUrl);
 
-            if (deletedImageCount == null)
+            var result = this.CheckIfValueIsNull(deletedImageId, PageNotFound, 404);
+            if (result != null)
             {
-                return this.View(ErrorViewName, new ErrorViewModel
-                {
-                    RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
-                    Message = PageNotFound,
-                    StatusCode = 404,
-                });
+                return result;
             }
 
             this.TempData[SuccessNotification] = SuccessfullyDeletedImage;
