@@ -41,7 +41,14 @@
         {
             if (!this.ModelState.IsValid)
             {
-                this.TempData[ErrorNotification] = WrontInput;
+                foreach (var modelState in this.ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        this.TempData[ErrorNotification] = error.ErrorMessage;
+                    }
+                }
+
                 return this.RedirectToRoute("restaurant", new { id = input.Id, name = input.RestaurantName.ToSlug() });
             }
 
@@ -108,7 +115,14 @@
         {
             if (!this.ModelState.IsValid)
             {
-                this.TempData[ErrorNotification] = WrontInput;
+                foreach (var modelState in this.ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        this.TempData[ErrorNotification] = error.ErrorMessage;
+                    }
+                }
+
                 return this.View(input);
             }
 

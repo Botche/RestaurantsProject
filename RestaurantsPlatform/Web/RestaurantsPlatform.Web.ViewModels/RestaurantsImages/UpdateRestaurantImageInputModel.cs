@@ -2,6 +2,8 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using RestaurantsPlatform.Web.Infrastructure;
+
     public class UpdateRestaurantImageInputModel
     {
         [Required]
@@ -15,5 +17,8 @@
 
         [Required]
         public string RestaurantName { get; set; }
+
+        [GoogleReCaptchaValidation]
+        public string RecaptchaValue { get; set; }
     }
 }

@@ -2,6 +2,8 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using RestaurantsPlatform.Web.Infrastructure;
+
     public class UpdateCommentInputView
     {
         [Required]

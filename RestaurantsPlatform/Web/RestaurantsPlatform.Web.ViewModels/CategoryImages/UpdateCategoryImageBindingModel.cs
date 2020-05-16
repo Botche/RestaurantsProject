@@ -1,16 +1,17 @@
 ﻿namespace RestaurantsPlatform.Web.ViewModels.CategoryImages
 {
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
     using RestaurantsPlatform.Web.Infrastructure;
 
-    public class UpdateCategoryImageInputModel
+    public class UpdateCategoryImageBindingModel
     {
         [Required]
         public int CategoryId { get; set; }
 
         [Required]
-        [Url]
+        [DisplayName("Image Url")]
         public string ImageUrl { get; set; }
 
         [GoogleReCaptchaValidation]

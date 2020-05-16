@@ -24,7 +24,7 @@
 
         public IActionResult Update(int id, string imageUrl)
         {
-            var image = new UpdateCategoryImageViewModel
+            var image = new UpdateCategoryImageBindingModel
             {
                 CategoryId = id,
                 ImageUrl = imageUrl,
@@ -34,11 +34,18 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateCategoryImageInputModel input)
+        public async Task<IActionResult> Update(UpdateCategoryImageBindingModel input)
         {
             if (!this.ModelState.IsValid)
             {
-                this.TempData[ErrorNotification] = WrontInput;
+                foreach (var modelState in this.ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        this.TempData[ErrorNotification] = error.ErrorMessage;
+                    }
+                }
+
                 return this.View(input);
             }
 

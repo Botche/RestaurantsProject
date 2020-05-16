@@ -39,9 +39,6 @@
         [Required]
         public string CommentContent { get; set; }
 
-        [GoogleReCaptchaValidation]
-        public string RecaptchaValue { get; set; }
-
         public bool IsFavourite { get; set; }
 
         public string CategoryUrl => this.CategoryName.Replace(' ', '-').ToLower();

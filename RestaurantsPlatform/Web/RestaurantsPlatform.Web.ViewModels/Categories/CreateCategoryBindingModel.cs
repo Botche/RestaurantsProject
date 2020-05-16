@@ -7,7 +7,7 @@
 
     using static RestaurantsPlatform.Data.Common.Constants.Models.Category;
 
-    public class CreateCategoryViewModel
+    public class CreateCategoryBindingModel
     {
         [Required]
         [MaxLength(NameMaxLength)]

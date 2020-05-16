@@ -98,11 +98,18 @@
 
         [Authorize(Roles = AdministratorRoleName)]
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCategoryInputModel input)
+        public async Task<IActionResult> Create(CreateCategoryBindingModel input)
         {
             if (!this.ModelState.IsValid)
             {
-                this.TempData[ErrorNotification] = WrontInput;
+                foreach (var modelState in this.ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        this.TempData[ErrorNotification] = error.ErrorMessage;
+                    }
+                }
+
                 return this.View(input);
             }
 
@@ -116,18 +123,25 @@
         [Authorize(Roles = AdministratorRoleName)]
         public async Task<IActionResult> Update(int id)
         {
-            var category = await this.categoryService.GetByIdAsync<UpdateCategoryViewModel>(id);
+            var category = await this.categoryService.GetByIdAsync<UpdateCategoryBindingModel>(id);
 
             return this.View(category);
         }
 
         [Authorize(Roles = AdministratorRoleName)]
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateCategoryInputModel input)
+        public async Task<IActionResult> Update(UpdateCategoryBindingModel input)
         {
             if (!this.ModelState.IsValid)
             {
-                this.TempData[ErrorNotification] = WrontInput;
+                foreach (var modelState in this.ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        this.TempData[ErrorNotification] = error.ErrorMessage;
+                    }
+                }
+
                 return this.View(input);
             }
 

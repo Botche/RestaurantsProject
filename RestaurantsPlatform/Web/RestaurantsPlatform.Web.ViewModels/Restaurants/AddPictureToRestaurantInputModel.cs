@@ -15,8 +15,5 @@
         [Required]
         [Url]
         public string ImageUrl { get; set; }
-
-        [GoogleReCaptchaValidation]
-        public string RecaptchaValue { get; set; }
     }
 }

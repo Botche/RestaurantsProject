@@ -2,11 +2,13 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using RestaurantsPlatform.Data.Models.Restaurants;
+    using RestaurantsPlatform.Services.Mapping;
     using RestaurantsPlatform.Web.Infrastructure;
 
     using static RestaurantsPlatform.Data.Common.Constants.Models.Category;
 
-    public class UpdateCategoryInputModel
+    public class UpdateCategoryBindingModel : IMapFrom<Category>
     {
         [Required]
         public int Id { get; set; }
@@ -25,5 +27,7 @@
 
         [GoogleReCaptchaValidation]
         public string RecaptchaValue { get; set; }
+
+        public string Url => this.Name.Replace(' ', '-').ToLower();
     }
 }

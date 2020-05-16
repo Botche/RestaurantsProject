@@ -348,7 +348,7 @@
         {
             AutoMapperConfig.RegisterMappings(typeof(DetailsCategoryViewModel).Assembly);
 
-            var result = await this.controller.Create(new CreateCategoryInputModel
+            var result = await this.controller.Create(new CreateCategoryBindingModel
             {
                 Name = "Category",
                 Description = "Category",
@@ -368,10 +368,10 @@
         [Fact]
         public async Task CategoriesController_Create_Post_WrongModelState()
         {
-            AutoMapperConfig.RegisterMappings(typeof(CreateCategoryInputModel).Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(CreateCategoryBindingModel).Assembly);
 
             this.controller.ModelState.AddModelError("test", "test");
-            var result = await this.controller.Create(new CreateCategoryInputModel()
+            var result = await this.controller.Create(new CreateCategoryBindingModel()
             {
                 Name = "Pesho",
             });
@@ -379,7 +379,7 @@
             var model = Assert.IsAssignableFrom<IActionResult>(
                 result);
             var inputModel = Assert.IsType<ViewResult>(model);
-            var viewResultModel = Assert.IsType<CreateCategoryInputModel>(inputModel.Model);
+            var viewResultModel = Assert.IsType<CreateCategoryBindingModel>(inputModel.Model);
 
             var categoryCount = this.categoryRepository.All().Count();
 
@@ -413,7 +413,7 @@
 
             AutoMapperConfig.RegisterMappings(typeof(DetailsCategoryViewModel).Assembly);
 
-            var result = await this.controller.Update(new UpdateCategoryInputModel
+            var result = await this.controller.Update(new UpdateCategoryBindingModel
             {
                 Name = "Category1",
                 Description = "Category1",
@@ -439,10 +439,10 @@
         [Fact]
         public async Task CategoriesController_Update_Post_WrongModelState()
         {
-            AutoMapperConfig.RegisterMappings(typeof(UpdateCategoryInputModel).Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(UpdateCategoryBindingModel).Assembly);
 
             this.controller.ModelState.AddModelError("test", "test");
-            var result = await this.controller.Update(new UpdateCategoryInputModel
+            var result = await this.controller.Update(new UpdateCategoryBindingModel
             {
                 Id = 1,
             });
@@ -450,7 +450,7 @@
             var model = Assert.IsAssignableFrom<IActionResult>(
                 result);
             var inputModel = Assert.IsType<ViewResult>(model);
-            var viewResultModel = Assert.IsType<UpdateCategoryInputModel>(inputModel.Model);
+            var viewResultModel = Assert.IsType<UpdateCategoryBindingModel>(inputModel.Model);
 
             var categoryCount = this.categoryRepository.All().Count();
 
@@ -472,7 +472,7 @@
         [Fact]
         public async Task CategoriesController_Delete_Post()
         {
-            await this.controller.Create(new CreateCategoryInputModel
+            await this.controller.Create(new CreateCategoryBindingModel
             {
                 Name = "Name",
                 Title = "Title",
@@ -500,7 +500,7 @@
         [Fact]
         public async Task CategoriesController_Delete_Post_WithRestaurants()
         {
-            await this.controller.Create(new CreateCategoryInputModel
+            await this.controller.Create(new CreateCategoryBindingModel
             {
                 Name = "Name",
                 Title = "Title",
@@ -544,7 +544,7 @@
             });
             await this.categoryRepository.SaveChangesAsync();
 
-            AutoMapperConfig.RegisterMappings(typeof(UpdateCategoryInputModel).Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(UpdateCategoryBindingModel).Assembly);
 
             this.controller.ModelState.AddModelError("test", "test");
             var result = await this.controller.Delete(new DeleteCategoryInputModel

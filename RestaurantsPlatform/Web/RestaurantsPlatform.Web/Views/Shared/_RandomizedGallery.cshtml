@@ -6,7 +6,7 @@
         {
             var index = i + 1;
             <figure class="gallery__item gallery__item--@index">
-                <a title="@Model[i].RestaurantRestaurantName" asp-route="restaurant" asp-route-id="@Model[i].RestaurantId" asp-route-name="@Model[i].RestaurantRestaurantName.ToLower().Replace(" ","-") ">
+                <a title="@Model[i].RestaurantRestaurantName" asp-route="restaurant" asp-route-id="@Model[i].RestaurantId" asp-route-name="@Model[i].RestaurantRestaurantName.ToLower().Replace(" ","-")">
                     <img src="@Model[i].ImageUrl" class="gallery__img" alt="@Model[i].RestaurantRestaurantName Image">
                 </a>
             </figure>

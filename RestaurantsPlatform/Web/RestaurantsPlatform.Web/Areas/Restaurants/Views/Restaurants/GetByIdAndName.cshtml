@@ -40,7 +40,7 @@
         <div class="border rounded-lg pl-3 pt-4 h-100">
             <dl>
                 <dt class="col-sm-2">@Html.DisplayNameFor(model => model.RestaurantName)</dt>
-                <dd class="col-sm-10">@Html.DisplayFor(model => model.RestaurantName)</dd>
+                <dd id="RestaurantName" class="col-sm-10">@Html.DisplayFor(model => model.RestaurantName)</dd>
                 <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Description)</dt>
                 <dd class="col-sm-10">
                     @if (Model.Description != null)
@@ -134,35 +134,20 @@
                     commentBody.parentNode.removeChild(commentBody);
 
                     // form
-                    const form = document.createElement('form');
+                    const form = createDomElement('form', null, null, 'submit-form');
                     form.href = href;
-                    form.id = 'submit-form';
-
-                    // restaurant name
-                    const restaurantIdDiv = document.createElement('div');
-                    restaurantIdDiv.classList.add('form-group');
 
                     // comment id
-                    const commentIdDiv = document.createElement('div');
-                    commentIdDiv.classList.add('form-group');
+                    const commentIdDiv = createDomElement('div', null, ['form-group']);
 
-                    const commentIdInput = document.createElement('input');
-                    commentIdInput.classList.add('form-control');
-                    commentIdInput.hidden = true;
-                    commentIdInput.required = true;
-                    commentIdInput.type = 'number';
-                    commentIdInput.name = 'commentId';
-                    commentIdInput.value = commentBodyParentNode.getElementsByClassName('comment-id')[0].textContent;
+                    const commentId = commentBodyParentNode.getElementsByClassName('comment-id')[0].textContent;
+                    const commentIdInput = createDomElementWithValue('input', commentId, ['form-control'], null, true, true, 'number','commentId');
 
                     // new comment content
-                    const commentContentDiv = document.createElement('div');
-                    commentContentDiv.classList.add('form-group');
+                    const commentContentDiv = createDomElement('div', null, ['form-group']);
 
-                    const editableCommentBody = document.createElement('textarea');
-                    editableCommentBody.value = commentBody.textContent.trim();
-                    editableCommentBody.classList.add('comment-content', 'form-control');
-                    editableCommentBody.required = true;
-                    editableCommentBody.name = 'content';
+                    const inputCommentValue = commentBody.textContent.trim();
+                    const editableCommentBody = createDomElementWithValue('textarea', inputCommentValue, ['form-control', 'comment-content'], null, true, false, 'text', 'content');
 
                     commentIdDiv.appendChild(commentIdInput);
                     commentContentDiv.appendChild(editableCommentBody);
@@ -183,15 +168,13 @@
                     editButtonParentNode.removeChild(deleteButton);
 
                     // submit button
-                    const submitButton = document.createElement('button');
-                    submitButton.classList.add('text-primary', 'button-link');
+                    const submitButton = createDomElement('button', null, ['text-primary', 'button-link']);
                     submitButton.innerHTML = '<i class="fas fa-check"></i> Submit';
                     submitButton.style.cursor = 'pointer';
                     submitButton.addEventListener('click', submit);
 
                     // return button
-                    const returnButton = document.createElement('button');
-                    returnButton.classList.add('text-primary', 'button-link', 'undo-button');
+                    const returnButton = createDomElement('button', null, ['text-primary', 'button-link', 'undo-button']);
                     returnButton.innerHTML = 'Undo <i class="fas fa-undo"></i>';
                     returnButton.style.cursor = 'pointer';
                     returnButton.addEventListener('click', undo);
@@ -223,9 +206,8 @@
                                     toastr.success('Successfully updated your comment!');
 
                                     if (!heading.getElementsByClassName('fa-pencil-alt')[0]) {
-                                        const editedSmall = document.createElement('small');
+                                        const editedSmall = createDomElement('small', null, ['float-right', 'text-muted', 'd-block']);
                                         editedSmall.innerHTML = '<i class="fas fa-pencil-alt"></i> Edited';
-                                        editedSmall.classList.add('float-right', 'text-muted', 'd-block');
 
                                         heading.appendChild(editedSmall);
                                     }
@@ -253,6 +235,46 @@
                     }
                 })
             });
+
+            function createDomElement(type, textContent, classList, id, href) {
+                const element = document.createElement(type);
+
+                element.textContent = textContent;
+
+                if (href) {
+                    element.href = href;
+                }
+
+                if (classList) {
+                    element.classList.add(...classList);
+                }
+
+                if (id) {
+                    element.setAttribute('id', id);
+                }
+
+                return element;
+            }
+
+            function createDomElementWithValue(type, value, classList, id, required, hidden, inputType, name) {
+                const element = document.createElement(type);
+
+                element.value = value;
+                element.required = required;
+                element.type = inputType;
+                element.name = name;
+                element.hidden = hidden;
+
+                if (classList) {
+                    element.classList.add(...classList);
+                }
+
+                if (id) {
+                    element.setAttribute('id', id);
+                }
+
+                return element;
+            }
         })();
     </script>
     <script type="text/javascript">

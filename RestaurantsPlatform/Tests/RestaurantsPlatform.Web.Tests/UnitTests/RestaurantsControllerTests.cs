@@ -308,7 +308,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = await this.controller.Create(new CreateRestaurantInputModel
+            var result = await this.controller.Create(new CreateRestaurantBindingModel
             {
                 Address = "Address",
                 CategoryId = 1,
@@ -345,7 +345,7 @@
             };
 
             this.controller.ModelState.AddModelError("test", "test");
-            var result = await this.controller.Create(new CreateRestaurantInputModel
+            var result = await this.controller.Create(new CreateRestaurantBindingModel
             {
                 Address = "Address",
                 CategoryId = 1,
@@ -357,7 +357,7 @@
             });
 
             var viewResult = Assert.IsAssignableFrom<ViewResult>(result);
-            var model = Assert.IsType<CreateRestaurantInputModel>(viewResult.Model);
+            var model = Assert.IsType<CreateRestaurantBindingModel>(viewResult.Model);
 
             Assert.Equal("Address", model.Address);
             Assert.Equal(1, model.CategoryId);
@@ -409,7 +409,7 @@
             var result = await this.controller.Update(1);
 
             var viewResult = Assert.IsAssignableFrom<ViewResult>(result);
-            var model = Assert.IsType<UpdateRestaurantViewModel>(viewResult.Model);
+            var model = Assert.IsType<UpdateRestaurantBindingModel>(viewResult.Model);
 
             Assert.Equal("Address", model.Address);
             Assert.Equal(1, model.CategoryId);
@@ -532,7 +532,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = await this.controller.Update(new UpdateRestaurantInputModel
+            var result = await this.controller.Update(new UpdateRestaurantBindingModel
             {
                 Id = 1,
                 Address = "Address",
@@ -580,7 +580,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = await this.controller.Update(new UpdateRestaurantInputModel
+            var result = await this.controller.Update(new UpdateRestaurantBindingModel
             {
                 Id = 1,
                 Address = "Address",
@@ -616,7 +616,7 @@
             };
 
             this.controller.ModelState.AddModelError("test", "test");
-            var result = await this.controller.Update(new UpdateRestaurantInputModel
+            var result = await this.controller.Update(new UpdateRestaurantBindingModel
             {
                 Address = "Address",
                 CategoryId = 1,
@@ -628,7 +628,7 @@
             });
 
             var viewResult = Assert.IsAssignableFrom<ViewResult>(result);
-            var model = Assert.IsType<UpdateRestaurantInputModel>(viewResult.Model);
+            var model = Assert.IsType<UpdateRestaurantBindingModel>(viewResult.Model);
 
             Assert.Equal("Address", model.Address);
             Assert.Equal(1, model.CategoryId);
@@ -655,7 +655,7 @@
                 HttpContext = new DefaultHttpContext { User = user },
             };
 
-            var result = await this.controller.Update(new UpdateRestaurantInputModel
+            var result = await this.controller.Update(new UpdateRestaurantBindingModel
             {
                 Id = 1,
                 Address = "Address",

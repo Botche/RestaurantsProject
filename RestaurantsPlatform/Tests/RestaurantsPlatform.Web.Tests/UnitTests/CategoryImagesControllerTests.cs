@@ -91,7 +91,7 @@
             var result = this.controller.Update(categoryId, imageUrl);
 
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<UpdateCategoryImageViewModel>(
+            var model = Assert.IsAssignableFrom<UpdateCategoryImageBindingModel>(
                 viewResult.ViewData.Model);
 
             Assert.Equal(categoryId, model.CategoryId);
@@ -115,7 +115,7 @@
             string imageUrl = "https://www.capital.bg/shimg/zx620_3323939.jpg";
 
             AutoMapperConfig.RegisterMappings(typeof(PublicIdCategoryImageBindinModel).Assembly);
-            var result = await this.controller.Update(new UpdateCategoryImageInputModel
+            var result = await this.controller.Update(new UpdateCategoryImageBindingModel
             {
                 CategoryId = categoryId,
                 ImageUrl = imageUrl,
@@ -136,13 +136,13 @@
             int categoryId = 1;
 
             this.controller.ModelState.AddModelError("test", "test");
-            var result = await this.controller.Update(new UpdateCategoryImageInputModel
+            var result = await this.controller.Update(new UpdateCategoryImageBindingModel
             {
                 CategoryId = categoryId,
             });
 
             var viewResult = Assert.IsAssignableFrom<ViewResult>(result);
-            var model = Assert.IsType<UpdateCategoryImageInputModel>(viewResult.Model);
+            var model = Assert.IsType<UpdateCategoryImageBindingModel>(viewResult.Model);
 
             Assert.Equal(categoryId, model.CategoryId);
             Assert.Null(model.ImageUrl);

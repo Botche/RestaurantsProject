@@ -82,11 +82,21 @@
 
         [Authorize(Roles = AdministratorOrRestaurantOwner)]
         [HttpPost]
-        public async Task<IActionResult> Create(CreateRestaurantInputModel input)
+        public async Task<IActionResult> Create(CreateRestaurantBindingModel input)
         {
             if (!this.ModelState.IsValid)
             {
-                this.TempData[ErrorNotification] = WrontInput;
+                foreach (var modelState in this.ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        this.TempData[ErrorNotification] = error.ErrorMessage;
+                    }
+                }
+
+                var categories = this.categoryService.GetAllCategories<AllCategoriesToCreateRestaurantViewModel>();
+                this.ViewBag.Categories = categories;
+
                 return this.View(input);
             }
 
@@ -110,7 +120,7 @@
         [Authorize(Roles = AdministratorOrRestaurantOwner)]
         public async Task<IActionResult> Update(int id)
         {
-            var restaurant = await this.restaurantService.GetByIdAsync<UpdateRestaurantViewModel>(id);
+            var restaurant = await this.restaurantService.GetByIdAsync<UpdateRestaurantBindingModel>(id);
 
             var resultForRestaurant = this.CheckIfValueIsNull(restaurant, PageNotFound, 404);
             if (resultForRestaurant != null)
@@ -133,11 +143,18 @@
 
         [Authorize(Roles = AdministratorOrRestaurantOwner)]
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateRestaurantInputModel input)
+        public async Task<IActionResult> Update(UpdateRestaurantBindingModel input)
         {
             if (!this.ModelState.IsValid)
             {
-                this.TempData[ErrorNotification] = WrontInput;
+                foreach (var modelState in this.ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        this.TempData[ErrorNotification] = error.ErrorMessage;
+                    }
+                }
+
                 return this.View(input);
             }
 
