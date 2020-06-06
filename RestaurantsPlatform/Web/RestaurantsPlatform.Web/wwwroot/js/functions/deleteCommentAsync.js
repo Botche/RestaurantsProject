@@ -1,4 +1,4 @@
-﻿(() => {
+﻿function deleteCommentAsync () {
     const deleteBtns = document.getElementsByClassName('delete-comment');
 
     Array.from(deleteBtns).forEach(deleteBtn => {
@@ -18,4 +18,6 @@
                 });
         });
     });
-})();
+};
+
+deleteCommentAsync();

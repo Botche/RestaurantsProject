@@ -1,4 +1,4 @@
-﻿(() => {
+﻿function voteAsync () {
     const upvoteBtns = document.getElementsByClassName('upvote');
     const downvoteBtns = document.getElementsByClassName('downvote');
 
@@ -86,4 +86,6 @@
                 votes.innerText = json.votesCount
             });
     }
-})();
+};
+
+voteAsync();

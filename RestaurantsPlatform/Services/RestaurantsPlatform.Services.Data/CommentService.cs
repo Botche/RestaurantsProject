@@ -75,6 +75,7 @@
             return this.commentRepostitory.All()
                 .Where(comment => comment.RestaurantId == restaurantId)
                 .OrderByDescending(comment => comment.CreatedOn)
+                .ThenByDescending(comment => comment.Votes.Sum(vote => (int)vote.Type))
                 .To<T>()
                 .ToList();
         }
@@ -84,6 +85,7 @@
             return this.commentRepostitory.All()
                 .Where(comment => comment.RestaurantId == restaurantId)
                 .OrderByDescending(comment => comment.Votes.Sum(vote => (int)vote.Type))
+                .ThenByDescending(comment => comment.CreatedOn)
                 .To<T>()
                 .ToList();
         }

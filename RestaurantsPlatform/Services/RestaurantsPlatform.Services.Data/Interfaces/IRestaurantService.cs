@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using RestaurantsPlatform.Web.ViewModels.Restaurants;
 
     public interface IRestaurantService
     {
@@ -24,5 +25,9 @@
         Task<int?> DeleteImageByRestaurantIdAsync(int id, string imageUrl);
 
         Task<T> GetRestaurantByIdWithImageAsync<T>(int id, string imageUrl);
+
+        Task<DetailsRestaurantViewModel> GetRestaurantByIdAndNameWithMostPopularComments(int restaurantId, string restaurantName);
+
+        Task<DetailsRestaurantViewModel> GetRestaurantByIdAndNameWithRecentComments(int restaurantId, string restaurantName);
     }
 }

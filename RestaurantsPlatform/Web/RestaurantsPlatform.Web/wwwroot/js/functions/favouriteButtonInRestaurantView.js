@@ -28,6 +28,7 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(json)
-        });
+        })
+            .catch(error=>console.log(error));
     });
 })();

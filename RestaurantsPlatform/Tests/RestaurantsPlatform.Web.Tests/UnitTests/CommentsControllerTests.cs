@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+    using Microsoft.Extensions.Configuration;
     using Moq;
 
     using RestaurantsPlatform.Data;
@@ -28,30 +29,42 @@
     {
         private readonly ApplicationDbContext dbContext;
 
+        private readonly IConfigurationRoot configuration;
+        private readonly IDeletableEntityRepository<RestaurantImage> restaurantImagesRepository;
         private readonly IDeletableEntityRepository<Restaurant> restaurantRepository;
         private readonly IDeletableEntityRepository<Comment> commentsRepository;
-        private readonly IRepository<Vote> voteRepository;
 
+        private readonly IRepository<Vote> voteRepository;
+        private readonly ICloudinaryImageService cloudinaryService;
+        private readonly IRestaurantImageService imageService;
         private readonly IVoteService voteService;
         private readonly ICommentService commentsService;
+        private readonly IRestaurantService restaurantService;
 
         private readonly CommentsController controller;
 
         public CommentsControllerTests()
         {
             this.dbContext = MockDbContext.GetContext();
+            this.configuration = new ConfigurationBuilder()
+                    .AddJsonFile("settings.json")
+                    .Build();
 
+            this.restaurantImagesRepository = new EfDeletableEntityRepository<RestaurantImage>(this.dbContext);
             this.restaurantRepository = new EfDeletableEntityRepository<Restaurant>(this.dbContext);
             this.commentsRepository = new EfDeletableEntityRepository<Comment>(this.dbContext);
             this.voteRepository = new EfRepository<Vote>(this.dbContext);
 
+            this.cloudinaryService = new CloudinaryImageService(this.configuration);
+            this.imageService = new RestaurantImageService(this.restaurantImagesRepository, this.cloudinaryService);
             this.voteService = new VoteService(this.voteRepository);
             this.commentsService = new CommentService(this.commentsRepository, this.voteService);
+            this.restaurantService = new RestaurantService(this.restaurantRepository, this.imageService, this.commentsService);
 
             var httpContext = new DefaultHttpContext();
             var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
 
-            this.controller = new CommentsController(this.commentsService)
+            this.controller = new CommentsController(this.commentsService, this.restaurantService)
             {
                 TempData = tempData,
             };

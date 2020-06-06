@@ -1,4 +1,4 @@
-﻿$(function () {
+﻿function showLocalTime () {
     $("time").each(function (i, e) {
         const dateTimeValue = $(e).attr("datetime");
         if (!dateTimeValue) {
@@ -9,7 +9,9 @@
         $(e).html(time.format("llll"));
         $(e).attr("title", $(e).attr("datetime"));
     });
-});
+};
+
+showLocalTime();
 
 $(function () {
     let current = location.pathname;

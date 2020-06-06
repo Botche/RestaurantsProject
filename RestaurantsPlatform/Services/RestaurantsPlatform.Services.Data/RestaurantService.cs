@@ -10,6 +10,8 @@
     using RestaurantsPlatform.Data.Models.Restaurants;
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Services.Mapping;
+    using RestaurantsPlatform.Web.ViewModels.Comments;
+    using RestaurantsPlatform.Web.ViewModels.Restaurants;
 
     public class RestaurantService : IRestaurantService
     {
@@ -182,6 +184,26 @@
                 .FirstOrDefaultAsync();
 
             return restaurantToReturn;
+        }
+
+        public async Task<DetailsRestaurantViewModel> GetRestaurantByIdAndNameWithMostPopularComments(int restaurantId, string restaurantName)
+        {
+            var comments = this.commentService.GetMostPopularComments<DetailsCommentViewModel>(restaurantId);
+            var restaurant = await this.GetByIdAndNameAsync<DetailsRestaurantViewModel>(restaurantId, restaurantName);
+
+            restaurant.Comments = comments;
+
+            return restaurant;
+        }
+
+        public async Task<DetailsRestaurantViewModel> GetRestaurantByIdAndNameWithRecentComments(int restaurantId, string restaurantName)
+        {
+            var comments = this.commentService.GetLatestComments<DetailsCommentViewModel>(restaurantId);
+            var restaurant = await this.GetByIdAndNameAsync<DetailsRestaurantViewModel>(restaurantId, restaurantName);
+
+            restaurant.Comments = comments;
+
+            return restaurant;
         }
 
         private bool CheckIfRestaurantImagesContainsImageUrl(Restaurant restaurant, string imageUrl)

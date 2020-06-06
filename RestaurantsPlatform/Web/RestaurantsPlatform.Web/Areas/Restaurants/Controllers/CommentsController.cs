@@ -9,6 +9,7 @@
     using RestaurantsPlatform.Services.Data.Interfaces;
     using RestaurantsPlatform.Web.Controllers;
     using RestaurantsPlatform.Web.ViewModels.Comments;
+    using RestaurantsPlatform.Web.ViewModels.Restaurants;
 
     using static RestaurantsPlatform.Common.StringExtensions;
     using static RestaurantsPlatform.Web.Common.ErrorConstants;
@@ -19,10 +20,14 @@
     public class CommentsController : BaseController
     {
         private readonly ICommentService commentService;
+        private readonly IRestaurantService restaurantService;
 
-        public CommentsController(ICommentService commentService)
+        public CommentsController(
+            ICommentService commentService,
+            IRestaurantService restaurantService)
         {
             this.commentService = commentService;
+            this.restaurantService = restaurantService;
         }
 
         public async Task<IActionResult> AddCommentToRestaurant(CreateCommentInputModel input)
@@ -95,18 +100,20 @@
             return this.Json(new { content = input.Content });
         }
 
-        public IActionResult LatestComments(int restaurantId)
+        [AllowAnonymous]
+        public async Task<IActionResult> LatestComments(int restaurantId, string restaurantName)
         {
-            var comments = this.commentService.GetLatestComments<DetailsCommentViewModel>(restaurantId);
+            var restaurant = await this.restaurantService.GetRestaurantByIdAndNameWithRecentComments(restaurantId, restaurantName);
 
-            return this.Json(new { comments });
+            return this.PartialView("./PartialViews/_CommentsPartialView", restaurant);
         }
 
-        public IActionResult MostPopularComments(int restaurantId)
+        [AllowAnonymous]
+        public async Task<IActionResult> MostPopularComments(int restaurantId, string restaurantName)
         {
-            var comments = this.commentService.GetMostPopularComments<DetailsCommentViewModel>(restaurantId);
+            var restaurant = await this.restaurantService.GetRestaurantByIdAndNameWithMostPopularComments(restaurantId, restaurantName);
 
-            return this.Json(new { comments });
+            return this.PartialView("./PartialViews/_CommentsPartialView", restaurant);
         }
     }
 }

@@ -14,7 +14,7 @@
             icon.classList.replace('text-white', 'text-danger');
         });
         likeBtn.addEventListener('click', function () {
-            const form = document.getElementById('favourites');
+            const form = likeBtn.parentNode.querySelector('#favourites');
             const token = form.querySelector('input[name=__RequestVerificationToken]').value;
             const restaurantId = +form.querySelector('input[name=Id]').value;
             let json = {};
