@@ -129,9 +129,9 @@
         [Fact]
         public async Task CategoriesController_AllWithSecondPage()
         {
-            var expectedCount = 1;
+            var expectedCount = 0;
             var expectedPage = 2;
-            var expectedPagesCount = 2;
+            var expectedPagesCount = 1;
 
             await this.categoryRepository.AddAsync(new Category
             {
