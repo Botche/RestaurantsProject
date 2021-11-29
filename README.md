@@ -1,7 +1,5 @@
 # RestaurantsProject
 
-[The application is hosted in azure](https://restaurantsplatform.azurewebsites.net/ "Restaurants Platform")
-
 Платформата има за цел да презентира различни видове ресторанти под категории.
 
 Не логнатите потребители могат да разглеждат ресторантите, коментарите към тях.
