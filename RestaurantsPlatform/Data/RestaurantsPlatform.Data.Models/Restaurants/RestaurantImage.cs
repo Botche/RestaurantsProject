@@ -4,7 +4,7 @@
 
     using RestaurantsPlatform.Data.Common.Models;
 
-    public class RestaurantImage : IDeletableEntity<int>
+    public class RestaurantImage : DeletableEntity<int>
     {
         [Required]
         [Url]

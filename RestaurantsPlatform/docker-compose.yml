@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  restaurantsplatform.web:
+    image: ${DOCKER_REGISTRY-}restaurantsplatformweb
+    build:
+      context: .
+      dockerfile: Web/RestaurantsPlatform.Web/Dockerfile
+  db:
+    image: "mcr.microsoft.com/mssql/server:2017-latest"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=SUPER_DUPER-strong-password_123

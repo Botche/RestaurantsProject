@@ -128,7 +128,7 @@ namespace RestaurantsPlatform.Seed.Seeding
 
                 if (!result.Succeeded || !addToRoleResult.Succeeded)
                 {
-                    throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
+                    throw new InvalidOperationException(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
                 }
             }
         }

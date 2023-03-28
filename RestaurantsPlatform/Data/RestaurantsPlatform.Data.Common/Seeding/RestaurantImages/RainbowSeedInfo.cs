@@ -1,6 +1,6 @@
 ﻿namespace RestaurantsPlatform.Data.Common.Seeding.RestaurantImages
 {
-    public class RainbowSeedInfo
+    public static class RainbowSeedInfo
     {
         public const string FirstImage = "https://res.cloudinary.com/djlskbceh/image/upload/v1587849893/restaurant/seedInfo/restaurants/rainbow-factory/nuchggt2jyu8egzvloy6_bn9zku.jpg";
 

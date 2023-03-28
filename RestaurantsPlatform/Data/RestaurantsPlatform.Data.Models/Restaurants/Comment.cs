@@ -5,7 +5,7 @@
 
     using RestaurantsPlatform.Data.Common.Models;
 
-    public class Comment : IDeletableEntity<int>
+    public class Comment : DeletableEntity<int>
     {
         public Comment()
         {

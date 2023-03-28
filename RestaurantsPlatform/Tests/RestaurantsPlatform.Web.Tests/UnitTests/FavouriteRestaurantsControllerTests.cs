@@ -79,7 +79,7 @@
                 RestaurantId = 1,
             });
 
-            var viewResult = Assert.IsType<OkResult>(result);
+            Assert.IsType<OkResult>(result);
 
             var favouriteRestaurant = this.favouriteRepository.All()
                 .Select(favourite => new
@@ -130,7 +130,7 @@
                 RestaurantId = 1,
             });
 
-            var viewResult = Assert.IsType<OkResult>(result);
+            Assert.IsType<OkResult>(result);
 
             var favouriteRestaurant = this.favouriteRepository.All()
                 .Select(favourite => new
@@ -176,7 +176,7 @@
                 RestaurantId = 1,
             });
 
-            var viewResult = Assert.IsType<BadRequestResult>(result);
+            Assert.IsType<BadRequestResult>(result);
 
             var favouriteRestaurant = this.favouriteRepository.All()
                 .Select(favourite => new

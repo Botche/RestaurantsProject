@@ -16,10 +16,10 @@
 
         public static void RegisterMappings(params Assembly[] assemblies)
         {
-        //    if (initialized)
-        //    {
-        //        return;
-        //    }
+            if (initialized)
+            {
+               return;
+            }
 
             initialized = true;
 
@@ -97,7 +97,7 @@
             return customMaps;
         }
 
-        private class TypesMap
+        private sealed class TypesMap
         {
             public Type Source { get; set; }
 

@@ -7,9 +7,9 @@
 
     public class ApplicationRoleConfiguration : IEntityTypeConfiguration<ApplicationRole>
     {
-        public void Configure(EntityTypeBuilder<ApplicationRole> appRole)
+        public void Configure(EntityTypeBuilder<ApplicationRole> builder)
         {
-            appRole
+            builder
                 .HasMany(e => e.UserRoles)
                 .WithOne(e => e.Role)
                 .HasForeignKey(e => e.RoleId)

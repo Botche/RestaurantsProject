@@ -4,7 +4,7 @@
 
     public interface ICategoryImageService
     {
-        Task<int> AddImageToCategoryAsync(string imageUrl, string name);
+        Task<int> AddImageToCategoryAsync(string imageUrl, string categoryName);
 
         Task DeleteImageAsync(int imageId);
     }

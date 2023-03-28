@@ -1,6 +1,6 @@
 ﻿namespace RestaurantsPlatform.Data.Common.Seeding.RestaurantImages
 {
-    public class SkaptoSeedInfo
+    public static class SkaptoSeedInfo
     {
         public const string SkaptoFirstPic = "https://res.cloudinary.com/djlskbceh/image/upload/v1586942126/restaurant/seedInfo/restaurants/skapto-mall-of-sofia/jjbsmvo2dj4capenotpr_moz254.jpg";
 

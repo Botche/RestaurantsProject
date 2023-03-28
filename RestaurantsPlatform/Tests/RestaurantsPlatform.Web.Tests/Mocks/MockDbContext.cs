@@ -5,7 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using RestaurantsPlatform.Data;
 
-    public class MockDbContext
+    public static class MockDbContext
     {
         public static ApplicationDbContext GetContext()
         {

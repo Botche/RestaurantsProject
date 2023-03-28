@@ -1,6 +1,6 @@
 ﻿namespace RestaurantsPlatform.Data.Common.Seeding.RestaurantImages
 {
-    public class TenebrisSeedInfo
+    public static class TenebrisSeedInfo
     {
         public const string FirstImage = "https://res.cloudinary.com/djlskbceh/image/upload/v1587849919/restaurant/seedInfo/restaurants/tenebris/ennwmjsiadfajsm4ncwe_qp1773.jpg";
 

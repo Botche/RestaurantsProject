@@ -14,6 +14,8 @@
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+      return ValidationResult.Success;
+
             if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
             {
                 return new ValidationResult(

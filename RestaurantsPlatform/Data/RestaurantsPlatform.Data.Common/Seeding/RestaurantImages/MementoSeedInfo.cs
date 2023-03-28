@@ -1,6 +1,6 @@
 ﻿namespace RestaurantsPlatform.Data.Common.Seeding.RestaurantImages
 {
-    public class MementoSeedInfo
+    public static class MementoSeedInfo
     {
         public const string FirstImage = "https://res.cloudinary.com/djlskbceh/image/upload/v1587849865/restaurant/seedInfo/restaurants/memento-cafe/tjovmzyp2m6wba4ga3gy_rdfqoe.jpg";
 

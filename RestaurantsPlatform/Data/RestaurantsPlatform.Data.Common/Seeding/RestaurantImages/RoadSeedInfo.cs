@@ -1,6 +1,6 @@
 ﻿namespace RestaurantsPlatform.Data.Common.Seeding.RestaurantImages
 {
-    public class RoadSeedInfo
+    public static class RoadSeedInfo
     {
         public const string FirstImage = "https://res.cloudinary.com/djlskbceh/image/upload/v1587849796/restaurant/seedInfo/restaurants/bar-road-66/kz4uabofbkvtqw1beuwn_totw8x.jpg";
 

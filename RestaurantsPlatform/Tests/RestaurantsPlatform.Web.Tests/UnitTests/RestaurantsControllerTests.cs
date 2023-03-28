@@ -875,7 +875,7 @@
             });
             await this.restaurantRepository.SaveChangesAsync();
 
-            var imageId = await this.restaurantImagesService
+            await this.restaurantImagesService
                 .AddImageToRestaurantAsync(
                     "https://www.capital.bg/shimg/zx620_3323939.jpg",
                     "Restaurant",

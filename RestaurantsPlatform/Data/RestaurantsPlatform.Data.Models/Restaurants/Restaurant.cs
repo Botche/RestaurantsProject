@@ -7,7 +7,7 @@
 
     using static RestaurantsPlatform.Data.Common.Constants.Models.Restraurant;
 
-    public class Restaurant : IDeletableEntity<int>
+    public class Restaurant : DeletableEntity<int>
     {
         public Restaurant()
         {

@@ -121,7 +121,7 @@
                 })
                 .FirstOrDefault(restaurant => restaurant.Id == 1)
                 .Comments
-                .Count();
+                .Count;
 
             Assert.Equal(1, commentsCount);
         }
@@ -171,7 +171,7 @@
                 })
                 .FirstOrDefault(restaurant => restaurant.Id == 1)
                 .Comments
-                .Count();
+                .Count;
 
             Assert.Equal(0, commentsCount);
         }
@@ -228,7 +228,7 @@
                 })
                 .FirstOrDefault(restaurant => restaurant.Id == 1)
                 .Comments
-                .Count();
+                .Count;
 
             Assert.Equal(0, commentsCount);
         }
@@ -287,7 +287,7 @@
                 })
                 .FirstOrDefault(restaurant => restaurant.Id == 1)
                 .Comments
-                .Count();
+                .Count;
 
             Assert.Equal(1, commentsCount);
         }
@@ -387,7 +387,7 @@
                 Content = "New Comment",
             });
 
-            var viewResult = Assert.IsType<BadRequestResult>(result);
+            Assert.IsType<BadRequestResult>(result);
 
             var comment = this.restaurantRepository.All()
                 .Select(restaurant => new
